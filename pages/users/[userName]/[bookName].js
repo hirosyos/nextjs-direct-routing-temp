@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../../../styles/Home.module.css";
+import Layout from "../../../components/Layout";
+import styles from "../../../styles/Home.module.scss";
 
 // 最初に実行される。事前ビルドするパスを配列でreturnする。
 export async function getStaticPaths() {
@@ -23,40 +24,44 @@ const Post = (props) => {
     console.log({ props });
 
     return (
-        <div className={styles.container}>
-            <Head>
-                <title>手記書庫</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+        <Layout>
+            <div className={styles.container}>
+                <Head>
+                    <title>手記書庫</title>
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
 
-            <main className={styles.main}>
-                <h1 className={styles.title}>Welcome to 手記 ページ</h1>
-                <p> ユーザー: {props.userName}</p>
-                <p> 手記: {props.bookName}</p>
+                <main className={styles.main}>
+                    <h1 className={styles.title}>Welcome to 手記 ページ</h1>
+                    <p> ユーザー: {props.userName}</p>
+                    <p> 手記: {props.bookName}</p>
 
-                <Link href={`/users/${props.userName}/bookSetting`}>
-                    <a>手記設定 へ移動</a>
-                </Link>
-                <Link href={`/users/${props.userName}/${props.bookName}/iroha`}>
-                    <a>セクション いろは へ移動</a>
-                </Link>
-            </main>
+                    <Link href={`/users/${props.userName}/bookSetting`}>
+                        <a>手記設定 へ移動</a>
+                    </Link>
+                    <Link
+                        href={`/users/${props.userName}/${props.bookName}/iroha`}
+                    >
+                        <a>セクション いろは へ移動</a>
+                    </Link>
+                </main>
 
-            <footer className={styles.footer}>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{" "}
-                    <img
-                        src="/vercel.svg"
-                        alt="Vercel Logo"
-                        className={styles.logo}
-                    />
-                </a>
-            </footer>
-        </div>
+                <footer className={styles.footer}>
+                    <a
+                        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Powered by{" "}
+                        <img
+                            src="/vercel.svg"
+                            alt="Vercel Logo"
+                            className={styles.logo}
+                        />
+                    </a>
+                </footer>
+            </div>
+        </Layout>
     );
 };
 

@@ -1,0 +1,21 @@
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 1rem 0;
+    border-bottom: 1px solid #efefef;
+}
+
+.header__img {
+    max-width: 12.5rem;
+}
+
+.container {
+    margin-top: 3rem;
+}

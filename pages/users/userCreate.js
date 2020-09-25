@@ -1,27 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../../components/Layout";
-import styles from "../../../styles/Home.module.scss";
+import Layout from "../../components/Layout";
+import styles from "../../styles/Home.module.scss";
 
-// 最初に実行される。事前ビルドするパスを配列でreturnする。
-export async function getStaticPaths() {
-    // const paths = ["/post/1", "/post/2"];
-    const paths = [];
-    return { paths, fallback: true };
-}
-
-export async function getStaticProps({ params }) {
-    console.log({ params });
-    return {
-        props: {
-            userName: params.userName,
-        },
-    };
-}
-
-const BookSetting = (props) => {
-    console.log({ props });
-
+const UserCreate = () => {
     return (
         <Layout>
             <div className={styles.container}>
@@ -31,12 +13,11 @@ const BookSetting = (props) => {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to 手記設定</h1>
-
-                    <p> ユーザー: {props.userName}</p>
-
-                    <Link href={`/users/${props.userName}`}>
-                        <a>ユーザページ</a>
+                    <h1 className={styles.title}>
+                        Welcome to ユーザ作成 ページ
+                    </h1>
+                    <Link href="/users/hoge/bookCreate">
+                        <a>手記作成</a>
                     </Link>
                 </main>
 
@@ -58,5 +39,4 @@ const BookSetting = (props) => {
         </Layout>
     );
 };
-
-export default BookSetting;
+export default UserCreate;

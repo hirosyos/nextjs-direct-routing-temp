@@ -19,9 +19,7 @@ export async function getStaticProps({ params }) {
     };
 }
 
-const BookSetting = (props) => {
-    console.log({ props });
-
+const BookCreate = (props) => {
     return (
         <Layout>
             <div className={styles.container}>
@@ -31,7 +29,7 @@ const BookSetting = (props) => {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to 手記設定</h1>
+                    <h1 className={styles.title}>Welcome to 手記作成 ページ</h1>
 
                     <p> ユーザー: {props.userName}</p>
 
@@ -58,5 +56,4 @@ const BookSetting = (props) => {
         </Layout>
     );
 };
-
-export default BookSetting;
+export default BookCreate;

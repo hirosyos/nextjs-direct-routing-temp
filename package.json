@@ -8,8 +8,11 @@
     "start": "next start"
   },
   "dependencies": {
+    "firebase": "^7.21.1",
     "next": "9.5.3",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-firebase-hooks": "^2.2.0",
+    "sass": "^1.26.11"
   }
 }

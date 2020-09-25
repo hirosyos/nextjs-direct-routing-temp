@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../../components/Layout";
-import styles from "../../../styles/Home.module.scss";
+import Layout from "../../../../components/Layout";
+import styles from "../../../../styles/Home.module.scss";
 
 // 最初に実行される。事前ビルドするパスを配列でreturnする。
 export async function getStaticPaths() {
@@ -15,11 +15,12 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             userName: params.userName,
+            bookName: params.bookName,
         },
     };
 }
 
-const BookSetting = (props) => {
+const SectionCreate = (props) => {
     console.log({ props });
 
     return (
@@ -31,12 +32,16 @@ const BookSetting = (props) => {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to 手記設定</h1>
-
+                    <h1 className={styles.title}>
+                        Welcome to セクション 作成ページ
+                    </h1>
                     <p> ユーザー: {props.userName}</p>
-
+                    <p> 手記: {props.bookName}</p>
                     <Link href={`/users/${props.userName}`}>
                         <a>ユーザページ</a>
+                    </Link>
+                    <Link href={`/users/${props.userName}/${props.bookName}`}>
+                        <a>手記ページ</a>
                     </Link>
                 </main>
 
@@ -59,4 +64,4 @@ const BookSetting = (props) => {
     );
 };
 
-export default BookSetting;
+export default SectionCreate;
