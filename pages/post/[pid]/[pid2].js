@@ -18,6 +18,7 @@ export async function getStaticProps({ params }) {
     return {
         props: {
             pid: params.pid,
+            pid2: params.pid2,
         },
     };
 }
@@ -32,7 +33,12 @@ const Post = (props) => {
 
     // const { pid } = router.query;
 
-    return <p>Post: {props.pid}</p>;
+    return (
+        <>
+            <p> pid Post: {props.pid}</p>
+            <p> pid2 Post: {props.pid2}</p>;
+        </>
+    );
 };
 
 export default Post;

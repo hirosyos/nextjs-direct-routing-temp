@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 
-export default function Home() {
+export default function Signin() {
     return (
         <div className={styles.container}>
             <Head>
@@ -11,12 +11,9 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>Welcome to 手記書庫</h1>
-                <Link href="/auth/login">
-                    <a>ログイン</a>
-                </Link>
-                <Link href="/auth/signin">
-                    <a>サインイン</a>
+                <h1 className={styles.title}>Welcome to サインイン ページ</h1>
+                <Link href="/users/userInit">
+                    <a>ユーザ初期設定</a>
                 </Link>
             </main>
 

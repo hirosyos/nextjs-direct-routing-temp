@@ -1,8 +1,24 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
+import styles from "../../../styles/Home.module.css";
 
-export default function Home() {
+// 最初に実行される。事前ビルドするパスを配列でreturnする。
+export async function getStaticPaths() {
+    // const paths = ["/post/1", "/post/2"];
+    const paths = [];
+    return { paths, fallback: true };
+}
+
+export async function getStaticProps({ params }) {
+    console.log({ params });
+    return {
+        props: {
+            userName: params.userName,
+        },
+    };
+}
+
+const BookInit = (props) => {
     return (
         <div className={styles.container}>
             <Head>
@@ -11,12 +27,12 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                <h1 className={styles.title}>Welcome to 手記書庫</h1>
-                <Link href="/auth/login">
-                    <a>ログイン</a>
-                </Link>
-                <Link href="/auth/signin">
-                    <a>サインイン</a>
+                <h1 className={styles.title}>Welcome to 手記初期設定</h1>
+
+                <p> ユーザー: {props.userName}</p>
+
+                <Link href={`/users/${props.userName}`}>
+                    <a>ユーザページ</a>
                 </Link>
             </main>
 
@@ -36,4 +52,5 @@ export default function Home() {
             </footer>
         </div>
     );
-}
+};
+export default BookInit;
