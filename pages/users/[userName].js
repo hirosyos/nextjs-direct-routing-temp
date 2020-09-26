@@ -11,41 +11,42 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../firebase/firebase";
 
-// function useGetAllUserNamesByhook() {
-//     const [values, loading, error] = useCollectionData(
-//         firebase.firestore().collection(`users2`),
-//         {
-//             idField: "id",
-//         }
-//     );
-//     //firebaseからの呼び出し結果判定
-//     if (loading) {
-//         return (
-//             <Layout>
-//                 <div>Loading...</div>
-//             </Layout>
-//         );
-//     }
-//     if (error) {
-//         return (
-//             <Layout>
-//                 <div>{`Error: ${error1.message}`}</div>;
-//             </Layout>
-//         );
-//     }
-//     console.log(values);
-//     return values.map((value) => {
-//         return {
-//             params: {
-//                 userName: value.name,
-//             },
-//         };
-//     });
-// }
+function useGetAllUserNamesByhook() {
+    const [values, loading, error] = useCollectionData(
+        firebase.firestore().collection(`users2`),
+        {
+            idField: "id",
+        }
+    );
+    //firebaseからの呼び出し結果判定
+    if (loading) {
+        return (
+            <Layout>
+                <div>Loading...</div>
+            </Layout>
+        );
+    }
+    if (error) {
+        return (
+            <Layout>
+                <div>{`Error: ${error1.message}`}</div>;
+            </Layout>
+        );
+    }
+    console.log(values);
+    return values.map((value) => {
+        return {
+            params: {
+                userName: value.name,
+            },
+        };
+    });
+}
 
 async function getAllUserNames() {
     const values = await firebase.firestore().collection("users2").get();
 
+    console.log("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
     console.log({ values });
     return values.docs.map((value) => {
         return {
@@ -72,6 +73,7 @@ async function getAllUserNames() {
     ////でもこっちでも動くっぽい
     // const paths = ["/users/hoge3", "/users/hoge2"];
 
+    // const paths =[];
     // console.log({ paths });
     // return paths;
 }
@@ -126,7 +128,12 @@ export async function getStaticProps({ params }) {
 }
 
 const UserNamePage = (props) => {
+    console.log("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
     console.log({ props });
+
+    if (!props.userName) {
+        return null;
+    }
 
     return (
         <Layout>
@@ -146,11 +153,11 @@ const UserNamePage = (props) => {
                         {props.userName}のid: {props.userData.id}
                     </p>
                     {/* <p>
-                {props.userName}のname: {props.userData.name}
-            </p>
-            <p>
-                {props.userName}のhistory: {props.userData.history}
-            </p> */}
+                        {props.userName}のname: {props.userData.name}
+                    </p>
+                    <p>
+                        {props.userName}のhistory: {props.userData.history}
+                    </p> */}
                 </main>
             </div>
         </Layout>
