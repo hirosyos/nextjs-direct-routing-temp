@@ -77,7 +77,6 @@ const SigninPage = () => {
         );
     }
     const [values, loading, error1] = useDocumentData(
-        // firebase.firestore().collection(`users2`),
         firebase.firestore().collection("validUsers").doc(user.uid),
         {
             idField: "id",
@@ -91,20 +90,7 @@ const SigninPage = () => {
         return <div>{`Error: ${error1.message}`}</div>;
     }
     console.log(values);
-    // return values.map((value) => {
-    //     return {
-    //         params: {
-    //             userName: value.userName,
-    //         },
-    //     };
-    // });
 
-    // const userDocRef = firebase
-    //     .firestore()
-    //     .collection("validUsers")
-    //     .doc(user.uid)
-    //     .get();
-    // Router.replace(`/users/${userDocRef.userName}`);
     return (
         <Layout>
             <div className={styles.container}>
