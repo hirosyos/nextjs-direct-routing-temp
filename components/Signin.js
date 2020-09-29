@@ -15,6 +15,20 @@ const postDataToFirestore = async (collectionName, docName, postData) => {
     return addedData;
 };
 
+const createUserWithAuthenticationId = async (
+    collectionName,
+    docName,
+    postData
+) => {
+    const currentUser = firebase.auth().currentUser;
+    await firebase
+        .firestore()
+        .collection(collectionName)
+        .doc(currentUser.uid)
+        .set(postData);
+    return currentUser;
+};
+
 const Signin = () => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
@@ -35,13 +49,24 @@ const Signin = () => {
         try {
             await firebase.auth().createUserWithEmailAndPassword(email, pass);
 
+            const collectionName = "validUsers";
+
+            const docName = firebase.auth().currentUser.uid;
             // //ユーザデータ書き込み
-            const postData = {
-                history: "React難しい",
-                id: "4",
-                name: account,
+            const userData = {
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                isPublic: "false",
+                uid: firebase.auth().currentUser.uid,
+                userName: account,
+                userDisplayName: "",
+                userIconImageUrl: "",
+                userCoverImageUrl: "",
+                userIntroduction: "",
+                pricePlan: "",
             };
-            await postDataToFirestore("users2", account, postData);
+
+            await postDataToFirestore(collectionName, docName, userData);
         } catch (e) {
             console.log(e.message, mounted);
             if (mounted.current) setError(e);

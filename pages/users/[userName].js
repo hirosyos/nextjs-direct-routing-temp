@@ -11,9 +11,13 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../firebase/firebase";
 
+// const VALIDUSERS = "users2";
+const VALIDUSERS = "validUsers";
+
 function useGetAllUserNamesByhook() {
     const [values, loading, error] = useCollectionData(
-        firebase.firestore().collection(`users2`),
+        // firebase.firestore().collection(`users2`),
+        firebase.firestore().collection(VALIDUSERS),
         {
             idField: "id",
         }
@@ -37,21 +41,22 @@ function useGetAllUserNamesByhook() {
     return values.map((value) => {
         return {
             params: {
-                userName: value.name,
+                userName: value.userName,
             },
         };
     });
 }
 
 async function getAllUserNames() {
-    const values = await firebase.firestore().collection("users2").get();
+    const values = await firebase.firestore().collection(VALIDUSERS).get();
 
     console.log("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
     console.log({ values });
     return values.docs.map((value) => {
         return {
             params: {
-                userName: value.data().name,
+                userName: value.data().userName,
+                // userName: value.data().name,
             },
         };
     });
@@ -79,11 +84,40 @@ async function getAllUserNames() {
 }
 
 async function getUserData(userName) {
+    const tmpDoc = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        // .where("name", "==", userName)
+        .where("userName", "==", userName)
+        .get();
+    // .then((t) => {
+    //     console.log("◆tmpDoc.uid");
+    //     console.log(tmpDoc);
+    // });
+    const pagename = tmpDoc.docs.map((x) => {
+        return {
+            // name: x.data().name,
+            // userName: x.data().userName,
+            uid: x.data().uid,
+        };
+    });
+    console.log("pagename[0].uid");
+    console.log(pagename[0].uid);
+
     const values = await firebase
         .firestore()
-        .collection("users2")
-        .doc(userName)
+        .collection(VALIDUSERS)
+        // .doc(tmpDoc.name)
+        .doc(pagename[0].uid)
         .get();
+
+    console.log(values.data().userName);
+
+    // const values = await firebase
+    //     .firestore()
+    //     .collection(VALIDUSERS)
+    //     .doc(userName)
+    //     .get();
 
     return {
         userName,
@@ -119,10 +153,13 @@ export async function getStaticProps({ params }) {
 
     //ここでfirestore読み出しをしてみる
 
+    userData.values.data().createdAt = userData.values.data().createdAt.toDate;
+    userData.values.data().updatedAt = userData.values.data().updatedAt.toDate;
     return {
         props: {
             userName: params.userName,
-            userData: userData.values.data(),
+            // userData: userData.values.data(),
+            userData: JSON.parse(JSON.stringify(userData.values.data())),
         },
     };
 }
@@ -130,6 +167,19 @@ export async function getStaticProps({ params }) {
 const UserNamePage = (props) => {
     console.log("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
     console.log({ props });
+    console.log(props.userData.createdAt);
+
+    // timestamp形式のデータをいい感じの形式に変換する関数
+    const convertFromTimestampToDatetime = (timestamp) => {
+        const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+        const Y = _d.getFullYear();
+        const m = (_d.getMonth() + 1).toString().padStart(2, "0");
+        const d = _d.getDate().toString().padStart(2, "0");
+        const H = _d.getHours().toString().padStart(2, "0");
+        const i = _d.getMinutes().toString().padStart(2, "0");
+        const s = _d.getSeconds().toString().padStart(2, "0");
+        return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+    };
 
     if (!props.userName) {
         return null;
@@ -150,14 +200,26 @@ const UserNamePage = (props) => {
                     <h1>firebase読み出しテストページ</h1>
                     <p>URLに指定されたID: {props.userName}</p>
                     <p>
-                        {props.userName}のid: {props.userData.id}
-                    </p>
-                    {/* <p>
-                        {props.userName}のname: {props.userData.name}
+                        {props.userName}のuid: {props.userData.uid}
                     </p>
                     <p>
-                        {props.userName}のhistory: {props.userData.history}
-                    </p> */}
+                        {props.userName}のuserName: {props.userData.userName}
+                    </p>
+                    <p>
+                        {props.userName}のisPublic: {props.userData.isPublic}
+                    </p>
+                    <p>
+                        {props.userName}のcreatedAt:{" "}
+                        {convertFromTimestampToDatetime(
+                            props.userData.createdAt.seconds
+                        )}
+                    </p>
+                    <p>
+                        {props.userName}のupdatedAt:{" "}
+                        {convertFromTimestampToDatetime(
+                            props.userData.updatedAt.seconds
+                        )}
+                    </p>
                 </main>
             </div>
         </Layout>
