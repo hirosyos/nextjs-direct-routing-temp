@@ -75,51 +75,50 @@ const SigninPage = () => {
                 </div>
             </Layout>
         );
-    } else {
-        const [values, loading, error] = useDocumentData(
-            // firebase.firestore().collection(`users2`),
-            firebase.firestore().collection("validUsers").doc(user.uid),
-            {
-                idField: "id",
-            }
-        );
-        //firebaseからの呼び出し結果判定
-        if (loading) {
-            return <div>Loading...</div>;
-        }
-        if (error) {
-            return <div>{`Error: ${error1.message}`}</div>;
-        }
-        console.log(values);
-        // return values.map((value) => {
-        //     return {
-        //         params: {
-        //             userName: value.userName,
-        //         },
-        //     };
-        // });
-
-        // const userDocRef = firebase
-        //     .firestore()
-        //     .collection("validUsers")
-        //     .doc(user.uid)
-        //     .get();
-        // Router.replace(`/users/${userDocRef.userName}`);
-        return (
-            <Layout>
-                <div className={styles.container}>
-                    <Head>
-                        <title>手記書庫/サインイン</title>
-                        <link rel="icon" href="/favicon.ico" />
-                    </Head>
-                    <p>{`すでに${values.userName}としてログイン済みです`}</p>
-                    <Link href={`/users/${values.userName}`}>
-                        <a>ユーザページへ</a>
-                    </Link>
-                </div>
-            </Layout>
-        );
     }
+    const [values, loading, error1] = useDocumentData(
+        // firebase.firestore().collection(`users2`),
+        firebase.firestore().collection("validUsers").doc(user.uid),
+        {
+            idField: "id",
+        }
+    );
+    //firebaseからの呼び出し結果判定
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error1) {
+        return <div>{`Error: ${error1.message}`}</div>;
+    }
+    console.log(values);
+    // return values.map((value) => {
+    //     return {
+    //         params: {
+    //             userName: value.userName,
+    //         },
+    //     };
+    // });
+
+    // const userDocRef = firebase
+    //     .firestore()
+    //     .collection("validUsers")
+    //     .doc(user.uid)
+    //     .get();
+    // Router.replace(`/users/${userDocRef.userName}`);
+    return (
+        <Layout>
+            <div className={styles.container}>
+                <Head>
+                    <title>手記書庫/サインイン</title>
+                    <link rel="icon" href="/favicon.ico" />
+                </Head>
+                <p>{`すでに${values.userName}としてログイン済みです`}</p>
+                <Link href={`/users/${values.userName}`}>
+                    <a>ユーザページへ</a>
+                </Link>
+            </div>
+        </Layout>
+    );
 
     // return (
     //     <Layout>
