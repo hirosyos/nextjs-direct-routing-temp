@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Logout from "../../components/Logout";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.scss";
 import {
@@ -167,7 +168,7 @@ export async function getStaticProps({ params }) {
 const UserNamePage = (props) => {
     console.log("◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
     console.log({ props });
-    console.log(props.userData.createdAt);
+    // console.log(props.userData.createdAt);
 
     // timestamp形式のデータをいい感じの形式に変換する関数
     const convertFromTimestampToDatetime = (timestamp) => {
@@ -220,6 +221,7 @@ const UserNamePage = (props) => {
                             props.userData.updatedAt.seconds
                         )}
                     </p>
+                    <Logout />
                 </main>
             </div>
         </Layout>

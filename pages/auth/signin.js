@@ -9,6 +9,12 @@ import Logout from "../../components/Logout";
 import Signin from "../../components/Signin";
 import styles from "../../styles/Home.module.scss";
 import firebase from "../../firebase/firebase";
+import {
+    useCollectionData,
+    useCollection,
+    useDocumentData,
+    useDocument,
+} from "react-firebase-hooks/firestore";
 
 // Firestoreにデータを送信する関数
 const postDataToFirestore = async (collectionName, docName, postData) => {
@@ -20,7 +26,7 @@ const postDataToFirestore = async (collectionName, docName, postData) => {
     return addedData;
 };
 
-export default function SigninPage() {
+const SigninPage = () => {
     const [user, initialising, error] = useAuthState(firebase.auth());
     if (initialising) {
         return (
@@ -70,13 +76,51 @@ export default function SigninPage() {
             </Layout>
         );
     } else {
-        const userDocRef = firebase
-            .firestore()
-            .collection("validUsers")
-            .doc(user.uid);
-        Router.replace(`/users/${userDocRef.userName}`);
-        return <div />;
+        const [values, loading, error] = useDocumentData(
+            // firebase.firestore().collection(`users2`),
+            firebase.firestore().collection("validUsers").doc(user.uid),
+            {
+                idField: "id",
+            }
+        );
+        //firebaseからの呼び出し結果判定
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+        if (error) {
+            return <div>{`Error: ${error1.message}`}</div>;
+        }
+        console.log(values);
+        // return values.map((value) => {
+        //     return {
+        //         params: {
+        //             userName: value.userName,
+        //         },
+        //     };
+        // });
+
+        // const userDocRef = firebase
+        //     .firestore()
+        //     .collection("validUsers")
+        //     .doc(user.uid)
+        //     .get();
+        // Router.replace(`/users/${userDocRef.userName}`);
+        return (
+            <Layout>
+                <div className={styles.container}>
+                    <Head>
+                        <title>手記書庫/サインイン</title>
+                        <link rel="icon" href="/favicon.ico" />
+                    </Head>
+                    <p>{`すでに${values.userName}としてログイン済みです`}</p>
+                    <Link href={`/users/${values.userName}`}>
+                        <a>ユーザページへ</a>
+                    </Link>
+                </div>
+            </Layout>
+        );
     }
+
     // return (
     //     <Layout>
     //         <div className={styles.container}>
@@ -113,4 +157,6 @@ export default function SigninPage() {
     //         </div>
     //     </Layout>
     // );
-}
+};
+
+export default SigninPage;
