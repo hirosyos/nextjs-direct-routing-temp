@@ -11,83 +11,7 @@ import {
 } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../common/firebase";
-
-const VALIDUSERS = "validUsers";
-
-//****************************************************************
-//
-// 全ユーザネーム取得関数
-//
-// [in] なし
-// [OUT]静的パスを生成するための名称の配列
-// [out] ユーザドキュメント
-//
-//****************************************************************
-async function getAllUserNames() {
-    //有効ユーザコレクションを取り出し
-    const values = await firebase.firestore().collection(VALIDUSERS).get();
-
-    // Next.jsの仕様でこのような配列を返さないとだめ
-    // const paths = [
-    //     {
-    //         params: {
-    //             userName: "hoge3",
-    //         },
-    //     },
-    //     {
-    //         params: {
-    //             userName: "hoge4",
-    //         },
-    //     },
-    // ];
-
-    //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return values.docs.map((value) => {
-        return {
-            params: {
-                userName: value.data().userName,
-            },
-        };
-    });
-}
-
-//****************************************************************
-//
-// ユーザドキュメント情報取得関数
-//
-// [in] ユーザネーム
-// [out] ユーザネーム
-// [out] ユーザドキュメント
-//
-//****************************************************************
-async function getUserData(userName) {
-    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
-    const tmpDoc = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .where("userName", "==", userName)
-        .get();
-
-    //ユーザドキュメントからuidを取得
-    const pagename = tmpDoc.docs.map((x) => {
-        return {
-            uid: x.data().uid,
-        };
-    });
-
-    //uidからユーザドキュメントを取得
-    //2度手間してそうだけどとりあえずこのままで
-    const values = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .doc(pagename[0].uid)
-        .get();
-
-    return {
-        userName,
-        values,
-    };
-}
+import { getAllUserNames, getUserData } from "../../common/common";
 
 //****************************************************************
 //
@@ -194,6 +118,9 @@ const UserNamePage = (props) => {
                             props.userData.updatedAt.seconds
                         )}
                     </p>
+                    <Link href={`/users/${props.userName}/bookCreate`}>
+                        <a>手記作成</a>
+                    </Link>
                     <Logout />
                 </main>
             </div>

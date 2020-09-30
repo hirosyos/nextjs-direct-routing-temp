@@ -33,7 +33,7 @@
                     "bookName": "管理上の手記名", //文字列  ユーザの単位で一意であること
                     "bookDisplayName": "画面上に見せる手記名", //文字列
                     "authorDisplayName": "画面上に見せる著者名", //文字列,ユーザ名と別で良い
-                    "athorBirthday": "著者誕生日", //タイムスタンプ,年齢の算出に使う
+                    "authorBirthday": "著者誕生日", //タイムスタンプ,年齢の算出に使う
                     "authorNowAge": "著者の現在の年齢", //著者誕生日から算出する
                     "bookIconImageUrl": "手記アイコン画像URL", //文字列,Null許容
                     "bookCoverImageUrl": "手記カバー画像URL", //文字列,Null許容
