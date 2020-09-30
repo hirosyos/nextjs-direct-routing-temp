@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 import Logout from "../../components/Logout";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.scss";
@@ -16,7 +17,7 @@ import {
     getUserData,
     convertFromTimestampToDatetime,
 } from "../../common/common";
-import { UserCreateBooksList } from "../../components/User";
+import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
 
 //****************************************************************
 //
@@ -71,9 +72,35 @@ export async function getStaticProps({ params }) {
 //
 //****************************************************************
 const UserNamePage = (props) => {
+    const [myUid, setMyUid] = useState(null);
     // ユーザネームがない段階では何もしない
     if (!props.userName) {
         return null;
+    }
+
+    const [user, initialising, error] = useAuthState(firebase.auth());
+    if (initialising) {
+        return (
+            <Layout>
+                <div>Initialising...</div>
+            </Layout>
+        );
+    }
+    if (error) {
+        return (
+            <Layout>
+                <div>Error: {error}</div>
+            </Layout>
+        );
+    }
+    // if (!user) {
+    //     setMyUid(null);
+    // }
+    if (user) {
+        //ログインしていたら自分のuidを保存しておく
+        if (user.uid === props.userData.values.data().uid) {
+            setMyUid(user.uid);
+        }
     }
 
     return (
@@ -83,7 +110,9 @@ const UserNamePage = (props) => {
                     <title>手記書庫/ユーザページ</title>
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
+
                 <main className={styles.main}>
+                    <UserLoginInfo myUid={myUid} />
                     <h1>{props.userName}の手記書庫</h1>
                     <p>ユーザ情報</p>
                     <table border="1">

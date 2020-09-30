@@ -18,16 +18,8 @@ import {
 //****************************************************************
 export const UserCreateBooksList = (props) => {
     const [bookList, setBookList] = useState(null);
-    // alert(props);
-    console.log({ props });
-    // const userData = getUserData(props.userData.userName);
-    // console.log({ userData });
 
-    // const tmpDoc = firebase
-    //     .firestore()
-    //     .collection(VALIDUSERS)
-    //     .where("userName", "==", props.userName)
-    //     .get();
+    console.log({ props });
 
     // firestoreから全データを取得してstateに格納する関数
     const getBooksFromUserData = async (uid) => {
@@ -91,4 +83,28 @@ export const UserCreateBooksList = (props) => {
             </table>
         </>
     );
+};
+
+//****************************************************************
+//
+// ユーザのログイン情報
+//
+// [IN]userData ユーザデータ
+// [OUT] ユーザのログイン情報
+//
+//****************************************************************
+export const UserLoginInfo = (props) => {
+    if (!props.myUid) {
+        return (
+            <>
+                <p>未ログイン</p>
+            </>
+        );
+    } else {
+        return (
+            <>
+                <p>{props.myUid}としてログイン中</p>
+            </>
+        );
+    }
 };
