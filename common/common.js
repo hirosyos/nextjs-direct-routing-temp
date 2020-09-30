@@ -83,3 +83,72 @@ export async function getUserData(userName) {
         values,
     };
 }
+
+//****************************************************************
+//
+// ブックドキュメント情報取得関数
+//
+// [in] ユーザネーム
+// [in] ブックネーム
+//
+// [out] ユーザネーム
+// [out] ブックネーム
+// [out] ブックドキュメント
+// [out] ブックID
+//
+//****************************************************************
+export async function getBookData(userName, bookName) {
+    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
+    const tmpUserDocs = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .where("userName", "==", userName)
+        .limit(1)
+        .get();
+
+    //ユーザドキュメントからuidを取得
+    const tmpUserDocsId = tmpUserDocs.docs.map((x) => {
+        return {
+            uid: x.id,
+        };
+    });
+
+    const uid = tmpUserDocsId[0].uid;
+
+    const tmpBookDocs = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(uid)
+        .collection(VALIDBOOKS)
+        .where("bookName", "==", bookName)
+        .limit(1)
+        .get();
+
+    //ブックドキュメントからブックidを取得
+    const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
+        return {
+            bookId: x.id,
+        };
+    });
+
+    const bookId = tmpBookDocsId[0].bookId;
+
+    const bookData = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(uid)
+        .collection(VALIDBOOKS)
+        .doc(bookId)
+        .get();
+
+    console.log("◆bookData◆");
+    console.log(bookData);
+    console.log("◆bookId◆");
+    console.log(bookId);
+    return {
+        userName,
+        bookName,
+        bookData,
+        bookId,
+    };
+}

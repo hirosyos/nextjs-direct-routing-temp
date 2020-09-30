@@ -49,10 +49,9 @@ export async function getStaticProps({ params }) {
 //
 // [IN]props.userName ユーザネーム
 // [IN]props.userData ユーザデータ
-// [OUT] 手記ページ作成フォーム
+// [OUT] 手記ページ作成ページ全体
 //
 //****************************************************************
-
 const BookCreate = (props) => {
     return (
         <Layout>

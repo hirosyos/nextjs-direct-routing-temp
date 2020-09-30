@@ -40,6 +40,11 @@ const Post = (props) => {
                         <a>手記設定 へ移動</a>
                     </Link>
                     <Link
+                        href={`/users/${props.userName}/${props.bookName}/sectionCreate`}
+                    >
+                        <a>セクション作成 へ移動</a>
+                    </Link>
+                    <Link
                         href={`/users/${props.userName}/${props.bookName}/iroha`}
                     >
                         <a>セクション いろは へ移動</a>

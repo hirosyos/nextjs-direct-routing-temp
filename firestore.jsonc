@@ -30,6 +30,7 @@
                     "updatedAt": "手記更新日", // タイムスタンプ,firestoreのタイムスタンプ機能を使用
                     "userID": "ユーザドキュメントID", //文字列 collectionGroupクエリで使うかも
                     "userRef": "ユーザドキュメントへのリファレンス", //リファレンス
+                    "bookId": "手記ドキュメントID",
                     "bookName": "管理上の手記名", //文字列  ユーザの単位で一意であること
                     "bookDisplayName": "画面上に見せる手記名", //文字列
                     "authorDisplayName": "画面上に見せる著者名", //文字列,ユーザ名と別で良い
