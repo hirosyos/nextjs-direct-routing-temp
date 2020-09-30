@@ -28,6 +28,7 @@ const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
         bookCollectionName,
         bookId,
         sectionCollectionName,
+        sectionId,
         postData
     ) => {
         const addedData = await firebase
@@ -37,7 +38,8 @@ const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
             .collection(bookCollectionName)
             .doc(bookId)
             .collection(sectionCollectionName)
-            .add(postData);
+            .doc(sectionId)
+            .set(postData);
         return addedData;
     };
 
@@ -55,12 +57,27 @@ const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
             alert("いまのところ全部埋めてください");
             return false;
         }
+
+        //sectionIdを事前に取得
+        const sectionId = firebase
+            .firestore()
+            .collection(VALIDUSERS)
+            .doc(userData.uid)
+            .collection(VALIDBOOKS)
+            .doc(bookId)
+            .collection(VALIDSECTIONS)
+            .doc().id;
+
         const postData = {
             isPublic: isPublic,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            bookId: "",
-            bookRef: "",
+            uid: userData.uid,
+            userDocRef: `/${VALIDUSERS}/${userData.uid}`,
+            bookId: bookId,
+            bookDocRef: `/${VALIDUSERS}/${userData.uid}/${VALIDBOOKS}/${bookId}`,
+            sectionId: sectionId,
+            sectionDocRef: `/${VALIDUSERS}/${userData.uid}/${VALIDBOOKS}/${bookId}/${VALIDSECTIONS}/${sectionId}/`,
             date: new Date(date),
             title: title,
             contents: contents,
@@ -77,6 +94,7 @@ const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
             VALIDBOOKS,
             bookId,
             VALIDSECTIONS,
+            sectionId,
             postData
         );
 

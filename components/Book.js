@@ -58,6 +58,7 @@ const BookCreateInputForm = (props) => {
             .doc(props.userData.uid)
             .collection(VALIDBOOKS)
             .doc().id;
+
         const postData = {
             isPublic: isPublic,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
