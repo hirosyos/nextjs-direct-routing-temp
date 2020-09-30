@@ -6,7 +6,7 @@ import Layout from "../../components/Layout";
 import Logout from "../../components/Logout";
 import Login from "../../components/Login";
 import styles from "../../styles/Home.module.scss";
-import firebase from "../../firebase/firebase";
+import firebase from "../../common/firebase";
 import {
     useCollectionData,
     useCollection,
@@ -14,8 +14,60 @@ import {
     useDocument,
 } from "react-firebase-hooks/firestore";
 
-export default function LoginPage() {
+// export async function getServerSideProps({ params }) {
+//     const user = firebase.auth().currentUser;
+//     // const [user, initialising, error2] = useAuthState(firebase.auth());
+//     // if (initialising) {
+//     //     return {
+//     //         props: {
+//     //             initialising: initialising,
+//     //             error2: null,
+//     //             user: null,
+//     //         },
+//     //     };
+//     // }
+//     // if (error2) {
+//     //     return {
+//     //         props: {
+//     //             initialising: null,
+//     //             error2: error2,
+//     //             user: null,
+//     //         },
+//     //     };
+//     // }
+//     if (!user) {
+//         console.log("認証したユーザではありません");
+//         return {
+//             props: {
+//                 user: null,
+//             },
+//         };
+//     }
+
+//     const values = await firebase
+//         .firestore()
+//         .collection("validUsers")
+//         .doc(user.uid)
+//         .get();
+//     console.log("values");
+//     console.log(values);
+
+//     console.log("認証したユーザです");
+//     return {
+//         props: {
+//             user: values,
+//         },
+//     };
+// }
+
+const LoginPage = () => {
+    // console.log("props");
+    // console.log(props);
     const [user, initialising, error2] = useAuthState(firebase.auth());
+
+    // const user = firebase.auth().currentUser;
+    console.log("user");
+    console.log(user);
     if (initialising) {
         return (
             <Layout>
@@ -46,39 +98,25 @@ export default function LoginPage() {
                         <h1>ログインページ</h1>
                         <Login />
                     </main>
-
-                    <footer className={styles.footer}>
-                        <a
-                            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Powered by{" "}
-                            <img
-                                src="/vercel.svg"
-                                alt="Vercel Logo"
-                                className={styles.logo}
-                            />
-                        </a>
-                    </footer>
                 </div>
             </Layout>
         );
     }
-    const [values, loading, error1] = useDocumentData(
-        firebase.firestore().collection("validUsers").doc(user.uid),
-        {
-            idField: "id",
-        }
-    );
-    //firebaseからの呼び出し結果判定
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (error1) {
-        return <div>{`Error: ${error1.message}`}</div>;
-    }
-    console.log(values);
+
+    //ここのデータが取れてない
+    const fireget = async (uid) => {
+        const values = await firebase
+            .firestore()
+            .collection("validUsers")
+            .doc(uid)
+            .get();
+
+        console.log("values");
+        console.log(values);
+        return values;
+    };
+
+    const values = fireget(user.uid);
 
     return (
         <Layout>
@@ -87,47 +125,13 @@ export default function LoginPage() {
                     <title>手記書庫/サインイン</title>
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <p>{`すでに${values.userName}としてログイン済みです`}</p>
+                <p>{`すでにログイン済みです`}</p>
                 <Link href={`/users/${values.userName}`}>
                     <a>ユーザページへ</a>
                 </Link>
             </div>
         </Layout>
     );
-    // return (
-    //     <Layout>
-    //         <div className={styles.container}>
-    //             <Head>
-    //                 <title>自分史図書館/ログイン</title>
-    //                 <link rel="icon" href="/favicon.ico" />
-    //             </Head>
-    //             <main className={styles.main}>
-    //                 <p>displayName: {user.displayName}</p>
-    //                 <p>email: {user.email}</p>
-    //                 <p>emailVerified: {user.emailVerified}</p>
-    //                 <p>photoURL: {user.photoURL}</p>
-    //                 <p>isAnonymous: {user.isAnonymous}</p>
-    //                 <p>uid: {user.uid}</p>
-    //                 {/* <p>providerData: {user.providerData}</p> */}
-    //                 {console.log("あああああ")}
-    //                 {console.log({ user })}
-    //                 <Logout />
-    //             </main>
-    //             <footer className={styles.footer}>
-    //                 <a
-    //                     href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-    //                     target="_blank"
-    //                     rel="noopener noreferrer"
-    //                 >
-    //                     Powered by{" "}
-    //                     <img
-    //                         src="/vercel.svg"
-    //                         alt="Vercel Logo"
-    //                         className={styles.logo}
-    //                     />
-    //                 </a>
-    //             </footer>
-    //         </div>
-    //     </Layout>
-    // );
-}
+};
+
+export default LoginPage;

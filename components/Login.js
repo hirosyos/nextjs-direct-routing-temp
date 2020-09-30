@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Layout from "./Layout";
 import styles from "../styles/Home.module.scss";
-import firebase from "../firebase/firebase";
+import firebase from "../common/firebase";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -28,6 +28,7 @@ const Login = () => {
             if (mounted.current) setError(e);
         } finally {
             if (mounted.current) setPending(false);
+            console.log("ログイン処理しました");
         }
     };
     return (
