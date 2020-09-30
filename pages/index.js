@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import styles from "../styles/Home.module.scss";
+import Logout from "../components/Logout";
 
 export default function Home() {
     return (
@@ -20,6 +21,7 @@ export default function Home() {
                     <Link href="/auth/signin">
                         <a>サインイン</a>
                     </Link>
+                    <Logout />
                 </main>
 
                 <footer className={styles.footer}>

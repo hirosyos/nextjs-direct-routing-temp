@@ -82,6 +82,7 @@ const SigninPage = () => {
                 <Link href={`/users/${values.userName}`}>
                     <a>ユーザページへ</a>
                 </Link>
+                <Logout />
             </div>
         </Layout>
     );
