@@ -72,7 +72,8 @@ export async function getStaticProps({ params }) {
 //
 //****************************************************************
 const UserNamePage = (props) => {
-    const [myUid, setMyUid] = useState(null);
+    // const [myUid, setMyUid] = useState(null);
+    let myUid;
     // ユーザネームがない段階では何もしない
     if (!props.userName) {
         return null;
@@ -97,10 +98,12 @@ const UserNamePage = (props) => {
     //     setMyUid(null);
     // }
     if (user) {
+        console.log({ props });
         //ログインしていたら自分のuidを保存しておく
-        if (user.uid === props.userData.values.data().uid) {
-            setMyUid(user.uid);
-        }
+        // if (user.uid === props.userData.uid) {
+        // setMyUid(user.uid);
+        myUid = user.uid;
+        // }
     }
 
     return (
