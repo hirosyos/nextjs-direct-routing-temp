@@ -11,7 +11,12 @@ import {
 } from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../common/firebase";
-import { getAllUserNames, getUserData } from "../../common/common";
+import {
+    getAllUserNames,
+    getUserData,
+    convertFromTimestampToDatetime,
+} from "../../common/common";
+import { UserCreateBooksList } from "../../components/User";
 
 //****************************************************************
 //
@@ -66,18 +71,6 @@ export async function getStaticProps({ params }) {
 //
 //****************************************************************
 const UserNamePage = (props) => {
-    // timestamp形式のデータをいい感じの形式に変換する関数
-    const convertFromTimestampToDatetime = (timestamp) => {
-        const _d = timestamp ? new Date(timestamp * 1000) : new Date();
-        const Y = _d.getFullYear();
-        const m = (_d.getMonth() + 1).toString().padStart(2, "0");
-        const d = _d.getDate().toString().padStart(2, "0");
-        const H = _d.getHours().toString().padStart(2, "0");
-        const i = _d.getMinutes().toString().padStart(2, "0");
-        const s = _d.getSeconds().toString().padStart(2, "0");
-        return `${Y}/${m}/${d} ${H}:${i}:${s}`;
-    };
-
     // ユーザネームがない段階では何もしない
     if (!props.userName) {
         return null;
@@ -91,36 +84,85 @@ const UserNamePage = (props) => {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to ユーザー ページ</h1>
-                    <p> ユーザー: {props.userName}</p>
-                    <div>ここまで来た</div>
+                    <h1>{props.userName}の手記書庫</h1>
+                    <p>ユーザ情報</p>
+                    <table border="1">
+                        <tbody>
+                            <tr>
+                                <th>firebase上の名前</th>
+                                <th>具体的な名前</th>
+                                <th>格納されている値</th>
+                            </tr>
+                            <tr>
+                                <td>createdAt</td>
+                                <td>ユーザドキュメント作成日</td>
+                                <td>
+                                    {convertFromTimestampToDatetime(
+                                        props.userData.createdAt.seconds
+                                    )}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>updatedAt</td>
+                                <td>ユーザドキュメント更新日</td>
+                                <td>
+                                    {convertFromTimestampToDatetime(
+                                        props.userData.updatedAt.seconds
+                                    )}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>isPublic</td>
+                                <td>ユーザ公開設定</td>
+                                <td>{props.userData.isPublic}</td>
+                            </tr>
+                            <tr>
+                                <td>uid</td>
+                                <td>google認証から取得したユーザID</td>
+                                <td>{props.userData.uid}</td>
+                            </tr>
+                            <tr>
+                                <td>userName</td>
+                                <td>管理上のユーザ名</td>
+                                <td>{props.userData.userName}</td>
+                            </tr>
+                            <tr>
+                                <td>userDisplayName</td>
+                                <td>画面上に見せるユーザ名</td>
+                                <td>{props.userData.userDisplayName}</td>
+                            </tr>
+                            <tr>
+                                <td>userIconImageUrl</td>
+                                <td>ユーザアイコン画像URL</td>
+                                <td>{props.userData.userIconImageUrl}</td>
+                            </tr>
+                            <tr>
+                                <td>userCoverImageUrl</td>
+                                <td>ユーザカバー画像URL</td>
+                                <td>{props.userData.userCoverImageUrl}</td>
+                            </tr>
+                            <tr>
+                                <td>userIntroduction</td>
+                                <td>ユーザ自己紹介文</td>
+                                <td>{props.userData.userIntroduction}</td>
+                            </tr>
+                            <tr>
+                                <td>pricePlan</td>
+                                <td>料金プラン</td>
+                                <td>{props.userData.pricePlan}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
 
-                    <h1>firebase読み出しテストページ</h1>
-                    <p>URLに指定されたID: {props.userName}</p>
-                    <p>
-                        {props.userName}のuid: {props.userData.uid}
-                    </p>
-                    <p>
-                        {props.userName}のuserName: {props.userData.userName}
-                    </p>
-                    <p>
-                        {props.userName}のisPublic: {props.userData.isPublic}
-                    </p>
-                    <p>
-                        {props.userName}のcreatedAt:{" "}
-                        {convertFromTimestampToDatetime(
-                            props.userData.createdAt.seconds
-                        )}
-                    </p>
-                    <p>
-                        {props.userName}のupdatedAt:{" "}
-                        {convertFromTimestampToDatetime(
-                            props.userData.updatedAt.seconds
-                        )}
-                    </p>
+                    <p>{props.userName}が作成した手記</p>
+                    <UserCreateBooksList userData={props.userData} />
+                    <br />
+
                     <Link href={`/users/${props.userName}/bookCreate`}>
-                        <a>手記作成</a>
+                        <a>新規手記作成</a>
                     </Link>
+                    <br />
                     <Logout />
                 </main>
             </div>
