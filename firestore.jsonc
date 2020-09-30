@@ -28,14 +28,19 @@
                     "isPublic": "手記公開設定", //真偽値,True:自分以外に手記を見せない False:自分以外に手記を見せる(上位のisPublic設定に従う)
                     "createdAt": "手記作成日", // タイムスタンプ,firestoreのタイムスタンプ機能を使用
                     "updatedAt": "手記更新日", // タイムスタンプ,firestoreのタイムスタンプ機能を使用
-                    "userID": "ユーザドキュメントID", //文字列 collectionGroupクエリで使うかも
-                    "userRef": "ユーザドキュメントへのリファレンス", //リファレンス
+
+                    "uid": "ユーザドキュメントID", //文字列 collectionGroupクエリで使うかも
+                    "userDocRef": "ユーザドキュメントへのリファレンス", //リファレンス
                     "bookId": "手記ドキュメントID",
+                    "bookDocRef": "手記ドキュメントへのリファレンス",
+
                     "bookName": "管理上の手記名", //文字列  ユーザの単位で一意であること
                     "bookDisplayName": "画面上に見せる手記名", //文字列
+
                     "authorDisplayName": "画面上に見せる著者名", //文字列,ユーザ名と別で良い
                     "authorBirthday": "著者誕生日", //タイムスタンプ,年齢の算出に使う
                     "authorNowAge": "著者の現在の年齢", //著者誕生日から算出する
+
                     "bookIconImageUrl": "手記アイコン画像URL", //文字列,Null許容
                     "bookCoverImageUrl": "手記カバー画像URL", //文字列,Null許容
                     "bookIntroduction": "手記はじめに", //文字列,Null許容

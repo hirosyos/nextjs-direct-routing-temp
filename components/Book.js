@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import firebase from "../common/firebase";
+import { VALIDUSERS, VALIDBOOKS } from "../common/common";
 
 //****************************************************************
 //
@@ -20,17 +21,19 @@ const BookCreateInputForm = (props) => {
 
     // Firestoreにデータを送信する関数
     const postDataToFirestore = async (
-        collectionName,
-        userName,
-        subCollectionName,
+        userCollectionName,
+        userId,
+        bookCollectionName,
+        bookId,
         postData
     ) => {
         const addedData = await firebase
             .firestore()
-            .collection(collectionName)
-            .doc(userName)
-            .collection(subCollectionName)
-            .add(postData);
+            .collection(userCollectionName)
+            .doc(userId)
+            .collection(bookCollectionName)
+            .doc(bookId)
+            .set(postData);
         return addedData;
     };
 
@@ -48,17 +51,30 @@ const BookCreateInputForm = (props) => {
             alert("いまのところ全部埋めてください");
             return false;
         }
+        //bookIdを事前に取得
+        const bookId = firebase
+            .firestore()
+            .collection(VALIDUSERS)
+            .doc(props.userData.uid)
+            .collection(VALIDBOOKS)
+            .doc().id;
         const postData = {
             isPublic: isPublic,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            userID: "",
-            userRef: "",
+
+            uid: props.userData.uid,
+            userDocRef: `/${VALIDUSERS}/${props.userData.uid}`,
+            bookId: bookId,
+            bookDocRef: `/${VALIDUSERS}/${props.userData.uid}/${VALIDBOOKS}/${bookId}`,
+
             bookName: bookName,
             bookDisplayName: bookDisplayName,
+
             authorDisplayName: authorDisplayName,
             authorBirthday: new Date(authorBirthday),
             authorNowAge: "",
+
             bookIconImageUrl: "",
             bookCoverImageUrl: "",
             bookIntroduction: "",
@@ -67,9 +83,10 @@ const BookCreateInputForm = (props) => {
             chapterStartDate: new Date(chapterStartDate),
         };
         const addedData = await postDataToFirestore(
-            "validUsers",
+            VALIDUSERS,
             props.userData.uid,
-            "validBooks",
+            VALIDBOOKS,
+            bookId,
             postData
         );
 
