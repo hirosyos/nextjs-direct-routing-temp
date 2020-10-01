@@ -25,9 +25,9 @@
                 //手記ドキュメント 使用するbookIdはfirestore自動払い出しID
                 "<bookId>": {
                     //ドキュメントID
-                    "isPublic": "手記公開設定", //真偽値,True:自分以外に手記を見せない False:自分以外に手記を見せる(上位のisPublic設定に従う)
                     "createdAt": "手記作成日", // タイムスタンプ,firestoreのタイムスタンプ機能を使用
                     "updatedAt": "手記更新日", // タイムスタンプ,firestoreのタイムスタンプ機能を使用
+                    "isPublic": "手記公開設定", //真偽値,True:自分以外に手記を見せない False:自分以外に手記を見せる(上位のisPublic設定に従う)
 
                     "uid": "ユーザドキュメントID", //文字列 collectionGroupクエリで使うかも
                     "userDocRef": "ユーザドキュメントへのリファレンス", //リファレンス

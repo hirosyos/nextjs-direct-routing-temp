@@ -11,7 +11,7 @@ export const INVALIDSECTIONS = "invaridSections";
 
 //****************************************************************
 //
-// 全ユーザネーム取得関数
+// 全ユーザネームパス取得関数
 //
 // [in] なし
 // [OUT]静的パスを生成するための名称の配列
@@ -41,6 +41,52 @@ export async function getAllUserNames() {
         return {
             params: {
                 userName: value.data().userName,
+            },
+        };
+    });
+}
+
+//****************************************************************
+//
+// 全ブックネームパス取得関数
+//
+// [in] なし
+// [OUT]静的パスを生成するための名称の配列
+// [out] ユーザドキュメント
+//
+//****************************************************************
+export async function getAllBookNamePaths() {
+    //有効ブックコレクションに対してコレクショングループで一括取得
+    const values = await firebase.firestore().collectionGroup(VALIDBOOKS).get();
+
+    // Next.jsの仕様でこのような配列を返さないとだめ
+    // const paths = [
+    //     {
+    //         params: {
+    //             userName: "hoge5",
+    //             bookName: "bbb",
+    //         },
+    //     },
+    //     {
+    //         params: {
+    //             userName: "hoge5",
+    //             bookName: "kkk",
+    //         },
+    //     },
+    //     {
+    //         params: {
+    //             userName: "hoge7",
+    //             bookName: "aaa",
+    //         },
+    //     },
+    // ];
+
+    //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
+    return values.docs.map((value) => {
+        return {
+            params: {
+                userName: value.data().userName,
+                bookName: value.data().bookName,
             },
         };
     });
@@ -119,6 +165,21 @@ export async function getBookData(userName, bookName) {
         .limit(1)
         .get();
 
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (tmpUserDocs.size === 0) {
+        console.log(userName);
+        console.log("**************************tmpDoc");
+        // console.log(tmpUserDocs);
+        const bookData = {};
+        const bookId = null;
+        return {
+            userName,
+            bookName,
+            bookData,
+            bookId,
+        };
+    }
+
     //ユーザドキュメントからuidを取得
     const tmpUserDocsId = tmpUserDocs.docs.map((x) => {
         return {
@@ -128,6 +189,7 @@ export async function getBookData(userName, bookName) {
 
     const uid = tmpUserDocsId[0].uid;
 
+    //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
     const tmpBookDocs = await firebase
         .firestore()
         .collection(VALIDUSERS)
@@ -136,6 +198,20 @@ export async function getBookData(userName, bookName) {
         .where("bookName", "==", bookName)
         .limit(1)
         .get();
+
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (tmpBookDocs.size === 0) {
+        console.log(bookName);
+        // console.log(tmpUserDocs);
+        const bookData = {};
+        const bookId = null;
+        return {
+            userName,
+            bookName,
+            bookData,
+            bookId,
+        };
+    }
 
     //ブックドキュメントからブックidを取得
     const tmpBookDocsId = tmpBookDocs.docs.map((x) => {

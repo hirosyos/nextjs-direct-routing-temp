@@ -10,6 +10,13 @@ import { VALIDUSERS, VALIDBOOKS } from "../common/common";
 // [OUT] 手記作成フォーム
 //
 //****************************************************************
+
+/**
+ * 手記作成用フォームを作成する
+ *
+ * @param {*} props
+ * @return {*}
+ */
 const BookCreateInputForm = (props) => {
     const [isPublic, setIsPublic] = useState("");
     const [bookName, setBookName] = useState("");
@@ -65,6 +72,7 @@ const BookCreateInputForm = (props) => {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
 
             uid: props.userData.uid,
+            userName: props.userData.userName,
             userDocRef: `/${VALIDUSERS}/${props.userData.uid}`,
             bookId: bookId,
             bookDocRef: `/${VALIDUSERS}/${props.userData.uid}/${VALIDBOOKS}/${bookId}`,
