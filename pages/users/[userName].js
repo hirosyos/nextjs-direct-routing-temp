@@ -88,6 +88,14 @@ const UserNamePage = (props) => {
     console.log("props.userData");
     console.log(props.userData);
     let myUid;
+
+    //事前ビルドされていない場合はここで作成する
+    const router = useRouter();
+    if (router.isFallback) {
+        console.log(`${props.userName}静的ページ作成中...`);
+        return <div>{`${props.userName}静的ページ作成中...`}</div>;
+    }
+
     //ユーザネームがない段階では何もしない;
     if (!props.userName) {
         console.log("そんなユーザいません");
@@ -98,13 +106,6 @@ const UserNamePage = (props) => {
     if (!props.userData) {
         console.log("指定されたユーザは存在しません...");
         return <div>指定されたユーザは存在しません...</div>;
-    }
-
-    //事前ビルドされていない場合はここで作成する
-    const router = useRouter();
-    if (router.isFallback) {
-        console.log(`${props.userName}静的ページ作成中...`);
-        return <div>{`${props.userName}静的ページ作成中...`}</div>;
     }
 
     const [user, initialising, error] = useAuthState(firebase.auth());
