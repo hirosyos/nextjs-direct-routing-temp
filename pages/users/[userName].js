@@ -14,8 +14,8 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "../../common/firebase";
 import {
-    getAllUserNames,
-    getUserData,
+    getAllUserNamesPaths,
+    getUserDataFromUserName,
     convertFromTimestampToDatetime,
 } from "../../common/common";
 import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
@@ -31,7 +31,7 @@ import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
 //****************************************************************
 export async function getStaticPaths() {
     //すべてのユーザ名を含んだパス生成用配列を取得
-    const paths = await getAllUserNames();
+    const paths = await getAllUserNamesPaths();
 
     //デバッグ表示
     paths.map((p) => {
@@ -52,7 +52,7 @@ export async function getStaticPaths() {
 //****************************************************************
 export async function getStaticProps({ params }) {
     //ユーザ名からユーザデータを取得
-    const userData = await getUserData(params.userName);
+    const userData = await getUserDataFromUserName(params.userName);
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (!userData.values.exists) {

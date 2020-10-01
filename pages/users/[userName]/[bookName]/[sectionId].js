@@ -3,10 +3,10 @@ import Link from "next/link";
 import Layout from "../../../../components/Layout";
 import styles from "../../../../styles/Home.module.scss";
 import {
-    getBookData,
+    getBookDataFromBookName,
     convertFromTimestampToDatetime,
     getAllSectionIdPaths,
-    getSectionData,
+    getSectionDataFromSectionId,
 } from "../../../../common/common";
 import { useRouter } from "next/router";
 
@@ -42,7 +42,7 @@ export async function getStaticProps({ params }) {
     console.log({ params });
 
     //セクションIDからセクションデータを取得
-    const sectionData = await getSectionData(
+    const sectionData = await getSectionDataFromSectionId(
         params.userName,
         params.bookName,
         params.sectionId

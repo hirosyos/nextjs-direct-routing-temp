@@ -9,16 +9,13 @@ export const INVALIDBOOKS = "invalidBooks";
 export const VALIDSECTIONS = "varidSections";
 export const INVALIDSECTIONS = "invaridSections";
 
-//****************************************************************
-//
-// 全ユーザネームパス取得関数
-//
-// [in] なし
-// [OUT]静的パスを生成するための名称の配列
-// [out] ユーザドキュメント
-//
-//****************************************************************
-export async function getAllUserNames() {
+/**
+ * 全ユーザネームパス取得
+ *
+ * @export
+ * @return {getStaticPaths専用のオブジェクト配列}
+ */
+export async function getAllUserNamesPaths() {
     //有効ユーザコレクションを取り出し
     const values = await firebase.firestore().collection(VALIDUSERS).get();
 
@@ -32,15 +29,12 @@ export async function getAllUserNames() {
     });
 }
 
-//****************************************************************
-//
-// 全ブックネームパス取得関数
-//
-// [in] なし
-// [OUT]静的パスを生成するための名称の配列
-// [out] ユーザドキュメント
-//
-//****************************************************************
+/**
+ * 全ブックネームパス取得
+ *
+ * @export
+ * @return {getStaticPaths専用のオブジェクト配列}
+ */
 export async function getAllBookNamePaths() {
     //有効ブックコレクションに対してコレクショングループで一括取得
     const values = await firebase.firestore().collectionGroup(VALIDBOOKS).get();
@@ -56,15 +50,12 @@ export async function getAllBookNamePaths() {
     });
 }
 
-//****************************************************************
-//
-// 全セクションIDパス取得関数
-//
-// [in] なし
-// [OUT]静的パスを生成するための名称の配列
-// [out] ユーザドキュメント
-//
-//****************************************************************
+/**
+ * 全セクションIDパス取得
+ *
+ * @export
+ * @return {getStaticPaths専用のオブジェクト配列}
+ */
 export async function getAllSectionIdPaths() {
     //有効ブックコレクションに対してコレクショングループで一括取得
     const values = await firebase
@@ -84,16 +75,14 @@ export async function getAllSectionIdPaths() {
     });
 }
 
-//****************************************************************
-//
-// ユーザドキュメント情報取得関数
-//
-// [in] ユーザネーム
-// [out] ユーザネーム
-// [out] ユーザドキュメント
-//
-//****************************************************************
-export async function getUserData(userName) {
+/**
+ * ユーザドキュメント情報取得
+ *
+ * @export
+ * @param {*} userName
+ * @return {*}
+ */
+export async function getUserDataFromUserName(userName) {
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
     const tmpDoc = await firebase
         .firestore()
@@ -135,20 +124,15 @@ export async function getUserData(userName) {
     };
 }
 
-//****************************************************************
-//
-// ブックドキュメント情報取得関数
-//
-// [in] ユーザネーム
-// [in] ブックネーム
-//
-// [out] ユーザネーム
-// [out] ブックネーム
-// [out] ブックドキュメント
-// [out] ブックID
-//
-//****************************************************************
-export async function getBookData(userName, bookName) {
+/**
+ * ブックドキュメント情報取得
+ *
+ * @export
+ * @param {*} userName
+ * @param {*} bookName
+ * @return {*}
+ */
+export async function getBookDataFromBookName(userName, bookName) {
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
     const tmpUserDocs = await firebase
         .firestore()
@@ -243,7 +227,11 @@ export async function getBookData(userName, bookName) {
  * @param {*} sectionId
  * @return {*}
  */
-export async function getSectionData(userName, bookName, sectionId) {
+export async function getSectionDataFromSectionId(
+    userName,
+    bookName,
+    sectionId
+) {
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
     const tmpUserDocs = await firebase
         .firestore()
@@ -325,15 +313,6 @@ export async function getSectionData(userName, bookName, sectionId) {
         sectionData,
     };
 }
-//****************************************************************
-//
-// timestamp形式のデータをいい感じの形式に変換する関数
-//
-// [in] timestamp形式
-//
-// [out] いい感じの形式
-//
-//****************************************************************
 
 /**
  * timestamp形式のデータをいい感じの形式に変換する

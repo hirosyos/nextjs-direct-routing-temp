@@ -2,7 +2,10 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout from "../../../../components/Layout";
 import styles from "../../../../styles/Home.module.scss";
-import { getUserData, getBookData } from "../../../../common/common";
+import {
+    getUserDataFromUserName,
+    getBookDataFromBookName,
+} from "../../../../common/common";
 import SectionCreateInputForm from "../../../../components/Section";
 
 //****************************************************************
@@ -35,7 +38,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     console.log({ params });
     //ユーザ名からユーザデータを取得
-    const userData = await getUserData(params.userName);
+    const userData = await getUserDataFromUserName(params.userName);
     //ブック名からユーザデータを取得
     const bookData = await getBookData(params.userName, params.bookName);
     return {

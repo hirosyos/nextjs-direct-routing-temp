@@ -3,7 +3,7 @@ import Link from "next/link";
 import firebase from "../common/firebase";
 import {
     convertFromTimestampToDatetime,
-    getUserData,
+    getUserDataFromUserName,
     VALIDUSERS,
     VALIDBOOKS,
 } from "../common/common";

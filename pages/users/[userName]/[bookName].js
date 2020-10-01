@@ -3,7 +3,7 @@ import Link from "next/link";
 import Layout from "../../../components/Layout";
 import styles from "../../../styles/Home.module.scss";
 import {
-    getBookData,
+    getBookDataFromBookName,
     convertFromTimestampToDatetime,
     getAllBookNamePaths,
 } from "../../../common/common";
@@ -45,7 +45,10 @@ export async function getStaticProps({ params }) {
     console.log("getStaticProps");
     console.log({ params });
     //ブック名からブックデータを取得
-    const bookData = await getBookData(params.userName, params.bookName);
+    const bookData = await getBookDataFromBookName(
+        params.userName,
+        params.bookName
+    );
     //該当ブック名のデータが存在しない場合はデータ部をNullで返す
     if (!bookData.bookData.exists) {
         console.log("そんなブックありません");
