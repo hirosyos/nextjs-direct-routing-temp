@@ -9,16 +9,14 @@ import {
 } from "../../../common/common";
 import { useRouter } from "next/router";
 
-//****************************************************************
-//
-// 静的パス取得関数
-//
-// [IN]なし
-// [OUT]静的パスを生成するための名称の配列
-// [OUT]fallback設定
-//
-//****************************************************************
+/**
+ * 静的パス取得関数
+ *
+ * @export
+ * @return {Array} 静的パスを生成するための名称の配列
+ */
 export async function getStaticPaths() {
+    console.log("getStaticPaths");
     //すべてのユーザ名とブック名を含んだパス生成用配列を取得
     const paths = await getAllBookNamePaths();
 
@@ -31,16 +29,14 @@ export async function getStaticPaths() {
     return { paths, fallback: true };
 }
 
-/****************************************************************
+/**
+ * 静的パラメータ取得
  *
- * 静的パラメータ取得関数
- *
- * @params: { userName: 'パスから切り出された値' }
- * [out] ユーザネーム
- * [out] ブックネーム
- * [out] ブックドキュメント
- *
- ****************************************************************/
+ * @export
+ * @param {*} { params.userName 'パスから切り出された値'}
+ * @param {*} { params.bookName 'パスから切り出された値'}
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
     console.log("getStaticProps");
     console.log({ params });
@@ -78,26 +74,26 @@ export async function getStaticProps({ params }) {
  * @param {*} props.bookData
  * @return {*}
  */
-const BookNamePage = (props) => {
-    console.log({ props });
-    console.log(props.bookData);
+export default function BookNamePage(props) {
+    console.log("関数：BookNamePage");
+    const { userName, bookName, bookData } = props;
+    console.log({ userName });
+    console.log({ bookName });
+    console.log({ bookData });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
-        console.log(`${props.userName}/${props.bookName}静的ページ作成中...`);
-        return (
-            <div>{`${props.userName}/${props.bookName}静的ページ作成中...`}</div>
-        );
+        console.log(`${userName}/${bookName}静的ページ作成中...`);
+        return <div>{`${userName}/${bookName}静的ページ作成中...`}</div>;
     }
     //ユーザネームがない段階では何もしない;
-    if (!props.bookName) {
+    if (!bookName) {
         console.log("そんな手記はありません");
-        return <div>そんなユーザいません...</div>;
-        // return null;
+        return <div>そんな手記はありません...</div>;
     }
 
-    if (!props.bookData) {
+    if (!bookData) {
         console.log("指定された手記は存在しません...");
         return <div>指定された手記は存在しません...</div>;
     }
@@ -111,7 +107,7 @@ const BookNamePage = (props) => {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1>手記 {props.bookName}</h1>
+                    <h1>手記 {bookName}</h1>
 
                     <table border="1">
                         <tbody>
@@ -125,7 +121,7 @@ const BookNamePage = (props) => {
                                 <td>手記ドキュメント作成日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.bookData.createdAt.seconds
+                                        bookData.createdAt.seconds
                                     )}
                                 </td>
                             </tr>
@@ -134,90 +130,90 @@ const BookNamePage = (props) => {
                                 <td>手記ドキュメント更新日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.bookData.updatedAt.seconds
+                                        bookData.updatedAt.seconds
                                     )}
                                 </td>
                             </tr>
                             <tr>
                                 <td>isPublic</td>
                                 <td>ユーザ公開設定</td>
-                                <td>{props.bookData.isPublic}</td>
+                                <td>{bookData.isPublic}</td>
                             </tr>
                             <tr>
                                 <td>uid</td>
                                 <td>ユーザドキュメントID</td>
-                                <td>{props.bookData.uid}</td>
+                                <td>{bookData.uid}</td>
                             </tr>
                             <tr>
                                 <td>userDocRef</td>
                                 <td>ユーザドキュメントへのリファレンス</td>
-                                <td>{props.bookData.userDocRef}</td>
+                                <td>{bookData.userDocRef}</td>
                             </tr>
                             <tr>
                                 <td>bookId</td>
                                 <td>手記ドキュメントID</td>
-                                <td>{props.bookData.bookId}</td>
+                                <td>{bookData.bookId}</td>
                             </tr>
                             <tr>
                                 <td>bookDocRef</td>
                                 <td>手記ドキュメントへのリファレンス</td>
-                                <td>{props.bookData.bookDocRef}</td>
+                                <td>{bookData.bookDocRef}</td>
                             </tr>
                             <tr>
                                 <td>bookName</td>
                                 <td>管理上の手記名</td>
-                                <td>{props.bookData.bookName}</td>
+                                <td>{bookData.bookName}</td>
                             </tr>
                             <tr>
                                 <td>bookDisplayName</td>
                                 <td>画面上に見せる手記名</td>
-                                <td>{props.bookData.bookDisplayName}</td>
+                                <td>{bookData.bookDisplayName}</td>
                             </tr>
                             <tr>
                                 <td>authorBirthday</td>
                                 <td>著者誕生日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.bookData.authorBirthday.seconds
+                                        bookData.authorBirthday.seconds
                                     )}
                                 </td>
                             </tr>
                             <tr>
                                 <td>authorNowAge</td>
                                 <td>著者の現在の年齢</td>
-                                <td>{props.bookData.authorNowAge}</td>
+                                <td>{bookData.authorNowAge}</td>
                             </tr>
                             <tr>
                                 <td>bookIconImageUrl</td>
                                 <td>手記アイコン画像URL</td>
-                                <td>{props.bookData.bookIconImageUrl}</td>
+                                <td>{bookData.bookIconImageUrl}</td>
                             </tr>
                             <tr>
                                 <td>bookCoverImageUrl</td>
                                 <td>手記カバー画像URL</td>
-                                <td>{props.bookData.bookCoverImageUrl}</td>
+                                <td>{bookData.bookCoverImageUrl}</td>
                             </tr>
                             <tr>
                                 <td>bookIntroduction</td>
                                 <td>手記はじめに</td>
-                                <td>{props.bookData.bookIntroduction}</td>
+                                <td>{bookData.bookIntroduction}</td>
                             </tr>
                             <tr>
                                 <td>bookFavoritedCount</td>
                                 <td>手記がお気に入りに入れられている数</td>
-                                <td>{props.bookData.bookFavoritedCount}</td>
+                                <td>{bookData.bookFavoritedCount}</td>
                             </tr>
                             <tr>
                                 <td>chapterName</td>
                                 <td>時代名称</td>
-                                <td>{props.bookData.chapterName}</td>
+                                <td>{bookData.chapterName}</td>
                             </tr>
                             <tr>
                                 <td>chapterStartDate</td>
                                 <td>時代の開始年月日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.bookData.chapterStartDate.seconds
+                                        bookData.chapterStartDate.seconds
                                     )}
                                 </td>
                             </tr>
@@ -225,15 +221,13 @@ const BookNamePage = (props) => {
                     </table>
                     <br />
 
-                    <h1>手記 {props.bookName} が持つセクション</h1>
+                    <h1>手記 {bookName} が持つセクション</h1>
 
-                    <Link href={`/users/${props.userName}/bookSetting`}>
+                    <Link href={`/users/${userName}/bookSetting`}>
                         <a>手記設定 へ移動</a>
                     </Link>
                     <br />
-                    <Link
-                        href={`/users/${props.userName}/${props.bookName}/sectionCreate`}
-                    >
+                    <Link href={`/users/${userName}/${bookName}/sectionCreate`}>
                         <a>セクション作成 へ移動</a>
                     </Link>
                 </main>
@@ -255,6 +249,4 @@ const BookNamePage = (props) => {
             </div>
         </Layout>
     );
-};
-
-export default BookNamePage;
+}
