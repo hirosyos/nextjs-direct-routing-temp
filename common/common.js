@@ -22,20 +22,6 @@ export async function getAllUserNames() {
     //有効ユーザコレクションを取り出し
     const values = await firebase.firestore().collection(VALIDUSERS).get();
 
-    // Next.jsの仕様でこのような配列を返さないとだめ
-    // const paths = [
-    //     {
-    //         params: {
-    //             userName: "hoge3",
-    //         },
-    //     },
-    //     {
-    //         params: {
-    //             userName: "hoge4",
-    //         },
-    //     },
-    // ];
-
     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
     return values.docs.map((value) => {
         return {
@@ -59,27 +45,32 @@ export async function getAllBookNamePaths() {
     //有効ブックコレクションに対してコレクショングループで一括取得
     const values = await firebase.firestore().collectionGroup(VALIDBOOKS).get();
 
-    // Next.jsの仕様でこのような配列を返さないとだめ
-    // const paths = [
-    //     {
-    //         params: {
-    //             userName: "hoge5",
-    //             bookName: "bbb",
-    //         },
-    //     },
-    //     {
-    //         params: {
-    //             userName: "hoge5",
-    //             bookName: "kkk",
-    //         },
-    //     },
-    //     {
-    //         params: {
-    //             userName: "hoge7",
-    //             bookName: "aaa",
-    //         },
-    //     },
-    // ];
+    //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
+    return values.docs.map((value) => {
+        return {
+            params: {
+                userName: value.data().userName,
+                bookName: value.data().bookName,
+            },
+        };
+    });
+}
+
+//****************************************************************
+//
+// 全セクションIDパス取得関数
+//
+// [in] なし
+// [OUT]静的パスを生成するための名称の配列
+// [out] ユーザドキュメント
+//
+//****************************************************************
+export async function getAllSectionIdPaths() {
+    //有効ブックコレクションに対してコレクショングループで一括取得
+    const values = await firebase
+        .firestore()
+        .collectionGroup(VALIDSECTIONS)
+        .get();
 
     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
     return values.docs.map((value) => {
@@ -87,6 +78,7 @@ export async function getAllBookNamePaths() {
             params: {
                 userName: value.data().userName,
                 bookName: value.data().bookName,
+                sectionId: value.data().sectionId,
             },
         };
     });
@@ -239,6 +231,98 @@ export async function getBookData(userName, bookName) {
         bookName,
         bookData,
         bookId,
+    };
+}
+
+/**
+ * セクションドキュメント情報取得関数
+ *
+ * @export
+ * @param {*} userName
+ * @param {*} bookName
+ * @param {*} sectionId
+ * @return {*}
+ */
+export async function getSectionData(userName, bookName, sectionId) {
+    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
+    const tmpUserDocs = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .where("userName", "==", userName)
+        .limit(1)
+        .get();
+
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (tmpUserDocs.size === 0) {
+        console.log(userName);
+        console.log("**************************tmpDoc");
+        // console.log(tmpUserDocs);
+        const sectionData = {};
+        return {
+            userName,
+            bookName,
+            sectionId,
+            sectionData,
+        };
+    }
+
+    //ユーザドキュメントからuidを取得
+    const tmpUserDocsId = tmpUserDocs.docs.map((x) => {
+        return {
+            uid: x.id,
+        };
+    });
+
+    const uid = tmpUserDocsId[0].uid;
+
+    //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
+    const tmpBookDocs = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(uid)
+        .collection(VALIDBOOKS)
+        .where("bookName", "==", bookName)
+        .limit(1)
+        .get();
+
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (tmpBookDocs.size === 0) {
+        console.log(bookName);
+        // console.log(tmpUserDocs);
+        const sectionData = {};
+        return {
+            userName,
+            bookName,
+            sectionId,
+            sectionData,
+        };
+    }
+
+    //ブックドキュメントからブックidを取得
+    const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
+        return {
+            bookId: x.id,
+        };
+    });
+
+    const bookId = tmpBookDocsId[0].bookId;
+
+    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
+    const sectionData = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(uid)
+        .collection(VALIDBOOKS)
+        .doc(bookId)
+        .collection(VALIDSECTIONS)
+        .doc(sectionId)
+        .get();
+
+    return {
+        userName,
+        bookName,
+        sectionId,
+        sectionData,
     };
 }
 //****************************************************************
