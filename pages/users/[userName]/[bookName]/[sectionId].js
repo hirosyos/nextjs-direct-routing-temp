@@ -102,7 +102,7 @@ const SectionIdPage = (props) => {
 
     if (!props.sectionData) {
         console.log("指定されたセクションは存在しません...");
-        return <div>指定された手記は存在しません...</div>;
+        return <div>指定されたセクションは存在しません...</div>;
     }
 
     return (
