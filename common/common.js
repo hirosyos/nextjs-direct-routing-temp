@@ -61,7 +61,20 @@ export async function getUserData(userName) {
         .firestore()
         .collection(VALIDUSERS)
         .where("userName", "==", userName)
+        .limit(1)
         .get();
+
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (tmpDoc.size === 0) {
+        console.log(userName);
+        console.log("**************************tmpDoc");
+        // console.log(tmpDoc);
+        const values = {};
+        return {
+            userName,
+            values,
+        };
+    }
 
     //ユーザドキュメントからuidを取得
     const pagename = tmpDoc.docs.map((x) => {
@@ -161,6 +174,13 @@ export async function getBookData(userName, bookName) {
 // [out] いい感じの形式
 //
 //****************************************************************
+
+/**
+ * timestamp形式のデータをいい感じの形式に変換する
+ *
+ * @param {*} timestamp
+ * @return {*} いい感じの形式
+ */
 export const convertFromTimestampToDatetime = (timestamp) => {
     const _d = timestamp ? new Date(timestamp * 1000) : new Date();
     const Y = _d.getFullYear();

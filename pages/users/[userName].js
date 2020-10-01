@@ -54,6 +54,15 @@ export async function getStaticProps({ params }) {
     //ユーザ名からユーザデータを取得
     const userData = await getUserData(params.userName);
 
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (!userData.values.exists) {
+        return {
+            props: {
+                userName: params.userName,
+                userData: null,
+            },
+        };
+    }
     return {
         props: {
             userName: params.userName,
