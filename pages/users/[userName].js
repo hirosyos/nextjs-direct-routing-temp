@@ -51,23 +51,25 @@ export async function getStaticPaths() {
 //
 //****************************************************************
 export async function getStaticProps({ params }) {
+    //パスから切り出された値が入っている
+    const { userName } = params;
     //ユーザ名からユーザデータを取得
-    const userData = await getUserDataFromUserName(params.userName);
+    const { userData } = await getUserDataFromUserName(userName);
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (!userData.values.exists) {
+    if (!userData.exists) {
         return {
             props: {
-                userName: params.userName,
+                userName: userName,
                 userData: null,
             },
         };
     }
     return {
         props: {
-            userName: params.userName,
+            userName: userName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            userData: JSON.parse(JSON.stringify(userData.values.data())),
+            userData: JSON.parse(JSON.stringify(userData.data())),
         },
     };
 }
@@ -82,6 +84,7 @@ export async function getStaticProps({ params }) {
 //
 //****************************************************************
 const UserNamePage = (props) => {
+    // const { userName, userData } = params;
     // const [myUid, setMyUid] = useState(null);
     console.log("props.userName");
     console.log(props.userName);

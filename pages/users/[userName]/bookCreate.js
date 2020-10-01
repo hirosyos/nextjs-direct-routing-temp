@@ -31,14 +31,14 @@ export async function getStaticPaths() {
 //****************************************************************
 export async function getStaticProps({ params }) {
     //ユーザ名からユーザデータを取得
-    const userData = await getUserDataFromUserName(params.userName);
+    const { userData } = await getUserDataFromUserName(params.userName);
 
     // console.log({ params });
     return {
         props: {
             userName: params.userName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            userData: JSON.parse(JSON.stringify(userData.values.data())),
+            userData: JSON.parse(JSON.stringify(userData.data())),
         },
     };
 }

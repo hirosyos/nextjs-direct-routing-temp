@@ -96,10 +96,9 @@ export async function getUserDataFromUserName(userName) {
         console.log(userName);
         console.log("**************************tmpDoc");
         // console.log(tmpDoc);
-        const values = {};
+        const userData = {};
         return {
-            userName,
-            values,
+            userData,
         };
     }
 
@@ -112,15 +111,14 @@ export async function getUserDataFromUserName(userName) {
 
     //uidからユーザドキュメントを取得
     //2度手間してそうだけどとりあえずこのままで
-    const values = await firebase
+    const userData = await firebase
         .firestore()
         .collection(VALIDUSERS)
         .doc(pagename[0].uid)
         .get();
 
     return {
-        userName,
-        values,
+        userData,
     };
 }
 
@@ -133,6 +131,8 @@ export async function getUserDataFromUserName(userName) {
  * @return {*}
  */
 export async function getBookDataFromBookName(userName, bookName) {
+    // const userData = await getUserDataFromUserName(userName);
+
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
     const tmpUserDocs = await firebase
         .firestore()
