@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/router";
 import Logout from "../../components/Logout";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.scss";
@@ -73,24 +74,42 @@ export async function getStaticProps({ params }) {
 //****************************************************************
 const UserNamePage = (props) => {
     // const [myUid, setMyUid] = useState(null);
+    console.log("props.userName");
+    console.log(props.userName);
+    console.log("props.userData");
+    console.log(props.userData);
     let myUid;
-    // ユーザネームがない段階では何もしない
+    //ユーザネームがない段階では何もしない;
     if (!props.userName) {
-        return null;
+        console.log("そんなユーザいません");
+        return <div>そんなユーザいません...</div>;
+        // return null;
+    }
+
+    if (!props.userData) {
+        console.log("指定されたユーザは存在しません...");
+        return <div>指定されたユーザは存在しません...</div>;
+    }
+
+    //事前ビルドされていない場合はここで作成する
+    const router = useRouter();
+    if (router.isFallback) {
+        console.log(`${props.userName}静的ページ作成中...`);
+        return <div>{`${props.userName}静的ページ作成中...`}</div>;
     }
 
     const [user, initialising, error] = useAuthState(firebase.auth());
     if (initialising) {
         return (
             <Layout>
-                <div>Initialising...</div>
+                <div>認証確認中...</div>
             </Layout>
         );
     }
     if (error) {
         return (
             <Layout>
-                <div>Error: {error}</div>
+                <div>認証確認エラー: {error}</div>
             </Layout>
         );
     }
