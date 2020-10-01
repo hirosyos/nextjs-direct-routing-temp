@@ -74,36 +74,34 @@ export async function getStaticProps({ params }) {
     };
 }
 
-//****************************************************************
-//
-// ユーザページ構成関数コンポーネント
-//
-// [IN]props.userName ユーザネーム
-// [IN]props.userData ユーザデータ
-// [OUT] ユーザページ
-//
-//****************************************************************
-const UserNamePage = (props) => {
-    // const { userName, userData } = params;
+/**
+ * ユーザページ構成
+ *
+ * @param {string} props.userName ユーザネーム
+ * @param {object} props.userData ユーザデータ
+ * @return {JSX}
+ */
+export default function UserNamePage(props) {
+    const { userName, userData } = props;
     // const [myUid, setMyUid] = useState(null);
-    console.log("props.userName");
-    console.log(props.userName);
-    console.log("props.userData");
-    console.log(props.userData);
+    console.log("userName");
+    console.log(userName);
+    console.log("userData");
+    console.log(userData);
+
     let myUid;
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
-        console.log(`${props.userName}静的ページ作成中...`);
-        return <div>{`${props.userName}静的ページ作成中...`}</div>;
+        console.log(`${userName}静的ページ作成中...`);
+        return <div>{`${userName}静的ページ作成中...`}</div>;
     }
 
     //ユーザネームがない段階では何もしない;
     if (!props.userName) {
         console.log("そんなユーザいません");
         return <div>そんなユーザいません...</div>;
-        // return null;
     }
 
     if (!props.userData) {
@@ -132,7 +130,7 @@ const UserNamePage = (props) => {
     if (user) {
         console.log({ props });
         //ログインしていたら自分のuidを保存しておく
-        // if (user.uid === props.userData.uid) {
+        // if (user.uid === userData.uid) {
         // setMyUid(user.uid);
         myUid = user.uid;
         // }
@@ -148,7 +146,7 @@ const UserNamePage = (props) => {
 
                 <main className={styles.main}>
                     <UserLoginInfo myUid={myUid} />
-                    <h1>{props.userName}の手記書庫</h1>
+                    <h1>{userName}の手記書庫</h1>
                     <p>ユーザ情報</p>
                     <table border="1">
                         <tbody>
@@ -162,7 +160,7 @@ const UserNamePage = (props) => {
                                 <td>ユーザドキュメント作成日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.userData.createdAt.seconds
+                                        userData.createdAt.seconds
                                     )}
                                 </td>
                             </tr>
@@ -171,59 +169,59 @@ const UserNamePage = (props) => {
                                 <td>ユーザドキュメント更新日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.userData.updatedAt.seconds
+                                        userData.updatedAt.seconds
                                     )}
                                 </td>
                             </tr>
                             <tr>
                                 <td>isPublic</td>
                                 <td>ユーザ公開設定</td>
-                                <td>{props.userData.isPublic}</td>
+                                <td>{userData.isPublic}</td>
                             </tr>
                             <tr>
                                 <td>uid</td>
                                 <td>google認証から取得したユーザID</td>
-                                <td>{props.userData.uid}</td>
+                                <td>{userData.uid}</td>
                             </tr>
                             <tr>
                                 <td>userName</td>
                                 <td>管理上のユーザ名</td>
-                                <td>{props.userData.userName}</td>
+                                <td>{userData.userName}</td>
                             </tr>
                             <tr>
                                 <td>userDisplayName</td>
                                 <td>画面上に見せるユーザ名</td>
-                                <td>{props.userData.userDisplayName}</td>
+                                <td>{userData.userDisplayName}</td>
                             </tr>
                             <tr>
                                 <td>userIconImageUrl</td>
                                 <td>ユーザアイコン画像URL</td>
-                                <td>{props.userData.userIconImageUrl}</td>
+                                <td>{userData.userIconImageUrl}</td>
                             </tr>
                             <tr>
                                 <td>userCoverImageUrl</td>
                                 <td>ユーザカバー画像URL</td>
-                                <td>{props.userData.userCoverImageUrl}</td>
+                                <td>{userData.userCoverImageUrl}</td>
                             </tr>
                             <tr>
                                 <td>userIntroduction</td>
                                 <td>ユーザ自己紹介文</td>
-                                <td>{props.userData.userIntroduction}</td>
+                                <td>{userData.userIntroduction}</td>
                             </tr>
                             <tr>
                                 <td>pricePlan</td>
                                 <td>料金プラン</td>
-                                <td>{props.userData.pricePlan}</td>
+                                <td>{userData.pricePlan}</td>
                             </tr>
                         </tbody>
                     </table>
                     <br />
 
-                    <p>{props.userName}が作成した手記</p>
-                    <UserCreateBooksList userData={props.userData} />
+                    <p>{userName}が作成した手記</p>
+                    <UserCreateBooksList userData={userData} />
                     <br />
 
-                    <Link href={`/users/${props.userName}/bookCreate`}>
+                    <Link href={`/users/${userName}/bookCreate`}>
                         <a>新規手記作成</a>
                     </Link>
                     <br />
@@ -232,6 +230,4 @@ const UserNamePage = (props) => {
             </div>
         </Layout>
     );
-};
-
-export default UserNamePage;
+}
