@@ -38,33 +38,36 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
-    console.log("getStaticProps");
-    console.log({ params });
+    console.log("\nファイル：[sectionId].js");
+    console.log("\n関数：getStaticProps");
+    const { userName, bookName, sectionId } = params;
+    console.log({ userName });
+    console.log({ bookName });
+    console.log({ sectionId });
 
     //セクションIDからセクションデータを取得
     const sectionData = await getSectionDataFromSectionId(
-        params.userName,
-        params.bookName,
-        params.sectionId
+        userName,
+        bookName,
+        sectionId
     );
     //該当セクションIDのデータが存在しない場合はデータ部をNullで返す
     if (!sectionData.sectionData.exists) {
-        console.log("getStaticProps");
-        console.log("そんなセクションはありません");
+        console.log("\nそんなセクションはありません");
         return {
             props: {
-                userName: params.userName,
-                bookName: params.bookName,
-                sectionId: params.sectionId,
+                userName: userName,
+                bookName: bookName,
+                sectionId: sectionId,
                 sectionData: null,
             },
         };
     }
     return {
         props: {
-            userName: params.userName,
-            bookName: params.bookName,
-            sectionId: params.sectionId,
+            userName: userName,
+            bookName: bookName,
+            sectionId: sectionId,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             sectionData: JSON.parse(
                 JSON.stringify(sectionData.sectionData.data())
@@ -79,29 +82,31 @@ export async function getStaticProps({ params }) {
  * @return {*}
  */
 
-const SectionIdPage = (props) => {
-    console.log("SectionIdPage");
+export default function SectionIdPage(props) {
+    console.log("\nファイル：[sectionId].js");
+    console.log("\n関数：SectionIdPage");
     console.log({ props });
+    const { userName, bookName, sectionId, sectionData } = props;
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
         console.log(
-            `${props.userName}/${props.bookName}/${props.sectionId}静的ページ作成中...`
+            `\n${userName}/${bookName}/${sectionId}静的ページ作成中...`
         );
         return (
-            <div>{`${props.userName}/${props.bookName}/${props.sectionId}静的ページ作成中...`}</div>
+            <div>{`${userName}/${bookName}/${sectionId}静的ページ作成中...`}</div>
         );
     }
     //ユーザネームがない段階では何もしない;
-    if (!props.sectionId) {
-        console.log("そんなセクションはありません");
+    if (!sectionId) {
+        console.log("\nそんなセクションはありません");
         return <div>そんなセクションはありません...</div>;
         // return null;
     }
 
-    if (!props.sectionData) {
-        console.log("指定されたセクションは存在しません...");
+    if (!sectionData) {
+        console.log("\n指定されたセクションは存在しません...");
         return <div>指定されたセクションは存在しません...</div>;
     }
 
@@ -114,7 +119,7 @@ const SectionIdPage = (props) => {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1>セクション {props.sectionId} ページ</h1>
+                    <h1>セクション {sectionId} ページ</h1>
 
                     <table border="1">
                         <tbody>
@@ -128,7 +133,7 @@ const SectionIdPage = (props) => {
                                 <td>手記ドキュメント作成日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.sectionData.createdAt.seconds
+                                        sectionData.createdAt.seconds
                                     )}
                                 </td>
                             </tr>
@@ -137,111 +142,111 @@ const SectionIdPage = (props) => {
                                 <td>手記ドキュメント更新日</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.sectionData.updatedAt.seconds
+                                        sectionData.updatedAt.seconds
                                     )}
                                 </td>
                             </tr>
                             <tr>
                                 <td>isPublic</td>
                                 <td>ユーザ公開設定</td>
-                                <td>{props.sectionData.isPublic}</td>
+                                <td>{sectionData.isPublic}</td>
                             </tr>
                             <tr>
                                 <td>uid</td>
                                 <td>ユーザドキュメントID</td>
-                                <td>{props.sectionData.uid}</td>
+                                <td>{sectionData.uid}</td>
                             </tr>
                             <tr>
                                 <td>userName</td>
                                 <td>管理上のユーザ名</td>
-                                <td>{props.sectionData.userName}</td>
+                                <td>{sectionData.userName}</td>
                             </tr>
                             <tr>
                                 <td>bookId</td>
                                 <td>手記ドキュメントID</td>
-                                <td>{props.sectionData.bookId}</td>
+                                <td>{sectionData.bookId}</td>
                             </tr>
                             <tr>
                                 <td>bookDocRef</td>
                                 <td>手記ドキュメントへのリファレンス</td>
-                                <td>{props.sectionData.bookDocRef}</td>
+                                <td>{sectionData.bookDocRef}</td>
                             </tr>
                             <tr>
                                 <td>bookName</td>
                                 <td>管理上の手記名</td>
-                                <td>{props.sectionData.bookName}</td>
+                                <td>{sectionData.bookName}</td>
                             </tr>
                             <tr>
                                 <td>sectionId</td>
                                 <td>セクションドキュメントID</td>
-                                <td>{props.sectionData.sectionId}</td>
+                                <td>{sectionData.sectionId}</td>
                             </tr>
                             <tr>
                                 <td>date</td>
                                 <td>セクションが起きた日付</td>
                                 <td>
                                     {convertFromTimestampToDatetime(
-                                        props.sectionData.date.seconds
+                                        sectionData.date.seconds
                                     )}
                                 </td>
                             </tr>
                             <tr>
                                 <td>title</td>
                                 <td>セクションのタイトル</td>
-                                <td>{props.sectionData.title}</td>
+                                <td>{sectionData.title}</td>
                             </tr>
                             <tr>
                                 <td>contents</td>
                                 <td>セクションの内容</td>
-                                <td>{props.sectionData.contents}</td>
+                                <td>{sectionData.contents}</td>
                             </tr>
                             <tr>
                                 <td>bookCoverImageUrl</td>
                                 <td>手記カバー画像URL</td>
-                                <td>{props.sectionData.bookCoverImageUrl}</td>
+                                <td>{sectionData.bookCoverImageUrl}</td>
                             </tr>
                             <tr>
                                 <td>tag</td>
                                 <td>セクションを分類するタグ</td>
-                                <td>{props.sectionData.tag}</td>
+                                <td>{sectionData.tag}</td>
                             </tr>
                             <tr>
                                 <td>bookFavoritedCount</td>
                                 <td>手記がお気に入りに入れられている数</td>
-                                <td>{props.sectionData.bookFavoritedCount}</td>
+                                <td>{sectionData.bookFavoritedCount}</td>
                             </tr>
                             <tr>
                                 <td>url</td>
                                 <td>関連URL</td>
-                                <td>{props.sectionData.url}</td>
+                                <td>{sectionData.url}</td>
                             </tr>
                             <tr>
                                 <td>emo</td>
                                 <td>感情</td>
-                                <td>{props.sectionData.emo}</td>
+                                <td>{sectionData.emo}</td>
                             </tr>
                             <tr>
                                 <td>quoteRef</td>
                                 <td>引用した元セクション</td>
-                                <td>{props.sectionData.quoteRef}</td>
+                                <td>{sectionData.quoteRef}</td>
                             </tr>
                             <tr>
                                 <td>quotedRef</td>
                                 <td>引用された先ページ</td>
-                                <td>{props.sectionData.quotedRef}</td>
+                                <td>{sectionData.quotedRef}</td>
                             </tr>
                             <tr>
                                 <td>quotedCount</td>
                                 <td>引用された数</td>
-                                <td>{props.sectionData.quotedCount}</td>
+                                <td>{sectionData.quotedCount}</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <Link href={`/users/${props.userName}`}>
+                    <Link href={`/users/${userName}`}>
                         <a>ユーザページ</a>
                     </Link>
-                    <Link href={`/users/${props.userName}/${props.bookName}`}>
+                    <Link href={`/users/${userName}/${bookName}`}>
                         <a>手記ページ</a>
                     </Link>
                 </main>
@@ -263,6 +268,4 @@ const SectionIdPage = (props) => {
             </div>
         </Layout>
     );
-};
-
-export default SectionIdPage;
+}
