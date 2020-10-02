@@ -15,8 +15,19 @@ import {
     useDocumentData,
     useDocument,
 } from "react-firebase-hooks/firestore";
+/**
+ * サインインページ
+ *
+ * @export
+ * @return {*}
+ */
+export default function SigninPage() {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/auth/signin.js");
+    console.log("関数 SigninPage");
 
-const SigninPage = () => {
     const [user, initialising, error] = useAuthState(firebase.auth());
 
     if (initialising) {
@@ -86,6 +97,4 @@ const SigninPage = () => {
             </div>
         </Layout>
     );
-};
-
-export default SigninPage;
+}

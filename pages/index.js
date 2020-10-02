@@ -4,7 +4,17 @@ import Layout from "../components/Layout";
 import styles from "../styles/Home.module.scss";
 import Logout from "../components/Logout";
 
+/**
+ * サービストップページ
+ *
+ * @export
+ * @return {*}
+ */
 export default function Home() {
+    //デバッグ情報
+    console.log("\nファイル /pages/index.js");
+    console.log("関数 Home");
+
     return (
         <Layout>
             <div className={styles.container}>

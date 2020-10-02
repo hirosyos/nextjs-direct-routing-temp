@@ -17,10 +17,18 @@ import { useRouter } from "next/router";
  * @return {*}
  */
 export async function getStaticPaths() {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
+    console.log("関数コンポーネント getStaticPaths");
+
     //すべてのユーザ名とブック名とセクションIDを含んだパス生成用配列を取得
     const paths = await getAllSectionIdPaths();
 
-    //デバッグ表示
+    //
+    //デバッグ情報
+    //
     paths.map((p) => {
         console.log(
             `SSGページ対象は ${p.params.userName}/${p.params.bookName}/${p.params.sectionId}`
@@ -38,12 +46,14 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
-    console.log("\nファイル [sectionId].js");
-    console.log("関数 getStaticProps");
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
+    console.log("関数コンポーネント getStaticProps");
+    console.log({ params });
+
     const { userName, bookName, sectionId } = params;
-    console.log({ userName });
-    console.log({ bookName });
-    console.log({ sectionId });
 
     //セクションIDからセクションデータを取得
     const { sectionData } = await getSectionDataFromSectionId(
@@ -79,11 +89,14 @@ export async function getStaticProps({ params }) {
  * @param {*} props
  * @return {*}
  */
-
 export default function SectionIdPage(props) {
-    console.log("\nファイル [sectionId].js");
-    console.log("関数 SectionIdPage");
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
+    console.log("関数コンポーネント SectionIdPage");
     console.log({ props });
+
     const { userName, bookName, sectionId, sectionData } = props;
 
     //事前ビルドされていない場合はここで作成する
@@ -100,7 +113,6 @@ export default function SectionIdPage(props) {
     if (!sectionId) {
         console.log("異常終了 そんなセクションはありません\n");
         return <div>そんなセクションはありません...</div>;
-        // return null;
     }
 
     if (!sectionData) {

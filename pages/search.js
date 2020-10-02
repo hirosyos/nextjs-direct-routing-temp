@@ -3,7 +3,18 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import styles from "../styles/Home.module.scss";
 
-const Search = (props) => {
+/**
+ * 検索ページ
+ *
+ * @export
+ * @param {*} props
+ * @return {*}
+ */
+export default function Search(props) {
+    //デバッグ情報
+    console.log("\nファイル /pages/serch.js");
+    console.log("関数 Serch");
+    console.log({ props });
     return (
         <Layout>
             <div className={styles.container}>
@@ -37,5 +48,4 @@ const Search = (props) => {
             </div>
         </Layout>
     );
-};
-export default Search;
+}

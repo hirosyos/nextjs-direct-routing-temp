@@ -3,7 +3,17 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.scss";
 
-const UserCreate = () => {
+/**
+ * ユーザ作成ページ
+ *
+ * @export
+ * @return {*}
+ */
+export default function UserCreatePage() {
+    //デバッグ情報
+    console.log("\nファイル /pages/users/uerCreate.js");
+    console.log("関数 UserCreate");
+
     return (
         <Layout>
             <div className={styles.container}>
@@ -38,5 +48,4 @@ const UserCreate = () => {
             </div>
         </Layout>
     );
-};
-export default UserCreate;
+}

@@ -3,15 +3,41 @@ import Link from "next/link";
 import Layout from "../../../../components/Layout";
 import styles from "../../../../styles/Home.module.scss";
 
-// 最初に実行される。事前ビルドするパスを配列でreturnする。
+/**
+ * 静的パス取得
+ *
+ * @export
+ * @return {*}
+ */
 export async function getStaticPaths() {
-    // const paths = ["/post/1", "/post/2"];
+    //
+    //デバッグ情報
+    //
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
+    );
+    console.log("関数 getStaticPaths");
+
     const paths = [];
     return { paths, fallback: true };
 }
-
+/**
+ * 静的パラメータ取得
+ *
+ * @export
+ * @param {*} { params }
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
+    //
+    //デバッグ情報
+    //
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
+    );
+    console.log("関数 getStaticProps");
     console.log({ params });
+
     return {
         props: {
             userName: params.userName,
@@ -19,8 +45,20 @@ export async function getStaticProps({ params }) {
         },
     };
 }
-
-const SectionSetting = (props) => {
+/**
+ * セクション設定ページ
+ *
+ * @param {*} props
+ * @return {*}
+ */
+export default function SectionSettingPage(props) {
+    //
+    //デバッグ情報
+    //
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
+    );
+    console.log("関数コンポーネント SectionSetting");
     console.log({ props });
 
     return (
@@ -62,6 +100,4 @@ const SectionSetting = (props) => {
             </div>
         </Layout>
     );
-};
-
-export default SectionSetting;
+}

@@ -8,36 +8,38 @@ import {
 } from "../../../../common/common";
 import SectionCreateInputForm from "../../../../components/Section";
 
-//****************************************************************
-//
-// 静的パス取得関数
-//
-// [IN]なし
-// [OUT]静的パスを生成するための名称の配列
-// [OUT]fallback設定
-//
-//****************************************************************
+/**
+ * 静的パス取得
+ *
+ * @export
+ * @return {*}
+ */
 export async function getStaticPaths() {
-    // const paths = ["/post/1", "/post/2"];
+    //デバッグ情報
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
+    );
+    console.log("関数 getStaticPaths");
+
     const paths = [];
     return { paths, fallback: true };
 }
 
-//****************************************************************
-//
-// 静的パラメータ取得関数
-//
-// [IN]params: { userName: 'パスから切り出されたユーザネーム' }
-// [IN]params: { bookName: 'パスから切り出されたブックネーム' }
-// [out] ユーザネーム
-// [out] ユーザドキュメント
-// [out] ブックネーム
-// [out] ブックドキュメント
-//
-//****************************************************************
+/**
+ * 静的パラメータ取得
+ *
+ * @export
+ * @param {*} { params }
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
-    console.log("関数：getStaticProps：起動");
+    //デバッグ情報
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
+    );
+    console.log("関数 getStaticProps");
     console.log({ params });
+
     //ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
 
@@ -90,20 +92,19 @@ export async function getStaticProps({ params }) {
     };
 }
 
-//****************************************************************
-//
-// セクション作成ページ 関数コンポーネント
-//
-// [IN]props.userName ユーザネーム
-// [IN]props.userData ユーザデータ
-// [IN]props.bookName ブックネーム
-// [IN]props.bookData ブックデータ
-// [IN]props.bookId ブックID
-// [OUT] セクション作成ページ全体
-//
-//****************************************************************
-const SectionCreate = (props) => {
-    console.log("関数：SectionCreate：起動");
+/**
+ * セクション作成ページ
+ *
+ * @export
+ * @param {*} props
+ * @return {*}
+ */
+export default function SectionCreate(props) {
+    //デバッグ情報
+    console.log(
+        "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
+    );
+    console.log("関数コンポーネント SectionCreate");
     console.log({ props });
 
     return (
@@ -152,6 +153,6 @@ const SectionCreate = (props) => {
             </div>
         </Layout>
     );
-};
+}
 
 export default SectionCreate;

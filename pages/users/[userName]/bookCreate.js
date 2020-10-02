@@ -15,7 +15,10 @@ import { getUserDataFromUserName } from "../../../common/common";
 //
 //****************************************************************
 export async function getStaticPaths() {
-    // const paths = ["/post/1", "/post/2"];
+    //デバッグ情報
+    console.log("\nファイル /pages/users/[userName]/bookCreate.js");
+    console.log("関数 getStaticPaths");
+
     const paths = [];
     return { paths, fallback: true };
 }
@@ -30,6 +33,11 @@ export async function getStaticPaths() {
 //
 //****************************************************************
 export async function getStaticProps({ params }) {
+    //デバッグ情報
+    console.log("\nファイル /pages/users/[userName]/bookCreate.js");
+    console.log("関数 getStaticProps");
+    console.log({ params });
+
     //ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
 
@@ -61,7 +69,14 @@ export async function getStaticProps({ params }) {
 // [OUT] 手記ページ作成ページ全体
 //
 //****************************************************************
-const BookCreate = (props) => {
+export default function BookCreatePage(props) {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/bookCreate.js");
+    console.log("関数 BookCreatePage");
+    console.log({ props });
+
     return (
         <Layout>
             <div className={styles.container}>
@@ -99,5 +114,4 @@ const BookCreate = (props) => {
             </div>
         </Layout>
     );
-};
-export default BookCreate;
+}

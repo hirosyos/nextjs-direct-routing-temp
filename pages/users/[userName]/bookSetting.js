@@ -3,23 +3,56 @@ import Link from "next/link";
 import Layout from "../../../components/Layout";
 import styles from "../../../styles/Home.module.scss";
 
-// 最初に実行される。事前ビルドするパスを配列でreturnする。
+/**
+ * 静的パス取得
+ *
+ * @export
+ * @return {*}
+ */
 export async function getStaticPaths() {
-    // const paths = ["/post/1", "/post/2"];
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
+    console.log("関数 getStaticPaths");
+
     const paths = [];
     return { paths, fallback: true };
 }
-
+/**
+ * 静的パラメータ取得
+ *
+ * @export
+ * @param {*} { params }
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
+    console.log("関数 getStaticProps");
     console.log({ params });
+
     return {
         props: {
             userName: params.userName,
         },
     };
 }
-
-const BookSetting = (props) => {
+/**
+ * 手記設定ページ
+ *
+ * @export
+ * @param {*} props
+ * @return {*}
+ */
+export default function BookSettingPage(props) {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
+    console.log("関数 BookSettingPage");
     console.log({ props });
 
     return (
@@ -57,6 +90,4 @@ const BookSetting = (props) => {
             </div>
         </Layout>
     );
-};
-
-export default BookSetting;
+}

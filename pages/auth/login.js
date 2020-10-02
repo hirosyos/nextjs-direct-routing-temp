@@ -60,7 +60,18 @@ import {
 //     };
 // }
 
-const LoginPage = () => {
+/**
+ * ログインページ
+ *
+ * @return {*}
+ */
+export default function LoginPage() {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/auth/login.js");
+    console.log("関数 LoginPage");
+
     // console.log("props");
     // console.log(props);
     const [user, initialising, error2] = useAuthState(firebase.auth());
@@ -133,6 +144,4 @@ const LoginPage = () => {
             </div>
         </Layout>
     );
-};
-
-export default LoginPage;
+}

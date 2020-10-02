@@ -10,17 +10,24 @@ import {
 import { useRouter } from "next/router";
 
 /**
- * 静的パス取得関数
+ * 静的パス取得
  *
  * @export
  * @return {Array} 静的パスを生成するための名称の配列
  */
 export async function getStaticPaths() {
-    console.log("getStaticPaths");
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName].js");
+    console.log("関数 getStaticPaths");
+
     //すべてのユーザ名とブック名を含んだパス生成用配列を取得
     const paths = await getAllBookNamePaths();
 
-    //デバッグ表示
+    //
+    //デバッグ情報
+    //
     paths.map((p) => {
         console.log(
             `SSGページ対象は ${p.params.userName}/${p.params.bookName}`
@@ -38,9 +45,15 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
-    console.log("\n関数 getStaticProps 起動");
-    const { userName, bookName } = params;
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName].js");
+    console.log("関数 getStaticProps");
     console.log({ params });
+
+    const { userName, bookName } = params;
+
     //ブック名からブックデータを取得
     const { bookData } = await getBookDataFromBookName(userName, bookName);
     //該当ブック名のデータが存在しない場合はデータ部をNullで返す
@@ -65,7 +78,7 @@ export async function getStaticProps({ params }) {
     };
 }
 /**
- * 手記ページを作成する
+ * 手記ページ
  *
  * @param {*} props.userName
  * @param {*} props.bookName
@@ -73,11 +86,14 @@ export async function getStaticProps({ params }) {
  * @return {*}
  */
 export default function BookNamePage(props) {
-    console.log("関数：BookNamePage");
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル /pages/users/[userName]/[bookName].js");
+    console.log("関数 getStaticProps");
+    console.log({ props });
+
     const { userName, bookName, bookData } = props;
-    console.log({ userName });
-    console.log({ bookName });
-    console.log({ bookData });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();

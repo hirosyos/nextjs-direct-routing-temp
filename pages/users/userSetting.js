@@ -3,7 +3,16 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import styles from "../../styles/Home.module.scss";
 
-const UserSetting = () => {
+/**
+ * ユーザ設定ページ
+ *
+ * @return {*}
+ */
+export default function UserSettingPage() {
+    //デバッグ情報
+    console.log("\nファイル /pages/users/userSetting.js");
+    console.log("関数 UserSettingPage");
+
     return (
         <Layout>
             <div className={styles.container}>
@@ -38,5 +47,4 @@ const UserSetting = () => {
             </div>
         </Layout>
     );
-};
-export default UserSetting;
+}

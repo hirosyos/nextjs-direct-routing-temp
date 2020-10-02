@@ -20,38 +20,44 @@ import {
 } from "../../common/common";
 import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
 
-//****************************************************************
-//
-// 静的パス取得関数
-//
-// [IN]なし
-// [OUT]静的パスを生成するための名称の配列
-// [OUT]fallback設定
-//
-//****************************************************************
+/**
+ * 静的パス取得
+ *
+ * @export
+ * @return {*}
+ */
 export async function getStaticPaths() {
+    //デバッグ情報
+    console.log("\nファイル /pages/users/[userName].js");
+    console.log("関数 getStaticPaths");
+
     //すべてのユーザ名を含んだパス生成用配列を取得
     const paths = await getAllUserNamesPaths();
 
-    //デバッグ表示
+    //デバッグ情報
     paths.map((p) => {
         console.log(`SSGページ対象は ${p.params.userName}`);
     });
 
+    //デバッグ情報
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 
-//****************************************************************
-//
-// 静的パラメータ取得関数
-//
-// [IN]params: { userName: 'パスから切り出された値' }
-// [out] ユーザネーム
-// [out] ユーザドキュメント
-//
-//****************************************************************
+/**
+ * 静的パラメータ取得
+ *
+ * @export
+ * @param {*} { params }
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
-    console.log("\n関数：getStaticProps：起動");
+    //デバッグ情報
+    console.log("\nファイル /pages/users/userName].js");
+    console.log("関数 getStaticProps");
+    console.log({ params });
+
     //パスから切り出された値が入っている
     const { userName } = params;
     //ユーザ名からユーザデータを取得
@@ -77,20 +83,19 @@ export async function getStaticProps({ params }) {
 }
 
 /**
- * ユーザページ構成
+ * ユーザページ
  *
  * @param {string} props.userName ユーザネーム
  * @param {object} props.userData ユーザデータ
  * @return {JSX}
  */
 export default function UserNamePage(props) {
-    console.log("\n関数：UserNamePage：起動");
+    //デバッグ情報
+    console.log("\nファイル /pages/users/[userName].js");
+    console.log("関数 UserNamePage");
+    console.log({ props });
+
     const { userName, userData } = props;
-    // const [myUid, setMyUid] = useState(null);
-    console.log("userName");
-    console.log(userName);
-    console.log("userData");
-    console.log(userData);
 
     let myUid;
 
