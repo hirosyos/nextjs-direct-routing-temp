@@ -36,22 +36,56 @@ export async function getStaticPaths() {
 //
 //****************************************************************
 export async function getStaticProps({ params }) {
+    console.log("関数：getStaticProps：起動");
     console.log({ params });
     //ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
+
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (!userData) {
+        console.log("関数：getStaticProps 該当ユーザ名のデータが見つからない");
+        return {
+            props: {
+                userName: params.userName,
+                userData: null,
+                bookName: params.bookName,
+                bookData: null,
+                bookId: null,
+            },
+        };
+    }
+
     //ブック名からユーザデータを取得
-    const bookData = await getBookData(params.userName, params.bookName);
+    const bookData = await getBookDataFromBookName(
+        params.userName,
+        params.bookName
+    );
+
+    //該当ブック名のデータが存在しない場合はデータ部をNullで返す
+    if (!userData) {
+        console.log("関数：getStaticProps 該当ブック名のデータが見つからない");
+        return {
+            props: {
+                userName: params.userName,
+                userData: userData,
+                bookName: params.bookName,
+                bookData: null,
+                bookId: null,
+            },
+        };
+    }
+
     return {
         props: {
             userName: params.userName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            userData: JSON.parse(JSON.stringify(userData.data())),
+            userData: JSON.parse(JSON.stringify(userData)),
 
             bookName: params.bookName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             bookData: JSON.parse(JSON.stringify(bookData.bookData.data())),
 
-            bookId: bookData.bookId,
+            bookId: bookData.bookData.data().bookId,
         },
     };
 }
@@ -69,7 +103,7 @@ export async function getStaticProps({ params }) {
 //
 //****************************************************************
 const SectionCreate = (props) => {
-    console.log("SectionCreate props");
+    console.log("関数：SectionCreate：起動");
     console.log({ props });
 
     return (

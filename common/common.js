@@ -15,19 +15,36 @@ export const INVALIDSECTIONS = "invaridSections";
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
  */
-export async function getAllUserNamesPaths() {
+// export const getAllUserNamesPaths = async () => {
+//     //有効ユーザコレクションを取り出し
+//     const values = await firebase.firestore().collection(VALIDUSERS).get();
+
+//     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
+//     return values.docs.map((userDoc) => {
+//         return {
+//             params: {
+//                 userName: userDoc.data().userName,
+//             },
+//         };
+//     });
+// };
+
+export const getAllUserNamesPaths = async () => {
     //有効ユーザコレクションを取り出し
-    const values = await firebase.firestore().collection(VALIDUSERS).get();
+    const querySnapshot = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .get();
 
     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return values.docs.map((value) => {
+    return querySnapshot.docs.map((userDocSnapshot) => {
         return {
             params: {
-                userName: value.data().userName,
+                userName: userDocSnapshot.data().userName,
             },
         };
     });
-}
+};
 
 /**
  * 全ブックネームパス取得
@@ -35,20 +52,23 @@ export async function getAllUserNamesPaths() {
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
  */
-export async function getAllBookNamePaths() {
+export const getAllBookNamePaths = async () => {
     //有効ブックコレクションに対してコレクショングループで一括取得
-    const values = await firebase.firestore().collectionGroup(VALIDBOOKS).get();
+    const querySnapshot = await firebase
+        .firestore()
+        .collectionGroup(VALIDBOOKS)
+        .get();
 
     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return values.docs.map((value) => {
+    return querySnapshot.docs.map((bookDocSnapshot) => {
         return {
             params: {
-                userName: value.data().userName,
-                bookName: value.data().bookName,
+                userName: bookDocSnapshot.data().userName,
+                bookName: bookDocSnapshot.data().bookName,
             },
         };
     });
-}
+};
 
 /**
  * 全セクションIDパス取得
@@ -56,24 +76,24 @@ export async function getAllBookNamePaths() {
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
  */
-export async function getAllSectionIdPaths() {
+export const getAllSectionIdPaths = async () => {
     //有効ブックコレクションに対してコレクショングループで一括取得
-    const values = await firebase
+    const querySnapshot = await firebase
         .firestore()
         .collectionGroup(VALIDSECTIONS)
         .get();
 
     //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return values.docs.map((value) => {
+    return querySnapshot.docs.map((sectionDocSnapshot) => {
         return {
             params: {
-                userName: value.data().userName,
-                bookName: value.data().bookName,
-                sectionId: value.data().sectionId,
+                userName: sectionDocSnapshot.data().userName,
+                bookName: sectionDocSnapshot.data().bookName,
+                sectionId: sectionDocSnapshot.data().sectionId,
             },
         };
     });
-}
+};
 
 /**
  * ユーザドキュメント情報取得
@@ -83,8 +103,9 @@ export async function getAllSectionIdPaths() {
  * @return {*}
  */
 export async function getUserDataFromUserName(userName) {
+    console.log("\n関数：getUserDataFromUserName：起動");
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
-    const tmpDoc = await firebase
+    const querySnapshot = await firebase
         .firestore()
         .collection(VALIDUSERS)
         .where("userName", "==", userName)
@@ -92,33 +113,17 @@ export async function getUserDataFromUserName(userName) {
         .get();
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (tmpDoc.size === 0) {
-        console.log(userName);
-        console.log("**************************tmpDoc");
+    if (querySnapshot.size === 0) {
+        console.error(`\n${userName}のドキュメントは存在しません`);
         // console.log(tmpDoc);
         const userData = {};
         return {
-            userData,
+            userData: null,
         };
     }
 
-    //ユーザドキュメントからuidを取得
-    const pagename = tmpDoc.docs.map((x) => {
-        return {
-            uid: x.data().uid,
-        };
-    });
-
-    //uidからユーザドキュメントを取得
-    //2度手間してそうだけどとりあえずこのままで
-    const userData = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .doc(pagename[0].uid)
-        .get();
-
     return {
-        userData,
+        userData: querySnapshot.docs[0].data(),
     };
 }
 
@@ -131,45 +136,29 @@ export async function getUserDataFromUserName(userName) {
  * @return {*}
  */
 export async function getBookDataFromBookName(userName, bookName) {
-    // const userData = await getUserDataFromUserName(userName);
+    console.log("\n関数：getBookDataFromBookName：起動");
 
-    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
-    const tmpUserDocs = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .where("userName", "==", userName)
-        .limit(1)
-        .get();
-
+    const { userData } = await getUserDataFromUserName(userName);
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (tmpUserDocs.size === 0) {
-        console.log(userName);
-        console.log("**************************tmpDoc");
-        // console.log(tmpUserDocs);
+    if (!userData) {
+        console.log(
+            "関数：getBookDataFromBookName：該当ユーザ名のデータが存在しない"
+        );
         const bookData = {};
         const bookId = null;
         return {
-            userName,
-            bookName,
-            bookData,
-            bookId,
+            userName: userName,
+            bookName: bookName,
+            bookData: bookData,
+            bookId: bookId,
         };
     }
-
-    //ユーザドキュメントからuidを取得
-    const tmpUserDocsId = tmpUserDocs.docs.map((x) => {
-        return {
-            uid: x.id,
-        };
-    });
-
-    const uid = tmpUserDocsId[0].uid;
 
     //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
     const tmpBookDocs = await firebase
         .firestore()
         .collection(VALIDUSERS)
-        .doc(uid)
+        .doc(userData.uid)
         .collection(VALIDBOOKS)
         .where("bookName", "==", bookName)
         .limit(1)
@@ -177,44 +166,46 @@ export async function getBookDataFromBookName(userName, bookName) {
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (tmpBookDocs.size === 0) {
-        console.log(bookName);
-        // console.log(tmpUserDocs);
+        console.log(
+            "関数：getBookDataFromBookName：該当ブック名のデータが存在しない"
+        );
         const bookData = {};
         const bookId = null;
         return {
-            userName,
-            bookName,
-            bookData,
-            bookId,
+            userName: userName,
+            bookName: bookName,
+            bookData: bookData,
+            bookId: bookId,
         };
     }
 
-    //ブックドキュメントからブックidを取得
-    const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
-        return {
-            bookId: x.id,
-        };
-    });
+    // //ブックドキュメントからブックidを取得
+    // const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
+    //     return {
+    //         bookId: x.id,
+    //     };
+    // });
 
-    const bookId = tmpBookDocsId[0].bookId;
+    // const bookId = tmpBookDocsId[0].bookId;
 
-    const bookData = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .doc(uid)
-        .collection(VALIDBOOKS)
-        .doc(bookId)
-        .get();
+    // const bookData = await firebase
+    //     .firestore()
+    //     .collection(VALIDUSERS)
+    //     .doc(uid)
+    //     .collection(VALIDBOOKS)
+    //     .doc(bookId)
+    //     .get();
 
-    console.log("◆bookData◆");
-    console.log(bookData);
-    console.log("◆bookId◆");
-    console.log(bookId);
+    // console.log("◆bookData◆");
+    // console.log(bookData);
+    // console.log("◆bookId◆");
+    // console.log(bookId);
+
     return {
-        userName,
-        bookName,
-        bookData,
-        bookId,
+        userName: userName,
+        bookName: bookName,
+        bookData: tmpBookDocs.docs[0],
+        bookId: tmpBookDocs.docs[0].bookId,
     };
 }
 

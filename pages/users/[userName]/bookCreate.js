@@ -33,12 +33,21 @@ export async function getStaticProps({ params }) {
     //ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
 
-    // console.log({ params });
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
+    if (!userData) {
+        console.log("関数：getStaticProps：該当ユーザ名のデータが存在しない");
+        return {
+            props: {
+                userName: params.userName,
+                userData: null,
+            },
+        };
+    }
     return {
         props: {
             userName: params.userName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            userData: JSON.parse(JSON.stringify(userData.data())),
+            userData: JSON.parse(JSON.stringify(userData)),
         },
     };
 }
