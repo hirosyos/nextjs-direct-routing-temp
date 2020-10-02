@@ -8,13 +8,13 @@ import { VALIDUSERS, VALIDBOOKS } from "../common/common";
  * @param {*} props
  * @return {*}
  */
-const BookCreateInputForm = (props) => {
+export const BookCreateInputForm = ({ userData }) => {
     //
     //デバッグ情報
     //
     console.log("\nファイル Book.js");
     console.log("関数 BookCreateInputForm");
-    console.log({ props });
+    console.log({ userData });
 
     const [isPublic, setIsPublic] = useState("");
     const [bookName, setBookName] = useState("");
@@ -60,7 +60,7 @@ const BookCreateInputForm = (props) => {
         const bookId = firebase
             .firestore()
             .collection(VALIDUSERS)
-            .doc(props.userData.uid)
+            .doc(userData.uid)
             .collection(VALIDBOOKS)
             .doc().id;
 
@@ -69,11 +69,11 @@ const BookCreateInputForm = (props) => {
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
 
-            uid: props.userData.uid,
-            userName: props.userData.userName,
-            userDocRef: `/${VALIDUSERS}/${props.userData.uid}`,
+            uid: userData.uid,
+            userName: userData.userName,
+            userDocRef: `/${VALIDUSERS}/${userData.uid}`,
             bookId: bookId,
-            bookDocRef: `/${VALIDUSERS}/${props.userData.uid}/${VALIDBOOKS}/${bookId}`,
+            bookDocRef: `/${VALIDUSERS}/${userData.uid}/${VALIDBOOKS}/${bookId}`,
 
             bookName: bookName,
             bookDisplayName: bookDisplayName,
@@ -91,7 +91,7 @@ const BookCreateInputForm = (props) => {
         };
         const addedData = await postDataToFirestore(
             VALIDUSERS,
-            props.userData.uid,
+            userData.uid,
             VALIDBOOKS,
             bookId,
             postData
@@ -191,5 +191,3 @@ const BookCreateInputForm = (props) => {
         </form>
     );
 };
-
-export default BookCreateInputForm;

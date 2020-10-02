@@ -26,7 +26,8 @@ import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
  * @export
  * @return {*}
  */
-export async function getStaticPaths() {
+// export async function getStaticPaths() {
+export const getStaticPaths = async () => {
     //
     //デバッグ情報
     //
@@ -49,7 +50,7 @@ export async function getStaticPaths() {
     console.log("正常終了\n");
 
     return { paths, fallback: true };
-}
+};
 
 /**
  * 静的パラメータ取得
@@ -58,7 +59,8 @@ export async function getStaticPaths() {
  * @param {*} { params }
  * @return {*}
  */
-export async function getStaticProps({ params }) {
+// export async function getStaticProps({ params }) {
+export const getStaticProps = async ({ params }) => {
     //
     //デバッグ情報
     //
@@ -97,22 +99,19 @@ export async function getStaticProps({ params }) {
             userData: JSON.parse(JSON.stringify(userData)),
         },
     };
-}
+};
 
 /**
  * ユーザページ
  *
- * @param {string} props.userName ユーザネーム
- * @param {object} props.userData ユーザデータ
+ * @param {string} userName ユーザネーム
+ * @param {object} userData ユーザデータ
  * @return {JSX}
  */
-export default function UserNamePage(props) {
+export default function UserNamePage({ userName, userData }) {
     //デバッグ情報
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 UserNamePage");
-    console.log({ props });
-
-    const { userName, userData } = props;
 
     let myUid;
 
@@ -124,7 +123,7 @@ export default function UserNamePage(props) {
     }
 
     //ユーザネームがない段階では何もしない;
-    if (!props.userName) {
+    if (!userName) {
         //
         //デバッグ情報
         //
@@ -132,7 +131,7 @@ export default function UserNamePage(props) {
         return <div>そんなユーザいません...</div>;
     }
 
-    if (!props.userData) {
+    if (!userData) {
         //
         //デバッグ情報
         //
@@ -159,7 +158,7 @@ export default function UserNamePage(props) {
     //     setMyUid(null);
     // }
     if (user) {
-        console.log({ props });
+        console.log({ userName, userData });
         //ログインしていたら自分のuidを保存しておく
         // if (user.uid === userData.uid) {
         // setMyUid(user.uid);

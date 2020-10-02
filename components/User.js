@@ -14,13 +14,13 @@ import {
  * @param {*} userData
  * @return {*}
  */
-export const UserCreateBooksList = (props) => {
+export const UserCreateBooksList = ({ userData }) => {
     //
     //デバッグ情報
     //
     console.log("\nファイル User.js");
     console.log("関数 UserCreateBooksList");
-    console.log({ props });
+    console.log({ userData });
 
     const [bookList, setBookList] = useState(null);
 
@@ -47,10 +47,10 @@ export const UserCreateBooksList = (props) => {
     };
 
     useEffect(() => {
-        const result = getBooksFromUserData(props.userData.uid);
+        const result = getBooksFromUserData(userData.uid);
         console.log({ result });
         console.log({ bookList });
-    }, [props]);
+    }, [userData]);
 
     //
     //デバッグ情報
@@ -80,7 +80,7 @@ export const UserCreateBooksList = (props) => {
                             <td>{x.data.bookDisplayName}</td>
                             <td>
                                 <Link
-                                    href={`./${props.userData.userName}/${x.data.bookName}`}
+                                    href={`./${userData.userName}/${x.data.bookName}`}
                                 >
                                     手記ページへ
                                 </Link>
@@ -93,16 +93,14 @@ export const UserCreateBooksList = (props) => {
     );
 };
 
-//****************************************************************
-//
-// ユーザのログイン情報
-//
-// [IN]userData ユーザデータ
-// [OUT] ユーザのログイン情報
-//
-//****************************************************************
-export const UserLoginInfo = (props) => {
-    if (!props.myUid) {
+/**
+ * ユーザのログイン情報
+ *
+ * @param {*} { myUid }
+ * @return {*}
+ */
+export const UserLoginInfo = ({ myUid }) => {
+    if (!myUid) {
         return (
             <>
                 <p>未ログイン</p>
@@ -111,7 +109,7 @@ export const UserLoginInfo = (props) => {
     } else {
         return (
             <>
-                <p>{props.myUid}としてログイン中</p>
+                <p>{myUid}としてログイン中</p>
             </>
         );
     }

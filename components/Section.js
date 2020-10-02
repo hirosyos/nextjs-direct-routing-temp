@@ -10,7 +10,7 @@ import { VALIDUSERS, VALIDBOOKS, VALIDSECTIONS } from "../common/common";
  * @param {string} bookId
  * @return {JSX}
  */
-const SectionCreateInputForm = (userData, bookData, bookId) => {
+const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
     //
     //デバッグ情報
     //

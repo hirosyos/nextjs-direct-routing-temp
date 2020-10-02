@@ -176,5 +176,3 @@ export default function SectionCreate(props) {
         </Layout>
     );
 }
-
-export default SectionCreate;

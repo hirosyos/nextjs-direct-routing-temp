@@ -71,8 +71,19 @@ export const getAllBookNamePaths = async () => {
     //有効ブックコレクションに対してコレクショングループで一括取得
     const querySnapshot = await firebase
         .firestore()
-        .collectionGroup(VALIDBOOKS)
-        .get();
+        .collectionGroup(VALIDBOOKS);
+
+    if (querySnapshot.size === 0) {
+        //ユーザが一人もいないタイミング
+
+        //
+        //デバッグ情報
+        //
+        console.log("準正常終了\n");
+
+        const paths = [];
+        return paths;
+    }
 
     //
     //デバッグ情報
@@ -285,12 +296,22 @@ export const getSectionDataFromSectionId = async (
         .doc(sectionId)
         .get();
 
+    if (!querySnapshot.exists) {
+        console.log(
+            "異常終了 getSectionDataFromSectionId セクションドキュメントスナップショットが取れなかった\n"
+        );
+        return {
+            userName: userName,
+            bookName: bookName,
+            sectionId: sectionId,
+            sectionData: null,
+        };
+    }
+
     //
     //デバッグ情報
     //
-    console.log(
-        "正常終了 getSectionDataFromSectionId getSectionDataFromSectionId\n"
-    );
+    console.log("正常終了  getSectionDataFromSectionId\n");
     return {
         userName: userName,
         bookName: bookName,

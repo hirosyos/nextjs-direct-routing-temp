@@ -93,20 +93,17 @@ export async function getStaticProps({ params }) {
 /**
  * 手記ページ
  *
- * @param {*} props.userName
- * @param {*} props.bookName
- * @param {*} props.bookData
+ * @export
+ * @param {*} { userName, bookName, bookData }
  * @return {*}
  */
-export default function BookNamePage(props) {
+export default function BookNamePage({ userName, bookName, bookData }) {
     //
     //デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 BookNamePage");
-    console.log({ props });
-
-    const { userName, bookName, bookData } = props;
+    console.log({ userName, bookName, bookData });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();

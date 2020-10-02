@@ -94,21 +94,31 @@ export async function getStaticProps({ params }) {
         },
     };
 }
+
 /**
  * セクションIDからページを作成する
  *
- * @param {*} props
+ * @export
+ * @param {*} {
+ *     userName,
+ *     bookName,
+ *     sectionId,
+ *     sectionData,
+ * }
  * @return {*}
  */
-export default function SectionIdPage(props) {
+export default function SectionIdPage({
+    userName,
+    bookName,
+    sectionId,
+    sectionData,
+}) {
     //
     //デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
     console.log("関数コンポーネント SectionIdPage");
-    console.log({ props });
-
-    const { userName, bookName, sectionId, sectionData } = props;
+    console.log({ userName, bookName, sectionId, sectionData });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
