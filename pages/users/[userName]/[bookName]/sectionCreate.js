@@ -55,14 +55,14 @@ export async function getStaticProps({ params }) {
         };
     }
 
-    //ブック名からユーザデータを取得
-    const bookData = await getBookDataFromBookName(
+    //ブック名からブックデータを取得
+    const { bookData } = await getBookDataFromBookName(
         params.userName,
         params.bookName
     );
 
     //該当ブック名のデータが存在しない場合はデータ部をNullで返す
-    if (!userData) {
+    if (!bookData) {
         console.log("関数：getStaticProps 該当ブック名のデータが見つからない");
         return {
             props: {
@@ -83,9 +83,9 @@ export async function getStaticProps({ params }) {
 
             bookName: params.bookName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            bookData: JSON.parse(JSON.stringify(bookData.bookData.data())),
+            bookData: JSON.parse(JSON.stringify(bookData)),
 
-            bookId: bookData.bookData.data().bookId,
+            bookId: bookData.bookId,
         },
     };
 }

@@ -137,25 +137,25 @@ export async function getUserDataFromUserName(userName) {
  */
 export async function getBookDataFromBookName(userName, bookName) {
     console.log("\n関数：getBookDataFromBookName：起動");
+    console.log({ userName, bookName });
 
+    //ユーザデータ取得
     const { userData } = await getUserDataFromUserName(userName);
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (!userData) {
         console.log(
             "関数：getBookDataFromBookName：該当ユーザ名のデータが存在しない"
         );
-        const bookData = {};
-        const bookId = null;
         return {
             userName: userName,
             bookName: bookName,
-            bookData: bookData,
-            bookId: bookId,
+            bookData: null,
+            bookId: null,
         };
     }
 
     //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
-    const tmpBookDocs = await firebase
+    const querySnapshot = await firebase
         .firestore()
         .collection(VALIDUSERS)
         .doc(userData.uid)
@@ -165,47 +165,23 @@ export async function getBookDataFromBookName(userName, bookName) {
         .get();
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (tmpBookDocs.size === 0) {
+    if (querySnapshot.size === 0) {
         console.log(
             "関数：getBookDataFromBookName：該当ブック名のデータが存在しない"
         );
-        const bookData = {};
-        const bookId = null;
         return {
             userName: userName,
             bookName: bookName,
-            bookData: bookData,
-            bookId: bookId,
+            bookData: null,
+            bookId: null,
         };
     }
-
-    // //ブックドキュメントからブックidを取得
-    // const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
-    //     return {
-    //         bookId: x.id,
-    //     };
-    // });
-
-    // const bookId = tmpBookDocsId[0].bookId;
-
-    // const bookData = await firebase
-    //     .firestore()
-    //     .collection(VALIDUSERS)
-    //     .doc(uid)
-    //     .collection(VALIDBOOKS)
-    //     .doc(bookId)
-    //     .get();
-
-    // console.log("◆bookData◆");
-    // console.log(bookData);
-    // console.log("◆bookId◆");
-    // console.log(bookId);
 
     return {
         userName: userName,
         bookName: bookName,
-        bookData: tmpBookDocs.docs[0],
-        bookId: tmpBookDocs.docs[0].bookId,
+        bookData: querySnapshot.docs[0].data(),
+        bookId: querySnapshot.docs[0].data().bookId,
     };
 }
 

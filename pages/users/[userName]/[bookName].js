@@ -38,20 +38,18 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
-    console.log("getStaticProps");
+    console.log("\n関数 getStaticProps 起動");
+    const { userName, bookName } = params;
     console.log({ params });
     //ブック名からブックデータを取得
-    const bookData = await getBookDataFromBookName(
-        params.userName,
-        params.bookName
-    );
+    const { bookData } = await getBookDataFromBookName(userName, bookName);
     //該当ブック名のデータが存在しない場合はデータ部をNullで返す
-    if (!bookData.bookData.exists) {
-        console.log("そんなブックありません");
+    if (!bookData) {
+        console.log("関数 getStaticProps そんなブックありません");
         return {
             props: {
-                userName: params.userName,
-                bookName: params.bookName,
+                userName: userName,
+                bookName: bookName,
                 bookData: null,
             },
         };
@@ -59,10 +57,10 @@ export async function getStaticProps({ params }) {
 
     return {
         props: {
-            userName: params.userName,
-            bookName: params.bookName,
+            userName: userName,
+            bookName: bookName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            bookData: JSON.parse(JSON.stringify(bookData.bookData.data())),
+            bookData: JSON.parse(JSON.stringify(bookData)),
         },
     };
 }
