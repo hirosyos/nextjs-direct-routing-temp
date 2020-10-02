@@ -136,16 +136,14 @@ export async function getUserDataFromUserName(userName) {
  * @return {*}
  */
 export async function getBookDataFromBookName(userName, bookName) {
-    console.log("\n関数：getBookDataFromBookName：起動");
+    console.log("\n開始 getBookDataFromBookName");
     console.log({ userName, bookName });
 
     //ユーザデータ取得
     const { userData } = await getUserDataFromUserName(userName);
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (!userData) {
-        console.log(
-            "関数：getBookDataFromBookName：該当ユーザ名のデータが存在しない"
-        );
+        console.log("異常終了 該当ユーザ名のデータが存在しない\n");
         return {
             userName: userName,
             bookName: bookName,
@@ -166,9 +164,7 @@ export async function getBookDataFromBookName(userName, bookName) {
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (querySnapshot.size === 0) {
-        console.log(
-            "関数：getBookDataFromBookName：該当ブック名のデータが存在しない"
-        );
+        console.log("異常終了 該当ブック名のデータが存在しない\n");
         return {
             userName: userName,
             bookName: bookName,
@@ -177,6 +173,7 @@ export async function getBookDataFromBookName(userName, bookName) {
         };
     }
 
+    console.log("正常終了\n");
     return {
         userName: userName,
         bookName: bookName,
@@ -194,92 +191,95 @@ export async function getBookDataFromBookName(userName, bookName) {
  * @param {*} sectionId
  * @return {*}
  */
-export async function getSectionDataFromSectionId(
+// export async function getSectionDataFromSectionId(
+export const getSectionDataFromSectionId = async (
     userName,
     bookName,
     sectionId
-) {
-    //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
-    const tmpUserDocs = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .where("userName", "==", userName)
-        .limit(1)
-        .get();
+) => {
+    console.log("\n開始 getSectionDataFromSectionId");
+    console.log({ userName, bookName, sectionId });
 
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (tmpUserDocs.size === 0) {
-        console.log(userName);
-        console.log("**************************tmpDoc");
-        // console.log(tmpUserDocs);
-        const sectionData = {};
+    // //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
+    // const querySnapshot = await firebase
+    //     .firestore()
+    //     .collection(VALIDUSERS)
+    //     .where("userName", "==", userName)
+    //     .limit(1)
+    //     .get();
+
+    // //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    // if (querySnapshot.size === 0) {
+    //     console.log("異常終了 該当ユーザ名のデータが存在しない");
+    //     return {
+    //         userName: userName,
+    //         bookName: bookName,
+    //         sectionId: sectionId,
+    //         sectionData: null,
+    //     };
+    // }
+
+    // //ユーザドキュメントからuidを取得
+    // const tmpUserDocsId = querySnapshot.docs.map((x) => {
+    //     return {
+    //         uid: x.id,
+    //     };
+    // });
+
+    // const uid = querySnapshot[0].uid;
+
+    // //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
+    // const tmpBookDocs = await firebase
+    //     .firestore()
+    //     .collection(VALIDUSERS)
+    //     .doc(uid)
+    //     .collection(VALIDBOOKS)
+    //     .where("bookName", "==", bookName)
+    //     .limit(1)
+    //     .get();
+
+    //ブックデータ取得
+    const { bookData } = await getBookDataFromBookName(userName, bookName);
+    console.log({ bookData });
+    //ブックデータが存在しない場合はデータ部をNullで返す
+    if (!bookData) {
+        console.log("異常終了 該当ブック名のデータが存在しない\n");
         return {
-            userName,
-            bookName,
-            sectionId,
-            sectionData,
+            userName: userName,
+            bookName: bookName,
+            sectionId: sectionId,
+            sectionData: null,
         };
     }
 
-    //ユーザドキュメントからuidを取得
-    const tmpUserDocsId = tmpUserDocs.docs.map((x) => {
-        return {
-            uid: x.id,
-        };
-    });
+    // //ブックドキュメントからブックidを取得
+    // const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
+    //     return {
+    //         bookId: x.id,
+    //     };
+    // });
 
-    const uid = tmpUserDocsId[0].uid;
-
-    //有効ブックコレクションのブックドキュメントからブックネームが一致するものを取得
-    const tmpBookDocs = await firebase
-        .firestore()
-        .collection(VALIDUSERS)
-        .doc(uid)
-        .collection(VALIDBOOKS)
-        .where("bookName", "==", bookName)
-        .limit(1)
-        .get();
-
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
-    if (tmpBookDocs.size === 0) {
-        console.log(bookName);
-        // console.log(tmpUserDocs);
-        const sectionData = {};
-        return {
-            userName,
-            bookName,
-            sectionId,
-            sectionData,
-        };
-    }
-
-    //ブックドキュメントからブックidを取得
-    const tmpBookDocsId = tmpBookDocs.docs.map((x) => {
-        return {
-            bookId: x.id,
-        };
-    });
-
-    const bookId = tmpBookDocsId[0].bookId;
+    // const bookId = tmpBookDocsId[0].bookId;
 
     //有効ユーザコレクションのユーザドキュメントからユーザネームが一致するものを取得
-    const sectionData = await firebase
+    const querySnapshot = await firebase
         .firestore()
         .collection(VALIDUSERS)
-        .doc(uid)
+        .doc(bookData.uid)
         .collection(VALIDBOOKS)
-        .doc(bookId)
+        .doc(bookData.bookId)
         .collection(VALIDSECTIONS)
         .doc(sectionId)
         .get();
 
+    console.log("正常終了\n");
     return {
-        userName,
-        bookName,
-        sectionId,
-        sectionData,
+        userName: userName,
+        bookName: bookName,
+        sectionId: sectionId,
+        sectionData: querySnapshot.data(),
     };
-}
+};
 
 /**
  * timestamp形式のデータをいい感じの形式に変換する

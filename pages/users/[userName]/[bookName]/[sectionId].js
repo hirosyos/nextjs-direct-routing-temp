@@ -38,21 +38,21 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
-    console.log("\nファイル：[sectionId].js");
-    console.log("\n関数：getStaticProps");
+    console.log("\nファイル [sectionId].js");
+    console.log("関数 getStaticProps");
     const { userName, bookName, sectionId } = params;
     console.log({ userName });
     console.log({ bookName });
     console.log({ sectionId });
 
     //セクションIDからセクションデータを取得
-    const sectionData = await getSectionDataFromSectionId(
+    const { sectionData } = await getSectionDataFromSectionId(
         userName,
         bookName,
         sectionId
     );
     //該当セクションIDのデータが存在しない場合はデータ部をNullで返す
-    if (!sectionData.sectionData.exists) {
+    if (!sectionData) {
         console.log("\nそんなセクションはありません");
         return {
             props: {
@@ -69,9 +69,7 @@ export async function getStaticProps({ params }) {
             bookName: bookName,
             sectionId: sectionId,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
-            sectionData: JSON.parse(
-                JSON.stringify(sectionData.sectionData.data())
-            ),
+            sectionData: JSON.parse(JSON.stringify(sectionData)),
         },
     };
 }
@@ -83,8 +81,8 @@ export async function getStaticProps({ params }) {
  */
 
 export default function SectionIdPage(props) {
-    console.log("\nファイル：[sectionId].js");
-    console.log("\n関数：SectionIdPage");
+    console.log("\nファイル [sectionId].js");
+    console.log("関数 SectionIdPage");
     console.log({ props });
     const { userName, bookName, sectionId, sectionData } = props;
 
@@ -100,13 +98,13 @@ export default function SectionIdPage(props) {
     }
     //ユーザネームがない段階では何もしない;
     if (!sectionId) {
-        console.log("\nそんなセクションはありません");
+        console.log("異常終了 そんなセクションはありません\n");
         return <div>そんなセクションはありません...</div>;
         // return null;
     }
 
     if (!sectionData) {
-        console.log("\n指定されたセクションは存在しません...");
+        console.log("異常終了 指定されたセクションは存在しません...\n");
         return <div>指定されたセクションは存在しません...</div>;
     }
 
