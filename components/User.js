@@ -8,18 +8,21 @@ import {
     VALIDBOOKS,
 } from "../common/common";
 
-//****************************************************************
-//
-// ユーザが作成した手記リスト
-//
-// [IN]userData ユーザデータ
-// [OUT] 手記リスト
-//
-//****************************************************************
+/**
+ * ユーザが作成した手記リスト
+ *
+ * @param {*} userData
+ * @return {*}
+ */
 export const UserCreateBooksList = (props) => {
-    const [bookList, setBookList] = useState(null);
-
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル User.js");
+    console.log("関数 UserCreateBooksList");
     console.log({ props });
+
+    const [bookList, setBookList] = useState(null);
 
     // firestoreから全データを取得してstateに格納する関数
     const getBooksFromUserData = async (uid) => {
@@ -48,6 +51,11 @@ export const UserCreateBooksList = (props) => {
         console.log({ result });
         console.log({ bookList });
     }, [props]);
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 UserCreateBooksList\n");
 
     return (
         <>

@@ -27,19 +27,25 @@ import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
  * @return {*}
  */
 export async function getStaticPaths() {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 getStaticPaths");
 
     //すべてのユーザ名を含んだパス生成用配列を取得
     const paths = await getAllUserNamesPaths();
 
+    //
     //デバッグ情報
+    //
     paths.map((p) => {
         console.log(`SSGページ対象は ${p.params.userName}`);
     });
 
+    //
     //デバッグ情報
+    //
     console.log("正常終了\n");
 
     return { paths, fallback: true };
@@ -53,7 +59,9 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/userName].js");
     console.log("関数 getStaticProps");
     console.log({ params });
@@ -65,7 +73,10 @@ export async function getStaticProps({ params }) {
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
     if (!userData) {
-        console.log("関数：getStaticProps：該当ユーザ名のデータが存在しない");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 該当ユーザ名のデータが存在しない\n");
         return {
             props: {
                 userName: userName,
@@ -73,6 +84,12 @@ export async function getStaticProps({ params }) {
             },
         };
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return {
         props: {
             userName: userName,
@@ -108,12 +125,18 @@ export default function UserNamePage(props) {
 
     //ユーザネームがない段階では何もしない;
     if (!props.userName) {
-        console.log("そんなユーザいません");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 そんなユーザいません\n");
         return <div>そんなユーザいません...</div>;
     }
 
     if (!props.userData) {
-        console.log("指定されたユーザは存在しません...");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 指定されたユーザは存在しません...\n");
         return <div>指定されたユーザは存在しません...</div>;
     }
 
@@ -143,6 +166,11 @@ export default function UserNamePage(props) {
         myUid = user.uid;
         // }
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

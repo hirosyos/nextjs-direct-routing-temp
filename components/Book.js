@@ -2,22 +2,20 @@ import React, { useState } from "react";
 import firebase from "../common/firebase";
 import { VALIDUSERS, VALIDBOOKS } from "../common/common";
 
-//****************************************************************
-//
-// 手記作成フォーム作成関数コンポーネント
-//
-// [IN]props.userData ユーザデータ
-// [OUT] 手記作成フォーム
-//
-//****************************************************************
-
 /**
- * 手記作成用フォームを作成する
+ * 手記作成用フォーム
  *
  * @param {*} props
  * @return {*}
  */
 const BookCreateInputForm = (props) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Book.js");
+    console.log("関数 BookCreateInputForm");
+    console.log({ props });
+
     const [isPublic, setIsPublic] = useState("");
     const [bookName, setBookName] = useState("");
     const [bookDisplayName, setBookDisplayName] = useState("");
@@ -109,6 +107,11 @@ const BookCreateInputForm = (props) => {
 
         // getTodosFromFirestore();
     };
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 BookCreateInputForm\n");
 
     return (
         <form action="">

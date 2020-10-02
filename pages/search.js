@@ -11,10 +11,18 @@ import styles from "../styles/Home.module.scss";
  * @return {*}
  */
 export default function Search(props) {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/serch.js");
     console.log("関数 Serch");
     console.log({ props });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return (
         <Layout>
             <div className={styles.container}>

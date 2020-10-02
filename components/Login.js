@@ -6,6 +6,12 @@ import styles from "../styles/Home.module.scss";
 import firebase from "../common/firebase";
 
 const Login = () => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Login.js");
+    console.log("関数 Login");
+
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [error, setError] = useState(null);

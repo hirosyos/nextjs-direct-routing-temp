@@ -15,11 +15,19 @@ import { getUserDataFromUserName } from "../../../common/common";
 //
 //****************************************************************
 export async function getStaticPaths() {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 getStaticPaths");
 
     const paths = [];
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 
@@ -33,7 +41,9 @@ export async function getStaticPaths() {
 //
 //****************************************************************
 export async function getStaticProps({ params }) {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 getStaticProps");
     console.log({ params });
@@ -43,7 +53,10 @@ export async function getStaticProps({ params }) {
 
     //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
     if (!userData) {
-        console.log("関数：getStaticProps：該当ユーザ名のデータが存在しない");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 該当ユーザ名のデータが存在しない");
         return {
             props: {
                 userName: params.userName,
@@ -51,6 +64,12 @@ export async function getStaticProps({ params }) {
             },
         };
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return {
         props: {
             userName: params.userName,
@@ -76,6 +95,11 @@ export default function BookCreatePage(props) {
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 BookCreatePage");
     console.log({ props });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

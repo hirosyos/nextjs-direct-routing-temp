@@ -7,11 +7,24 @@ import firebase from "../common/firebase";
 
 // Firestoreにデータを送信する関数
 const postDataToFirestore = async (collectionName, docName, postData) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Signin.js");
+    console.log("関数 postDataToFirestore");
+    console.log({ collectionName, docName, postData });
+
     const addedData = await firebase
         .firestore()
         .collection(collectionName)
         .doc(docName)
         .set(postData);
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return addedData;
 };
 
@@ -30,6 +43,12 @@ const createUserWithAuthenticationId = async (
 };
 
 const Signin = () => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Signin.js");
+    console.log("関数 Signin");
+
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [account, setAccount] = useState("");

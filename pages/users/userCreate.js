@@ -10,9 +10,16 @@ import styles from "../../styles/Home.module.scss";
  * @return {*}
  */
 export default function UserCreatePage() {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/uerCreate.js");
     console.log("関数 UserCreate");
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

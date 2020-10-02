@@ -9,9 +9,16 @@ import styles from "../../styles/Home.module.scss";
  * @return {*}
  */
 export default function UserSettingPage() {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/users/userSetting.js");
     console.log("関数 UserSettingPage");
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

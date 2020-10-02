@@ -35,6 +35,11 @@ export async function getStaticPaths() {
         );
     });
 
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 
@@ -63,7 +68,7 @@ export async function getStaticProps({ params }) {
     );
     //該当セクションIDのデータが存在しない場合はデータ部をNullで返す
     if (!sectionData) {
-        console.log("\nそんなセクションはありません");
+        console.log("そんなセクションはありません\n");
         return {
             props: {
                 userName: userName,
@@ -73,6 +78,12 @@ export async function getStaticProps({ params }) {
             },
         };
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return {
         props: {
             userName: userName,
@@ -102,9 +113,7 @@ export default function SectionIdPage(props) {
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
-        console.log(
-            `\n${userName}/${bookName}/${sectionId}静的ページ作成中...`
-        );
+        console.log(`${userName}/${bookName}/${sectionId}静的ページ作成中...`);
         return (
             <div>{`${userName}/${bookName}/${sectionId}静的ページ作成中...`}</div>
         );
@@ -119,6 +128,11 @@ export default function SectionIdPage(props) {
         console.log("異常終了 指定されたセクションは存在しません...\n");
         return <div>指定されたセクションは存在しません...</div>;
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

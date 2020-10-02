@@ -11,9 +11,16 @@ import Logout from "../components/Logout";
  * @return {*}
  */
 export default function Home() {
+    //
     //デバッグ情報
+    //
     console.log("\nファイル /pages/index.js");
     console.log("関数 Home");
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

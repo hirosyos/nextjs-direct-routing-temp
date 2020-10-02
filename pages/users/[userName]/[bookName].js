@@ -28,11 +28,19 @@ export async function getStaticPaths() {
     //
     //デバッグ情報
     //
-    paths.map((p) => {
-        console.log(
-            `SSGページ対象は ${p.params.userName}/${p.params.bookName}`
-        );
-    });
+    if (!paths) {
+        paths.map((p) => {
+            console.log(
+                `SSG対象ユーザページ ${p.params.userName}/${p.params.bookName}`
+            );
+        });
+    }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 getStaticPaths\n");
+
     return { paths, fallback: true };
 }
 
@@ -68,6 +76,11 @@ export async function getStaticProps({ params }) {
         };
     }
 
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 getStaticProps\n");
+
     return {
         props: {
             userName: userName,
@@ -90,7 +103,7 @@ export default function BookNamePage(props) {
     //デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
-    console.log("関数 getStaticProps");
+    console.log("関数 BookNamePage");
     console.log({ props });
 
     const { userName, bookName, bookData } = props;
@@ -103,14 +116,27 @@ export default function BookNamePage(props) {
     }
     //ユーザネームがない段階では何もしない;
     if (!bookName) {
-        console.log("そんな手記はありません");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 そんな手記はありません\n");
+
         return <div>そんな手記はありません...</div>;
     }
 
     if (!bookData) {
-        console.log("指定された手記は存在しません...");
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 指定された手記は存在しません...\n");
+
         return <div>指定された手記は存在しません...</div>;
     }
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 BookNamePage\n");
 
     return (
         <Layout>

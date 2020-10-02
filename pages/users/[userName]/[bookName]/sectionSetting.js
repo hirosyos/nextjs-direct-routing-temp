@@ -19,6 +19,12 @@ export async function getStaticPaths() {
     console.log("関数 getStaticPaths");
 
     const paths = [];
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 /**
@@ -37,6 +43,11 @@ export async function getStaticProps({ params }) {
     );
     console.log("関数 getStaticProps");
     console.log({ params });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return {
         props: {
@@ -60,6 +71,11 @@ export default function SectionSettingPage(props) {
     );
     console.log("関数コンポーネント SectionSetting");
     console.log({ props });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

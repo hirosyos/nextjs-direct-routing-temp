@@ -17,6 +17,12 @@ export async function getStaticPaths() {
     console.log("関数 getStaticPaths");
 
     const paths = [];
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 /**
@@ -33,6 +39,11 @@ export async function getStaticProps({ params }) {
     console.log("\nファイル /pages/users/[userName]/bookSetting.js");
     console.log("関数 getStaticProps");
     console.log({ params });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return {
         props: {
@@ -54,6 +65,11 @@ export default function BookSettingPage(props) {
     console.log("\nファイル /pages/users/[userName]/bookSetting.js");
     console.log("関数 BookSettingPage");
     console.log({ props });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

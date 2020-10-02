@@ -15,13 +15,21 @@ import SectionCreateInputForm from "../../../../components/Section";
  * @return {*}
  */
 export async function getStaticPaths() {
+    //
     //デバッグ情報
+    //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
     );
     console.log("関数 getStaticPaths");
 
     const paths = [];
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return { paths, fallback: true };
 }
 
@@ -33,7 +41,9 @@ export async function getStaticPaths() {
  * @return {*}
  */
 export async function getStaticProps({ params }) {
+    //
     //デバッグ情報
+    //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
     );
@@ -77,6 +87,11 @@ export async function getStaticProps({ params }) {
         };
     }
 
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
+
     return {
         props: {
             userName: params.userName,
@@ -100,12 +115,19 @@ export async function getStaticProps({ params }) {
  * @return {*}
  */
 export default function SectionCreate(props) {
+    //
     //デバッグ情報
+    //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
     );
     console.log("関数コンポーネント SectionCreate");
     console.log({ props });
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了\n");
 
     return (
         <Layout>

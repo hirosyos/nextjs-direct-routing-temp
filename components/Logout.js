@@ -6,6 +6,12 @@ import styles from "../styles/Home.module.scss";
 import firebase from "../common/firebase";
 
 const Logout = () => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Logout.js");
+    console.log("関数 Logout");
+
     const [pending, setPending] = useState(false);
     const mounted = useRef(true);
     useEffect(() => {

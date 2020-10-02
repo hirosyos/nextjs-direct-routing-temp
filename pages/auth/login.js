@@ -72,13 +72,11 @@ export default function LoginPage() {
     console.log("\nファイル /pages/auth/login.js");
     console.log("関数 LoginPage");
 
-    // console.log("props");
-    // console.log(props);
     const [user, initialising, error2] = useAuthState(firebase.auth());
 
-    // const user = firebase.auth().currentUser;
     console.log("user");
     console.log(user);
+
     if (initialising) {
         return (
             <Layout>

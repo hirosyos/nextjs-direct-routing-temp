@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import firebase from "../common/firebase";
 import { VALIDUSERS, VALIDBOOKS, VALIDSECTIONS } from "../common/common";
 
-//****************************************************************
-//
-// セクション作成フォーム作成関数コンポーネント
-//
-// [IN]userData ユーザデータ
-// [IN]bookData ブックデータ
-// [IN]bookId ブックドキュメントID
-// [OUT] セクション作成フォーム
-//
-//****************************************************************
-const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
+/**
+ * セクション作成フォーム
+ *
+ * @param {object} userData
+ * @param {object} bookData
+ * @param {string} bookId
+ * @return {JSX}
+ */
+const SectionCreateInputForm = (userData, bookData, bookId) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル Section.js");
+    console.log("関数 SectionCreateInputForm");
+    console.log({ userData, bookData, bookId });
+
     const [isPublic, setIsPublic] = useState("");
     const [date, setDate] = useState("");
     const [title, setTitle] = useState("");
@@ -108,6 +113,11 @@ const SectionCreateInputForm = ({ userData, bookData, bookId }) => {
 
         // getTodosFromFirestore();
     };
+
+    //
+    //デバッグ情報
+    //
+    console.log("正常終了 SectionCreateInputForm\n");
 
     return (
         <form action="">
