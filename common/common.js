@@ -71,7 +71,8 @@ export const getAllBookNamePaths = async () => {
     //有効ブックコレクションに対してコレクショングループで一括取得
     const querySnapshot = await firebase
         .firestore()
-        .collectionGroup(VALIDBOOKS);
+        .collectionGroup(VALIDBOOKS)
+        .get();
 
     if (querySnapshot.size === 0) {
         //ユーザが一人もいないタイミング

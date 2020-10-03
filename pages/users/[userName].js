@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import Logout from "../../components/Logout";
 import Layout from "../../components/Layout";
@@ -19,6 +19,8 @@ import {
     convertFromTimestampToDatetime,
 } from "../../common/common";
 import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
+import { CurrentUser } from "../../components/Auth";
+import { AuthContext } from "../_app";
 
 /**
  * 静的パス取得
@@ -108,6 +110,7 @@ export const getStaticProps = async ({ params }) => {
  * @param {object} userData ユーザデータ
  * @return {JSX}
  */
+// export default function UserNamePage({ userName, userData }) {
 export default function UserNamePage({ userName, userData }) {
     //デバッグ情報
     console.log("\nファイル /pages/users/[userName].js");
@@ -139,32 +142,35 @@ export default function UserNamePage({ userName, userData }) {
         return <div>指定されたユーザは存在しません...</div>;
     }
 
-    const [user, initialising, error] = useAuthState(firebase.auth());
-    if (initialising) {
-        return (
-            <Layout>
-                <div>認証確認中...</div>
-            </Layout>
-        );
-    }
-    if (error) {
-        return (
-            <Layout>
-                <div>認証確認エラー: {error}</div>
-            </Layout>
-        );
-    }
-    // if (!user) {
-    //     setMyUid(null);
+    // const [user, initialising, error] = useAuthState(firebase.auth());
+    // if (initialising) {
+    //     return (
+    //         <Layout>
+    //             <div>認証確認中...</div>
+    //         </Layout>
+    //     );
     // }
-    if (user) {
-        console.log({ userName, userData });
-        //ログインしていたら自分のuidを保存しておく
-        // if (user.uid === userData.uid) {
-        // setMyUid(user.uid);
-        myUid = user.uid;
-        // }
-    }
+    // if (error) {
+    //     return (
+    //         <Layout>
+    //             <div>認証確認エラー: {error}</div>
+    //         </Layout>
+    //     );
+    // }
+    // // if (!user) {
+    // //     setMyUid(null);
+    // // }
+    // if (user) {
+    //     console.log({ userName, userData });
+    //     //ログインしていたら自分のuidを保存しておく
+    //     // if (user.uid === userData.uid) {
+    //     // setMyUid(user.uid);
+    //     myUid = user.uid;
+    //     // }
+    // }
+
+    const user = useContext(AuthContext).user;
+    console.log({ user });
 
     //
     //デバッグ情報
@@ -180,7 +186,8 @@ export default function UserNamePage({ userName, userData }) {
                 </Head>
 
                 <main className={styles.main}>
-                    <UserLoginInfo myUid={myUid} />
+                    <UserLoginInfo myUid={user.uid} />
+                    {/* <CurrentUser /> */}
                     <h1>{userName}の手記書庫</h1>
                     <p>ユーザ情報</p>
                     <table border="1">
