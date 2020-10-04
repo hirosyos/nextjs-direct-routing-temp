@@ -347,19 +347,55 @@ export const getSectionDataFromSectionId = async (
 };
 
 /**
+ * セクションリストを取得
+ *
+ * @param {*} uid
+ * @param {*} bookId
+ */
+export const getSectionDataListFromBookData = async (bookData) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル common.js");
+    console.log("関数 getSectionDataListFromBookData");
+    console.log(bookData.uid);
+    console.log(bookData.bookId);
+    const aaaquerySnapshot = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(bookData.uid)
+        .collection(VALIDBOOKS)
+        .doc(bookData.bookId)
+        .collection(VALIDSECTIONS)
+        .orderBy("updatedAt")
+        .get();
+    console.log({ aaaquerySnapshot });
+    console.log("aaaquerySnapshot.size");
+    console.log(aaaquerySnapshot.size);
+    if (aaaquerySnapshot.size === 0) {
+        return null;
+    }
+    const sectionList = aaaquerySnapshot.docs.map((x) => {
+        console.log("x.data()");
+        console.log(x.data());
+        return {
+            userName: x.data.userName,
+            bookName: x.data.bookName,
+            data: x.data(),
+        };
+    });
+
+    console.log("正常終了 getSectionDataListFromBookData\n");
+    return sectionList;
+};
+
+/**
  * timestamp形式のデータをいい感じの形式に変換する
  *
  * @param {*} timestamp
  * @return {*} いい感じの形式
  */
 export const convertFromTimestampToDatetime = (timestamp) => {
-    //
-    //デバッグ情報
-    //
-    console.log("\nファイル common.js");
-    console.log("関数 convertFromTimestampToDatetime");
-    console.log({ timestamp });
-
     const _d = timestamp ? new Date(timestamp * 1000) : new Date();
     const Y = _d.getFullYear();
     const m = (_d.getMonth() + 1).toString().padStart(2, "0");
@@ -367,11 +403,6 @@ export const convertFromTimestampToDatetime = (timestamp) => {
     const H = _d.getHours().toString().padStart(2, "0");
     const i = _d.getMinutes().toString().padStart(2, "0");
     const s = _d.getSeconds().toString().padStart(2, "0");
-
-    //
-    //デバッグ情報
-    //
-    console.log("正常終了 convertFromTimestampToDatetime\n");
 
     return `${Y}/${m}/${d} ${H}:${i}:${s}`;
 };

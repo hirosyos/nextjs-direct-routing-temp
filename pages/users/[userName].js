@@ -18,7 +18,8 @@ import {
     getUserDataFromUserName,
     convertFromTimestampToDatetime,
 } from "../../common/common";
-import { UserCreateBooksList, UserLoginInfo } from "../../components/User";
+import { UserLoginInfo } from "../../components/User";
+import { BooksList } from "../../components/BookList";
 import { CurrentUser } from "../../components/Auth";
 import { AuthContext } from "../_app";
 
@@ -262,7 +263,7 @@ export default function UserNamePage({ userName, userData }) {
                     <br />
 
                     <p>{userName}が作成した手記</p>
-                    <UserCreateBooksList userData={userData} />
+                    <BooksList userData={userData} />
                     <br />
 
                     <Link href={`/users/${userName}/bookCreate`}>

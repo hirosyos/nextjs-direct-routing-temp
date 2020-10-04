@@ -3,11 +3,14 @@ import Link from "next/link";
 import Layout from "../../../components/Layout";
 import styles from "../../../styles/Home.module.scss";
 import {
+    getUserDataFromUserName,
     getBookDataFromBookName,
     convertFromTimestampToDatetime,
     getAllBookNamePaths,
+    getSectionDataListFromBookData,
 } from "../../../common/common";
 import { useRouter } from "next/router";
+import { SectionList, SectionList2 } from "../../../components/SectionList";
 
 /**
  * 静的パス取得
@@ -62,6 +65,21 @@ export async function getStaticProps({ params }) {
 
     const { userName, bookName } = params;
 
+    //ユーザ名からユーザデータを取得
+    const { userData } = await getUserDataFromUserName(userName);
+    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    if (!userData) {
+        console.log("関数 getStaticProps そんなユーザいません");
+        return {
+            props: {
+                userName: userName,
+                userData: null,
+                bookName: bookName,
+                bookData: null,
+            },
+        };
+    }
+
     //ブック名からブックデータを取得
     const { bookData } = await getBookDataFromBookName(userName, bookName);
     //該当ブック名のデータが存在しない場合はデータ部をNullで返す
@@ -70,10 +88,17 @@ export async function getStaticProps({ params }) {
         return {
             props: {
                 userName: userName,
+                userData: userData,
                 bookName: bookName,
                 bookData: null,
             },
         };
+    }
+
+    //ブック配下のセクションデータリストを取得
+    const sectionList = await getSectionDataListFromBookData(bookData);
+    //セクションが一つでもある場合(なくても異常ではない)
+    if (sectionList) {
     }
 
     //
@@ -82,11 +107,13 @@ export async function getStaticProps({ params }) {
     console.log("正常終了 getStaticProps\n");
 
     return {
+        //Next.jsはDate型を返してほしくないようなのでJSON変換という暫定処理
         props: {
             userName: userName,
+            userData: JSON.parse(JSON.stringify(userData)),
             bookName: bookName,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             bookData: JSON.parse(JSON.stringify(bookData)),
+            sectionList: JSON.parse(JSON.stringify(sectionList)),
         },
     };
 }
@@ -97,13 +124,19 @@ export async function getStaticProps({ params }) {
  * @param {*} { userName, bookName, bookData }
  * @return {*}
  */
-export default function BookNamePage({ userName, bookName, bookData }) {
+export default function BookNamePage({
+    userName,
+    userData,
+    bookName,
+    bookData,
+    sectionList,
+}) {
     //
     //デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 BookNamePage");
-    console.log({ userName, bookName, bookData });
+    console.log({ userName, userData, bookName, bookData, sectionList });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
@@ -111,6 +144,24 @@ export default function BookNamePage({ userName, bookName, bookData }) {
         console.log(`${userName}/${bookName}静的ページ作成中...`);
         return <div>{`${userName}/${bookName}静的ページ作成中...`}</div>;
     }
+
+    //ユーザネームがない段階では何もしない;
+    if (!userName) {
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 そんなユーザいません\n");
+        return <div>そんなユーザいません...</div>;
+    }
+
+    if (!userData) {
+        //
+        //デバッグ情報
+        //
+        console.log("異常終了 指定されたユーザは存在しません...\n");
+        return <div>指定されたユーザは存在しません...</div>;
+    }
+
     //ユーザネームがない段階では何もしない;
     if (!bookName) {
         //
@@ -259,12 +310,20 @@ export default function BookNamePage({ userName, bookName, bookData }) {
                     <br />
 
                     <h1>手記 {bookName} が持つセクション</h1>
+                    {/* <SectionList bookData={bookData} /> */}
+                    <SectionList2
+                        userName={userData.userName}
+                        bookName={bookData.bookName}
+                        sectionList={sectionList}
+                    />
 
-                    <Link href={`/users/${userName}/bookSetting`}>
+                    <Link href={`/users/${userData.userName}/bookSetting`}>
                         <a>手記設定 へ移動</a>
                     </Link>
                     <br />
-                    <Link href={`/users/${userName}/${bookName}/sectionCreate`}>
+                    <Link
+                        href={`/users/${userData.userName}/${bookData.bookName}/sectionCreate`}
+                    >
                         <a>セクション作成 へ移動</a>
                     </Link>
                 </main>
