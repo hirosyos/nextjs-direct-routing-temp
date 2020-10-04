@@ -310,10 +310,9 @@ export default function BookNamePage({
                     <br />
 
                     <h1>手記 {bookName} が持つセクション</h1>
-                    {/* <SectionList bookData={bookData} /> */}
-                    <SectionList2
-                        userName={userData.userName}
-                        bookName={bookData.bookName}
+                    <SectionList
+                        userData={userData}
+                        bookData={bookData}
                         sectionList={sectionList}
                     />
 

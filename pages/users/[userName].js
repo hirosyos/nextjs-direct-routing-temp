@@ -17,9 +17,10 @@ import {
     getAllUserNamesPaths,
     getUserDataFromUserName,
     convertFromTimestampToDatetime,
+    getBookDataListFromUserData,
 } from "../../common/common";
 import { UserLoginInfo } from "../../components/User";
-import { BooksList } from "../../components/BookList";
+import { BooksList, BooksList2 } from "../../components/BookList";
 import { CurrentUser } from "../../components/Auth";
 import { AuthContext } from "../_app";
 
@@ -92,6 +93,12 @@ export const getStaticProps = async ({ params }) => {
         };
     }
 
+    //ユーザデータ配下のブックデータリストを取得
+    const bookDataList = await getBookDataListFromUserData(userData);
+    //セクションが一つでもある場合(なくても異常ではない)
+    if (bookDataList) {
+    }
+
     //
     //デバッグ情報
     //
@@ -102,6 +109,7 @@ export const getStaticProps = async ({ params }) => {
             userName: userName,
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             userData: JSON.parse(JSON.stringify(userData)),
+            bookDataList: JSON.parse(JSON.stringify(bookDataList)),
         },
     };
 };
@@ -113,11 +121,11 @@ export const getStaticProps = async ({ params }) => {
  * @param {object} userData ユーザデータ
  * @return {JSX}
  */
-// export default function UserNamePage({ userName, userData }) {
-export default function UserNamePage({ userName, userData }) {
+export default function UserNamePage({ userName, userData, bookDataList }) {
     //デバッグ情報
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 UserNamePage");
+    console.log({ userName, userData, bookDataList });
 
     let myUid;
 
@@ -144,33 +152,6 @@ export default function UserNamePage({ userName, userData }) {
         console.log("異常終了 指定されたユーザは存在しません...\n");
         return <div>指定されたユーザは存在しません...</div>;
     }
-
-    // const [user, initialising, error] = useAuthState(firebase.auth());
-    // if (initialising) {
-    //     return (
-    //         <Layout>
-    //             <div>認証確認中...</div>
-    //         </Layout>
-    //     );
-    // }
-    // if (error) {
-    //     return (
-    //         <Layout>
-    //             <div>認証確認エラー: {error}</div>
-    //         </Layout>
-    //     );
-    // }
-    // // if (!user) {
-    // //     setMyUid(null);
-    // // }
-    // if (user) {
-    //     console.log({ userName, userData });
-    //     //ログインしていたら自分のuidを保存しておく
-    //     // if (user.uid === userData.uid) {
-    //     // setMyUid(user.uid);
-    //     myUid = user.uid;
-    //     // }
-    // }
 
     const user = useContext(AuthContext).user;
     console.log({ user });
@@ -264,6 +245,10 @@ export default function UserNamePage({ userName, userData }) {
 
                     <p>{userName}が作成した手記</p>
                     <BooksList userData={userData} />
+                    <BooksList2
+                        userData={userData}
+                        bookDataList={bookDataList}
+                    />
                     <br />
 
                     <Link href={`/users/${userName}/bookCreate`}>

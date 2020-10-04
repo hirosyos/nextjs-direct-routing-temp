@@ -347,7 +347,7 @@ export const getSectionDataFromSectionId = async (
 };
 
 /**
- * セクションリストを取得
+ * ブックデータ配下のセクションリストを取得
  *
  * @param {*} uid
  * @param {*} bookId
@@ -360,7 +360,7 @@ export const getSectionDataListFromBookData = async (bookData) => {
     console.log("関数 getSectionDataListFromBookData");
     console.log(bookData.uid);
     console.log(bookData.bookId);
-    const aaaquerySnapshot = await firebase
+    const querySnapshot = await firebase
         .firestore()
         .collection(VALIDUSERS)
         .doc(bookData.uid)
@@ -369,13 +369,13 @@ export const getSectionDataListFromBookData = async (bookData) => {
         .collection(VALIDSECTIONS)
         .orderBy("updatedAt")
         .get();
-    console.log({ aaaquerySnapshot });
-    console.log("aaaquerySnapshot.size");
-    console.log(aaaquerySnapshot.size);
-    if (aaaquerySnapshot.size === 0) {
+    console.log({ querySnapshot });
+    console.log("querySnapshot.size");
+    console.log(querySnapshot.size);
+    if (querySnapshot.size === 0) {
         return null;
     }
-    const sectionList = aaaquerySnapshot.docs.map((x) => {
+    const sectionList = querySnapshot.docs.map((x) => {
         console.log("x.data()");
         console.log(x.data());
         return {
@@ -386,6 +386,45 @@ export const getSectionDataListFromBookData = async (bookData) => {
     });
 
     console.log("正常終了 getSectionDataListFromBookData\n");
+    return sectionList;
+};
+
+/**
+ * ユーザデータ配下のブックリストを取得
+ *
+ * @param {*} uid
+ * @param {*} bookId
+ */
+export const getBookDataListFromUserData = async (userData) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル common.js");
+    console.log("関数 getBookDataListFromUserData");
+    console.log(userData.uid);
+    const querySnapshot = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .doc(userData.uid)
+        .collection(VALIDBOOKS)
+        .orderBy("updatedAt")
+        .get();
+    console.log({ querySnapshot });
+    console.log("querySnapshot.size");
+    console.log(querySnapshot.size);
+    if (querySnapshot.size === 0) {
+        return null;
+    }
+    const sectionList = querySnapshot.docs.map((x) => {
+        console.log("x.data()");
+        console.log(x.data());
+        return {
+            bookName: x.data.bookName,
+            data: x.data(),
+        };
+    });
+
+    console.log("正常終了 getBookDataListFromUserData\n");
     return sectionList;
 };
 
