@@ -347,6 +347,44 @@ export const getSectionDataFromSectionId = async (
 };
 
 /**
+ * ユーザデータリストを取得
+ *
+ * @param {*} uid
+ * @param {*} bookId
+ */
+export const getUserDataList = async () => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル common.js");
+    console.log("関数 getUserDataList");
+
+    const querySnapshot = await firebase
+        .firestore()
+        .collection(VALIDUSERS)
+        .orderBy("userName")
+        .get();
+    console.log({ querySnapshot });
+    console.log("querySnapshot.size");
+    console.log(querySnapshot.size);
+    if (querySnapshot.size === 0) {
+        return null;
+    }
+
+    const userDataList = querySnapshot.docs.map((x) => {
+        console.log("x.data()");
+        console.log(x.data());
+        return {
+            userName: x.data().userName,
+            userData: x.data(),
+        };
+    });
+
+    console.log("正常終了 getSectionDataListFromBookData\n");
+    return userDataList;
+};
+
+/**
  * ブックデータ配下のセクションリストを取得
  *
  * @param {*} uid
