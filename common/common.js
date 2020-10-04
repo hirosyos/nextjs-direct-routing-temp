@@ -419,7 +419,7 @@ export const getSectionDataListFromBookData = async (userData, bookData) => {
         console.log(x.data());
         return {
             userName: userData.userName,
-            bookName: x.data().bookName,
+            bookName: bookData.bookName,
             sectionId: x.data().sectionId,
             sectionData: x.data(),
         };

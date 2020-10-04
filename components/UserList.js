@@ -39,14 +39,16 @@ export const UserList = ({ userDataList }) => {
                     </tr>
                     {userDataList?.map((x, index) => (
                         <tr key={index}>
-                            <td>{x.isPublic}</td>
+                            <td>{x.userData.isPublic}</td>
                             <td>
-                                {convertFromTimestampToDatetime(x.updatedAt)}
+                                {convertFromTimestampToDatetime(
+                                    x.userData.updatedAt
+                                )}
                             </td>
-                            <td>{x.userName}</td>
-                            <td>{x.userDisplayName}</td>
+                            <td>{x.userData.userName}</td>
+                            <td>{x.userData.userDisplayName}</td>
                             <td>
-                                <Link href={`/users/${x.userName}`}>
+                                <Link href={`/users/${x.userData.userName}`}>
                                     ユーザページへ
                                 </Link>
                             </td>
