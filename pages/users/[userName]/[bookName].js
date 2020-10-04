@@ -28,10 +28,10 @@ export async function getStaticPaths() {
     //
     //デバッグ情報
     //
-    if (!paths) {
+    if (paths) {
         paths.map((p) => {
             console.log(
-                `SSG対象ユーザページ ${p.params.userName}/${p.params.bookName}`
+                `SSG対象ブックページ ${p.params.userName}/${p.params.bookName}`
             );
         });
     }

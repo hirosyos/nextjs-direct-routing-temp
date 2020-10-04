@@ -42,9 +42,11 @@ export const getStaticPaths = async () => {
     //
     //デバッグ情報
     //
-    paths.map((p) => {
-        console.log(`SSGページ対象は ${p.params.userName}`);
-    });
+    if (paths) {
+        paths.map((p) => {
+            console.log(`SSG対象ユーザページ ${p.params.userName}`);
+        });
+    }
 
     //
     //デバッグ情報

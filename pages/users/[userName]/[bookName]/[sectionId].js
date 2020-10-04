@@ -29,12 +29,13 @@ export async function getStaticPaths() {
     //
     //デバッグ情報
     //
-    paths.map((p) => {
-        console.log(
-            `SSGページ対象は ${p.params.userName}/${p.params.bookName}/${p.params.sectionId}`
-        );
-    });
-
+    if (paths) {
+        paths.map((p) => {
+            console.log(
+                `SSG対象セクションページ ${p.params.userName}/${p.params.bookName}/${p.params.sectionId}`
+            );
+        });
+    }
     //
     //デバッグ情報
     //

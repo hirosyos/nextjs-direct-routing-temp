@@ -75,7 +75,7 @@ export const getAllBookNamePaths = async () => {
         .get();
 
     if (querySnapshot.size === 0) {
-        //ユーザが一人もいないタイミング
+        //サービス開始時などブックが一つもないタイミング
 
         //
         //デバッグ情報
@@ -91,15 +91,21 @@ export const getAllBookNamePaths = async () => {
     //
     console.log("正常終了\n");
 
-    //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return querySnapshot.docs.map((bookDocSnapshot) => {
-        return {
-            params: {
-                userName: bookDocSnapshot.data().userName,
-                bookName: bookDocSnapshot.data().bookName,
-            },
-        };
-    });
+    //有効ブックコレクションの親ユーザドキュメントからユーザネーム取り出し
+    const paths = await Promise.all(
+        querySnapshot.docs.map(async (bookDocSnapshot) => {
+            const userDocSnapshot = await bookDocSnapshot.ref.parent.parent.get();
+
+            return {
+                params: {
+                    userName: userDocSnapshot.data().userName,
+                    bookName: bookDocSnapshot.data().bookName,
+                },
+            };
+        })
+    );
+
+    return paths;
 };
 
 /**
@@ -115,27 +121,46 @@ export const getAllSectionIdPaths = async () => {
     console.log("\nファイル common.js");
     console.log("関数 getAllSectionIdPaths");
 
-    //有効ブックコレクションに対してコレクショングループで一括取得
+    //有効セクションコレクションに対してコレクショングループで一括取得
     const querySnapshot = await firebase
         .firestore()
         .collectionGroup(VALIDSECTIONS)
         .get();
+
+    if (querySnapshot.size === 0) {
+        //サービス開始時などセクションが一つもないタイミング
+
+        //
+        //デバッグ情報
+        //
+        console.log("準正常終了\n");
+
+        const paths = [];
+        return paths;
+    }
 
     //
     //デバッグ情報
     //
     console.log("正常終了\n");
 
-    //有効ユーザコレクションのすべてのユーザドキュメントからユーザネーム取り出し
-    return querySnapshot.docs.map((sectionDocSnapshot) => {
-        return {
-            params: {
-                userName: sectionDocSnapshot.data().userName,
-                bookName: sectionDocSnapshot.data().bookName,
-                sectionId: sectionDocSnapshot.data().sectionId,
-            },
-        };
-    });
+    //有効セクションコレクションの親ブックドキュメントからブックネーム取り出し
+    //親ブックドキュメントの親ユーザ毒面とからユーザネーム取り出し
+    const paths = await Promise.all(
+        querySnapshot.docs.map(async (sectionDocSnapshot) => {
+            const userDocSnapshot = await sectionDocSnapshot.ref.parent.parent.parent.parent.get();
+            const bookDocSnapshot = await sectionDocSnapshot.ref.parent.parent.get();
+            return {
+                params: {
+                    userName: userDocSnapshot.data().userName,
+                    bookName: bookDocSnapshot.data().bookName,
+                    sectionId: sectionDocSnapshot.data().sectionId,
+                },
+            };
+        })
+    );
+
+    return paths;
 };
 
 /**
