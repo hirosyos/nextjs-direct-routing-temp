@@ -10,7 +10,7 @@ import {
     getSectionDataListFromBookData,
 } from "../../../common/common";
 import { useRouter } from "next/router";
-import { SectionList, SectionList2 } from "../../../components/SectionList";
+import { SectionList } from "../../../components/SectionList";
 
 /**
  * 静的パス取得
@@ -96,9 +96,12 @@ export async function getStaticProps({ params }) {
     }
 
     //ブック配下のセクションデータリストを取得
-    const sectionList = await getSectionDataListFromBookData(bookData);
+    const sectionDataList = await getSectionDataListFromBookData(
+        userData,
+        bookData
+    );
     //セクションが一つでもある場合(なくても異常ではない)
-    if (sectionList) {
+    if (sectionDataList) {
     }
 
     //
@@ -113,7 +116,7 @@ export async function getStaticProps({ params }) {
             userData: JSON.parse(JSON.stringify(userData)),
             bookName: bookName,
             bookData: JSON.parse(JSON.stringify(bookData)),
-            sectionList: JSON.parse(JSON.stringify(sectionList)),
+            sectionDataList: JSON.parse(JSON.stringify(sectionDataList)),
         },
     };
 }
@@ -129,14 +132,14 @@ export default function BookNamePage({
     userData,
     bookName,
     bookData,
-    sectionList,
+    sectionDataList,
 }) {
     //
     //デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 BookNamePage");
-    console.log({ userName, userData, bookName, bookData, sectionList });
+    console.log({ userName, userData, bookName, bookData, sectionDataList });
 
     //事前ビルドされていない場合はここで作成する
     const router = useRouter();
@@ -310,11 +313,7 @@ export default function BookNamePage({
                     <br />
 
                     <h1>手記 {bookName} が持つセクション</h1>
-                    <SectionList
-                        userData={userData}
-                        bookData={bookData}
-                        sectionList={sectionList}
-                    />
+                    <SectionList sectionDataList={sectionDataList} />
 
                     <Link href={`/users/${userData.userName}/bookSetting`}>
                         <a>手記設定 へ移動</a>

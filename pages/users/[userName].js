@@ -18,11 +18,13 @@ import {
     getUserDataFromUserName,
     convertFromTimestampToDatetime,
     getBookDataListFromUserData,
+    getSectionDataListFromUserData,
 } from "../../common/common";
 import { UserLoginInfo } from "../../components/User";
-import { BooksList, BooksList2 } from "../../components/BookList";
+import { BooksList } from "../../components/BookList";
 import { CurrentUser } from "../../components/Auth";
 import { AuthContext } from "../_app";
+import { SectionList } from "../../components/SectionList";
 
 /**
  * 静的パス取得
@@ -99,6 +101,12 @@ export const getStaticProps = async ({ params }) => {
     if (bookDataList) {
     }
 
+    //ユーザデータ配下のセクションデータリストを取得
+    const sectionDataList = await getSectionDataListFromUserData(userData);
+    //セクションが一つでもある場合(なくても異常ではない)
+    if (sectionDataList) {
+    }
+
     //
     //デバッグ情報
     //
@@ -110,6 +118,7 @@ export const getStaticProps = async ({ params }) => {
             //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             userData: JSON.parse(JSON.stringify(userData)),
             bookDataList: JSON.parse(JSON.stringify(bookDataList)),
+            sectionDataList: JSON.parse(JSON.stringify(sectionDataList)),
         },
     };
 };
@@ -121,11 +130,16 @@ export const getStaticProps = async ({ params }) => {
  * @param {object} userData ユーザデータ
  * @return {JSX}
  */
-export default function UserNamePage({ userName, userData, bookDataList }) {
+export default function UserNamePage({
+    userName,
+    userData,
+    bookDataList,
+    sectionDataList,
+}) {
     //デバッグ情報
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 UserNamePage");
-    console.log({ userName, userData, bookDataList });
+    console.log({ userName, userData, bookDataList, sectionDataList });
 
     let myUid;
 
@@ -244,11 +258,10 @@ export default function UserNamePage({ userName, userData, bookDataList }) {
                     <br />
 
                     <p>{userName}が作成した手記</p>
-                    <BooksList userData={userData} />
-                    <BooksList2
-                        userData={userData}
-                        bookDataList={bookDataList}
-                    />
+                    <BooksList bookDataList={bookDataList} />
+                    <br />
+                    <p>{userName}が作成したセクション</p>
+                    <SectionList sectionDataList={sectionDataList} />
                     <br />
 
                     <Link href={`/users/${userName}/bookCreate`}>

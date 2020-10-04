@@ -10,7 +10,7 @@ export const VALIDSECTIONS = "varidSections";
 export const INVALIDSECTIONS = "invaridSections";
 
 /**
- * 全ユーザネームパス取得
+ * 全ユーザネームパス取得(getStaticPaths専用)
  *
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
@@ -56,7 +56,7 @@ export const getAllUserNamesPaths = async () => {
 };
 
 /**
- * 全ブックネームパス取得
+ * 全ブックネームパス取得(getStaticPaths専用)
  *
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
@@ -109,7 +109,7 @@ export const getAllBookNamePaths = async () => {
 };
 
 /**
- * 全セクションIDパス取得
+ * 全セクションIDパス取得(getStaticPaths専用)
  *
  * @export
  * @return {getStaticPaths専用のオブジェクト配列}
@@ -352,7 +352,7 @@ export const getSectionDataFromSectionId = async (
  * @param {*} uid
  * @param {*} bookId
  */
-export const getSectionDataListFromBookData = async (bookData) => {
+export const getSectionDataListFromBookData = async (userData, bookData) => {
     //
     //デバッグ情報
     //
@@ -375,18 +375,20 @@ export const getSectionDataListFromBookData = async (bookData) => {
     if (querySnapshot.size === 0) {
         return null;
     }
-    const sectionList = querySnapshot.docs.map((x) => {
+
+    const sectionDataList = querySnapshot.docs.map((x) => {
         console.log("x.data()");
         console.log(x.data());
         return {
-            userName: x.data.userName,
-            bookName: x.data.bookName,
-            data: x.data(),
+            userName: userData.userName,
+            bookName: x.data().bookName,
+            sectionId: x.data().sectionId,
+            sectionData: x.data(),
         };
     });
 
     console.log("正常終了 getSectionDataListFromBookData\n");
-    return sectionList;
+    return sectionDataList;
 };
 
 /**
@@ -402,6 +404,7 @@ export const getBookDataListFromUserData = async (userData) => {
     console.log("\nファイル common.js");
     console.log("関数 getBookDataListFromUserData");
     console.log(userData.uid);
+
     const querySnapshot = await firebase
         .firestore()
         .collection(VALIDUSERS)
@@ -415,17 +418,75 @@ export const getBookDataListFromUserData = async (userData) => {
     if (querySnapshot.size === 0) {
         return null;
     }
-    const sectionList = querySnapshot.docs.map((x) => {
+    const bookDataList = querySnapshot.docs.map((x) => {
         console.log("x.data()");
         console.log(x.data());
         return {
+            userName: userData.userName,
             bookName: x.data.bookName,
             data: x.data(),
         };
     });
 
     console.log("正常終了 getBookDataListFromUserData\n");
-    return sectionList;
+    return bookDataList;
+};
+
+/**
+ * ユーザデータ配下のセクションデータリストを取得
+ *
+ * @param {*} uid
+ * @param {*} bookId
+ */
+export const getSectionDataListFromUserData = async (userData) => {
+    //
+    //デバッグ情報
+    //
+    console.log("\nファイル common.js");
+    console.log("関数 getSectionDataListFromUserData");
+    console.log(userData.uid);
+
+    //有効セクションコレクションに対してコレクショングループで一括取得
+    const querySnapshot = await firebase
+        .firestore()
+        .collectionGroup(VALIDSECTIONS)
+        .where("uid", "==", userData.uid)
+        .orderBy("updatedAt")
+        .limit(5)
+        .get();
+
+    console.log({ querySnapshot });
+    console.log("querySnapshot.size");
+    console.log(querySnapshot.size);
+    if (querySnapshot.size === 0) {
+        return null;
+    }
+
+    //有効セクションコレクションの親ブックドキュメントからブックネーム取り出し
+    const sectionDataList = await Promise.all(
+        querySnapshot.docs.map(async (sectionDocSnapshot) => {
+            const bookDocSnapshot = await sectionDocSnapshot.ref.parent.parent.get();
+            return {
+                userName: userData.userName,
+                bookName: bookDocSnapshot.data().bookName,
+                sectionId: sectionDocSnapshot.data().sectionId,
+                sectionData: sectionDocSnapshot.data(),
+            };
+        })
+    );
+
+    // const sectionDataList = querySnapshot.docs.map((x) => {
+    //     console.log("x.data()");
+    //     console.log(x.data());
+    //     return {
+
+    //         sectionId: x.data.sectionId,
+    //         sectionData: x.data(),
+    //     };
+    // });
+
+    console.log("正常終了 getSectionDataListFromUserData\n");
+    return sectionDataList;
 };
 
 /**

@@ -14,12 +14,12 @@ import {
  * @param {*} sectionList
  * @return {*}
  */
-export const SectionList = ({ userData, bookData, sectionList }) => {
+export const SectionList = ({ sectionDataList }) => {
     //
     //デバッグ情報
     //
     console.log("関数 SectionList");
-    console.log({ userData, bookData, sectionList });
+    console.log({ sectionDataList });
 
     console.log("正常終了 SectionList2\n");
 
@@ -34,19 +34,19 @@ export const SectionList = ({ userData, bookData, sectionList }) => {
                         <th>タイトル</th>
                         <th>セクションページへ移動ボタン</th>
                     </tr>
-                    {sectionList?.map((x, index) => (
+                    {sectionDataList?.map((x, index) => (
                         <tr key={index}>
-                            <td>{x.data.isPublic}</td>
+                            <td>{x.sectionData.isPublic}</td>
                             <td>
                                 {convertFromTimestampToDatetime(
-                                    x.data.updatedAt
+                                    x.sectionData.updatedAt
                                 )}
                             </td>
-                            <td>{x.data.sectionId}</td>
-                            <td>{x.data.title}</td>
+                            <td>{x.sectionData.sectionId}</td>
+                            <td>{x.sectionData.title}</td>
                             <td>
                                 <Link
-                                    href={`/users/${userData.userName}/${bookData.bookName}/${x.data.sectionId}`}
+                                    href={`/users/${x.userName}/${x.bookName}/${x.sectionData.sectionId}`}
                                 >
                                     セクションページへ
                                 </Link>
