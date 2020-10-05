@@ -1,16 +1,16 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../../components/Layout";
-import styles from "../../../styles/Home.module.scss";
+import Layout from "components/Layout";
+import styles from "styles/Home.module.scss";
 import {
     getUserDataFromUserName,
     getBookDataFromBookName,
     convertFromTimestampToDatetime,
     getAllBookNamePaths,
     getSectionDataListFromBookData,
-} from "../../../common/common";
+} from "common/common";
 import { useRouter } from "next/router";
-import { SectionList } from "../../../components/SectionList";
+import { SectionList } from "components/SectionList";
 
 /**
  * 静的パス取得

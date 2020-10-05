@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../../../components/Layout";
-import styles from "../../../../styles/Home.module.scss";
+import Layout from "components/Layout";
+import styles from "styles/Home.module.scss";
 import {
     getUserDataFromUserName,
     getBookDataFromBookName,
-} from "../../../../common/common";
-import SectionCreateInputForm from "../../../../components/Section";
+} from "common/common";
+import SectionCreateInputForm from "components/Section";
 
 /**
  * 静的パス取得

@@ -1,18 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Layout from "../../components/Layout";
-import Logout from "../../components/Logout";
-import Login from "../../components/Login";
-import styles from "../../styles/Home.module.scss";
-import firebase from "../../common/firebase";
-import {
-    useCollectionData,
-    useCollection,
-    useDocumentData,
-    useDocument,
-} from "react-firebase-hooks/firestore";
+import Layout from "components/Layout";
+import Logout from "components/Logout";
+import Login from "components/Login";
+import styles from "styles/Home.module.scss";
+import firebase from "common/firebase";
 
 // export async function getServerSideProps({ params }) {
 //     const user = firebase.auth().currentUser;

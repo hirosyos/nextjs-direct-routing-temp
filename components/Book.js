@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import firebase from "../common/firebase";
-import { VALIDUSERS, VALIDBOOKS } from "../common/common";
+import firebase from "common/firebase";
+import { VALIDUSERS, VALIDBOOKS } from "common/common";
 
 /**
  * 手記作成用フォーム

@@ -1,30 +1,22 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useRef, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { useRouter } from "next/router";
-import Logout from "../../components/Logout";
-import Layout from "../../components/Layout";
-import styles from "../../styles/Home.module.scss";
-import {
-    useCollectionData,
-    useCollection,
-    useDocumentData,
-    useDocument,
-} from "react-firebase-hooks/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../../common/firebase";
+import Logout from "@components/Logout";
+import Layout from "components/Layout";
+import styles from "styles/Home.module.scss";
+
 import {
     getAllUserNamesPaths,
     getUserDataFromUserName,
     convertFromTimestampToDatetime,
     getBookDataListFromUserData,
     getSectionDataListFromUserData,
-} from "../../common/common";
-import { UserLoginInfo } from "../../components/User";
-import { BooksList } from "../../components/BookList";
-import { CurrentUser } from "../../components/Auth";
-import { AuthContext } from "../_app";
-import { SectionList } from "../../components/SectionList";
+} from "common/common";
+import { UserLoginInfo } from "components/User";
+import { BooksList } from "components/BookList";
+import { AuthContext } from "pages/_app";
+import { SectionList } from "components/SectionList";
 
 /**
  * 静的パス取得

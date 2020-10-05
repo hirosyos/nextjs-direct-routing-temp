@@ -1,9 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../../../components/Layout";
-import styles from "../../../styles/Home.module.scss";
-import { BookCreateInputForm } from "../../../components/Book";
-import { getUserDataFromUserName } from "../../../common/common";
+import Layout from "components/Layout";
+import styles from "styles/Home.module.scss";
+import { BookCreateInputForm } from "components/Book";
+import { getUserDataFromUserName } from "common/common";
 
 //****************************************************************
 //

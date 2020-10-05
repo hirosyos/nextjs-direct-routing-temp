@@ -1,9 +1,6 @@
-import Head from "next/head";
 import { useState, useRef, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import Layout from "./Layout";
-import styles from "../styles/Home.module.scss";
-import firebase from "../common/firebase";
+
+import firebase from "common/firebase";
 
 // Firestoreにデータを送信する関数
 const postDataToFirestore = async (collectionName, docName, postData) => {

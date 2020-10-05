@@ -1,23 +1,5 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
-import Logout from "../components/Logout";
-import Layout from "../components/Layout";
-import {
-    useCollectionData,
-    useCollection,
-    useDocumentData,
-    useDocument,
-} from "react-firebase-hooks/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import firebase from "../common/firebase";
-import {
-    getAllUserNamesPaths,
-    getUserDataFromUserName,
-    convertFromTimestampToDatetime,
-} from "../common/common";
-import { UserCreateBooksList, UserLoginInfo } from "../components/User";
+import firebase from "common/firebase";
 
 // export const AuthInfo = () => {
 //     const [user, initialising, error] = useAuthState(firebase.auth());

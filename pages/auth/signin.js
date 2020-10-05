@@ -1,20 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/router";
-import Router from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Layout from "../../components/Layout";
-import Logout from "../../components/Logout";
-import Signin from "../../components/Signin";
-import styles from "../../styles/Home.module.scss";
-import firebase from "../../common/firebase";
-import {
-    useCollectionData,
-    useCollection,
-    useDocumentData,
-    useDocument,
-} from "react-firebase-hooks/firestore";
+import Layout from "components/Layout";
+import Logout from "components/Logout";
+import Signin from "components/Signin";
+import styles from "styles/Home.module.scss";
+import firebase from "common/firebase";
+
 /**
  * サインインページ
  *

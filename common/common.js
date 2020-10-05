@@ -1,4 +1,4 @@
-import firebase from "../common/firebase";
+import firebase from "common/firebase";
 
 export const VALIDUSERS = "validUsers";
 export const INVALIDUSERS = "invalidUsers";

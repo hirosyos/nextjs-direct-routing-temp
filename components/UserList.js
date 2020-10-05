@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
-import firebase from "../common/firebase";
-import {
-    convertFromTimestampToDatetime,
-    getUserDataFromUserName,
-    VALIDUSERS,
-    VALIDBOOKS,
-} from "../common/common";
+import { convertFromTimestampToDatetime } from "common/common";
 
 /**
  * ユーザが作成した手記リスト

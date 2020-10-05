@@ -1,5 +1,5 @@
-import "../styles/globals.scss";
-import firebase from "../common/firebase";
+import "styles/globals.scss";
+import firebase from "common/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import React, { createContext, useContext } from "react";
 
