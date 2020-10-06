@@ -1,22 +1,26 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
 import styles from "styles/Home.module.scss";
 
 /**
- * ユーザ設定ページ
+ * 検索ページ
  *
+ * @export
+ * @param {*} props
  * @return {*}
  */
-export default function UserSettingPage() {
+export default function Search(props) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log("\nファイル /pages/users/userSetting.js");
-    console.log("関数 UserSettingPage");
+    console.log("\nファイル /pages/serch.js");
+    console.log("関数 Serch");
+    console.log({ props });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -29,11 +33,10 @@ export default function UserSettingPage() {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>
-                        Welcome to ユーザ設定 ページ
-                    </h1>
-                    <Link href="/users/hoge/bookCreate">
-                        <a>手記作成</a>
+                    <h1 className={styles.title}>Welcome to 検索ページ</h1>
+
+                    <Link href={`/`}>
+                        <a>トップページ</a>
                     </Link>
                 </main>
 

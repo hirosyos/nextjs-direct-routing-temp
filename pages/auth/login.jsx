@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -60,7 +61,7 @@ import firebase from "common/firebase";
  */
 export default function LoginPage() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/auth/login.js");
     console.log("関数 LoginPage");
@@ -105,7 +106,7 @@ export default function LoginPage() {
         );
     }
 
-    //ここのデータが取れてない
+    // ここのデータが取れてない
     const fireget = async (uid) => {
         const values = await firebase
             .firestore()
@@ -127,7 +128,7 @@ export default function LoginPage() {
                     <title>手記書庫/サインイン</title>
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <p>{`すでにログイン済みです`}</p>
+                <p>すでにログイン済みです</p>
                 <Link href={`/users/${values.userName}`}>
                     <a>ユーザページへ</a>
                 </Link>

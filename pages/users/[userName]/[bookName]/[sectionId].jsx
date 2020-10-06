@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
@@ -17,16 +18,16 @@ import { useRouter } from "next/router";
  */
 export async function getStaticPaths() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
     console.log("関数コンポーネント getStaticPaths");
 
-    //すべてのユーザ名とブック名とセクションIDを含んだパス生成用配列を取得
+    // すべてのユーザ名とブック名とセクションIDを含んだパス生成用配列を取得
     const paths = await getAllSectionIdPaths();
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     if (paths) {
         paths.map((p) => {
@@ -36,7 +37,7 @@ export async function getStaticPaths() {
         });
     }
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -52,7 +53,7 @@ export async function getStaticPaths() {
  */
 export async function getStaticProps({ params }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
     console.log("関数コンポーネント getStaticProps");
@@ -60,13 +61,13 @@ export async function getStaticProps({ params }) {
 
     const { userName, bookName, sectionId } = params;
 
-    //セクションIDからセクションデータを取得
+    // セクションIDからセクションデータを取得
     const { sectionData } = await getSectionDataFromSectionId(
         userName,
         bookName,
         sectionId
     );
-    //該当セクションIDのデータが存在しない場合はデータ部をNullで返す
+    // 該当セクションIDのデータが存在しない場合はデータ部をNullで返す
     if (!sectionData) {
         console.log("そんなセクションはありません\n");
         return {
@@ -80,7 +81,7 @@ export async function getStaticProps({ params }) {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -89,7 +90,7 @@ export async function getStaticProps({ params }) {
             userName: userName,
             bookName: bookName,
             sectionId: sectionId,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
+            // Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             sectionData: JSON.parse(JSON.stringify(sectionData)),
         },
     };
@@ -114,13 +115,13 @@ export default function SectionIdPage({
     sectionData,
 }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName]/[sectionId].js");
     console.log("関数コンポーネント SectionIdPage");
     console.log({ userName, bookName, sectionId, sectionData });
 
-    //事前ビルドされていない場合はここで作成する
+    // 事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
         console.log(`${userName}/${bookName}/${sectionId}静的ページ作成中...`);
@@ -128,7 +129,7 @@ export default function SectionIdPage({
             <div>{`${userName}/${bookName}/${sectionId}静的ページ作成中...`}</div>
         );
     }
-    //ユーザネームがない段階では何もしない;
+    // ユーザネームがない段階では何もしない;
     if (!sectionId) {
         console.log("異常終了 そんなセクションはありません\n");
         return <div>そんなセクションはありません...</div>;
@@ -140,7 +141,7 @@ export default function SectionIdPage({
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 

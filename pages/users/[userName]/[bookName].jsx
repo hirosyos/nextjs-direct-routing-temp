@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
@@ -20,27 +21,27 @@ import { SectionList } from "components/SectionList";
  */
 export async function getStaticPaths() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 getStaticPaths");
 
-    //すべてのユーザ名とブック名を含んだパス生成用配列を取得
+    // すべてのユーザ名とブック名を含んだパス生成用配列を取得
     const paths = await getAllBookNamePaths();
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     if (paths) {
         paths.map((p) => {
-            console.log(
+            return console.log(
                 `SSG対象ブックページ ${p.params.userName}/${p.params.bookName}`
             );
         });
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了 getStaticPaths\n");
 
@@ -57,7 +58,7 @@ export async function getStaticPaths() {
  */
 export async function getStaticProps({ params }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 getStaticProps");
@@ -65,9 +66,9 @@ export async function getStaticProps({ params }) {
 
     const { userName, bookName } = params;
 
-    //ユーザ名からユーザデータを取得
+    // ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(userName);
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    // 該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (!userData) {
         console.log("関数 getStaticProps そんなユーザいません");
         return {
@@ -80,9 +81,9 @@ export async function getStaticProps({ params }) {
         };
     }
 
-    //ブック名からブックデータを取得
+    // ブック名からブックデータを取得
     const { bookData } = await getBookDataFromBookName(userName, bookName);
-    //該当ブック名のデータが存在しない場合はデータ部をNullで返す
+    // 該当ブック名のデータが存在しない場合はデータ部をNullで返す
     if (!bookData) {
         console.log("関数 getStaticProps そんなブックありません");
         return {
@@ -95,22 +96,22 @@ export async function getStaticProps({ params }) {
         };
     }
 
-    //ブック配下のセクションデータリストを取得
+    // ブック配下のセクションデータリストを取得
     const sectionDataList = await getSectionDataListFromBookData(
         userData,
         bookData
     );
-    //セクションが一つでもある場合(なくても異常ではない)
+    // セクションが一つでもある場合(なくても異常ではない)
     if (sectionDataList) {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了 getStaticProps\n");
 
     return {
-        //Next.jsはDate型を返してほしくないようなのでJSON変換という暫定処理
+        // Next.jsはDate型を返してほしくないようなのでJSON変換という暫定処理
         props: {
             userName: userName,
             userData: JSON.parse(JSON.stringify(userData)),
@@ -135,23 +136,23 @@ export default function BookNamePage({
     sectionDataList,
 }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/[bookName].js");
     console.log("関数 BookNamePage");
     console.log({ userName, userData, bookName, bookData, sectionDataList });
 
-    //事前ビルドされていない場合はここで作成する
+    // 事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
         console.log(`${userName}/${bookName}静的ページ作成中...`);
         return <div>{`${userName}/${bookName}静的ページ作成中...`}</div>;
     }
 
-    //ユーザネームがない段階では何もしない;
+    // ユーザネームがない段階では何もしない;
     if (!userName) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 そんなユーザいません\n");
         return <div>そんなユーザいません...</div>;
@@ -159,16 +160,16 @@ export default function BookNamePage({
 
     if (!userData) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 指定されたユーザは存在しません...\n");
         return <div>指定されたユーザは存在しません...</div>;
     }
 
-    //ユーザネームがない段階では何もしない;
+    // ユーザネームがない段階では何もしない;
     if (!bookName) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 そんな手記はありません\n");
 
@@ -177,7 +178,7 @@ export default function BookNamePage({
 
     if (!bookData) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 指定された手記は存在しません...\n");
 
@@ -185,7 +186,7 @@ export default function BookNamePage({
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了 BookNamePage\n");
 

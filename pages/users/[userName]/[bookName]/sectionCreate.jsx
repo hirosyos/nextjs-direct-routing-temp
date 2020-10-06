@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
@@ -16,7 +17,7 @@ import SectionCreateInputForm from "components/Section";
  */
 export async function getStaticPaths() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
@@ -26,7 +27,7 @@ export async function getStaticPaths() {
     const paths = [];
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -42,7 +43,7 @@ export async function getStaticPaths() {
  */
 export async function getStaticProps({ params }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
@@ -50,10 +51,10 @@ export async function getStaticProps({ params }) {
     console.log("関数 getStaticProps");
     console.log({ params });
 
-    //ユーザ名からユーザデータを取得
+    // ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
 
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
+    // 該当ユーザ名のデータが存在しない場合はデータ部をNullで返す
     if (!userData) {
         console.log("関数：getStaticProps 該当ユーザ名のデータが見つからない");
         return {
@@ -67,13 +68,13 @@ export async function getStaticProps({ params }) {
         };
     }
 
-    //ブック名からブックデータを取得
+    // ブック名からブックデータを取得
     const { bookData } = await getBookDataFromBookName(
         params.userName,
         params.bookName
     );
 
-    //該当ブック名のデータが存在しない場合はデータ部をNullで返す
+    // 該当ブック名のデータが存在しない場合はデータ部をNullで返す
     if (!bookData) {
         console.log("関数：getStaticProps 該当ブック名のデータが見つからない");
         return {
@@ -88,20 +89,17 @@ export async function getStaticProps({ params }) {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return {
+        // Next.jsはDate型を返してほしくないようなのでこのような対処をしている
         props: {
             userName: params.userName,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             userData: JSON.parse(JSON.stringify(userData)),
-
             bookName: params.bookName,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             bookData: JSON.parse(JSON.stringify(bookData)),
-
             bookId: bookData.bookId,
         },
     };
@@ -116,7 +114,7 @@ export async function getStaticProps({ params }) {
  */
 export default function SectionCreate(props) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log(
         "\nファイル /pages/users/[userName]/[bookName]/sectionCreate.js"
@@ -125,7 +123,7 @@ export default function SectionCreate(props) {
     console.log({ props });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 

@@ -1,25 +1,24 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
 import styles from "styles/Home.module.scss";
 
 /**
- * 検索ページ
+ * ユーザ作成ページ
  *
  * @export
- * @param {*} props
  * @return {*}
  */
-export default function Search(props) {
+export default function UserCreatePage() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log("\nファイル /pages/serch.js");
-    console.log("関数 Serch");
-    console.log({ props });
+    console.log("\nファイル /pages/users/uerCreate.js");
+    console.log("関数 UserCreate");
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -32,10 +31,11 @@ export default function Search(props) {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to 検索ページ</h1>
-
-                    <Link href={`/`}>
-                        <a>トップページ</a>
+                    <h1 className={styles.title}>
+                        Welcome to ユーザ作成 ページ
+                    </h1>
+                    <Link href="/users/hoge/bookCreate">
+                        <a>手記作成</a>
                     </Link>
                 </main>
 

@@ -1,23 +1,23 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
 import styles from "styles/Home.module.scss";
 
 /**
- * ユーザ作成ページ
+ * ユーザ設定ページ
  *
- * @export
  * @return {*}
  */
-export default function UserCreatePage() {
+export default function UserSettingPage() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log("\nファイル /pages/users/uerCreate.js");
-    console.log("関数 UserCreate");
+    console.log("\nファイル /pages/users/userSetting.js");
+    console.log("関数 UserSettingPage");
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -31,7 +31,7 @@ export default function UserCreatePage() {
 
                 <main className={styles.main}>
                     <h1 className={styles.title}>
-                        Welcome to ユーザ作成 ページ
+                        Welcome to ユーザ設定 ページ
                     </h1>
                     <Link href="/users/hoge/bookCreate">
                         <a>手記作成</a>

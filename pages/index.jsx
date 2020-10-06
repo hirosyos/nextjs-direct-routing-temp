@@ -1,30 +1,12 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
 import styles from "styles/Home.module.scss";
+import Logout from "components/Logout";
+import { UserList } from "components/UserList";
+import { getUserDataList } from "common/common";
 
-/**
- * 静的パス取得
- *
- * @export
- * @return {*}
- */
-export async function getStaticPaths() {
-    //
-    //デバッグ情報
-    //
-    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
-    console.log("関数 getStaticPaths");
-
-    const paths = [];
-
-    //
-    //デバッグ情報
-    //
-    console.log("正常終了\n");
-
-    return { paths, fallback: true };
-}
 /**
  * 静的パラメータ取得
  *
@@ -32,42 +14,45 @@ export async function getStaticPaths() {
  * @param {*} { params }
  * @return {*}
  */
-export async function getStaticProps({ params }) {
+export const getStaticProps = async ({ params }) => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
+    console.log("\nファイル /index.js");
     console.log("関数 getStaticProps");
     console.log({ params });
 
+    const userDataList = await getUserDataList();
+
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return {
+        // Next.jsはDate型を返してほしくないようなのでこのような対処をしている
         props: {
-            userName: params.userName,
+            userDataList: JSON.parse(JSON.stringify(userDataList)),
         },
     };
-}
+};
+
 /**
- * 手記設定ページ
+ * サービストップページ
  *
  * @export
- * @param {*} props
  * @return {*}
  */
-export default function BookSettingPage(props) {
+export default function Home({ userDataList }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
-    console.log("関数 BookSettingPage");
-    console.log({ props });
+    console.log("\nファイル /pages/index.js");
+    console.log("関数 Home");
+    console.log({ userDataList });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -80,13 +65,15 @@ export default function BookSettingPage(props) {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>Welcome to 手記設定</h1>
-
-                    <p> ユーザー: {props.userName}</p>
-
-                    <Link href={`/users/${props.userName}`}>
-                        <a>ユーザページ</a>
+                    <h1 className={styles.title}>Welcome to 手記書庫</h1>
+                    <Link href="/auth/login">
+                        <a>ログイン</a>
                     </Link>
+                    <Link href="/auth/signin">
+                        <a>サインイン</a>
+                    </Link>
+                    <Logout />
+                    <UserList userDataList={userDataList} />
                 </main>
 
                 <footer className={styles.footer}>

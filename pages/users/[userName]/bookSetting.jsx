@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
@@ -11,17 +12,15 @@ import styles from "styles/Home.module.scss";
  */
 export async function getStaticPaths() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log(
-        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
-    );
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
     console.log("関数 getStaticPaths");
 
     const paths = [];
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -36,44 +35,40 @@ export async function getStaticPaths() {
  */
 export async function getStaticProps({ params }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log(
-        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
-    );
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
     console.log("関数 getStaticProps");
     console.log({ params });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return {
         props: {
             userName: params.userName,
-            bookName: params.bookName,
         },
     };
 }
 /**
- * セクション設定ページ
+ * 手記設定ページ
  *
+ * @export
  * @param {*} props
  * @return {*}
  */
-export default function SectionSettingPage(props) {
+export default function BookSettingPage(props) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
-    console.log(
-        "\nファイル /pages/users/[userName]/[bookName]/sectionSetting.js"
-    );
-    console.log("関数コンポーネント SectionSetting");
+    console.log("\nファイル /pages/users/[userName]/bookSetting.js");
+    console.log("関数 BookSettingPage");
     console.log({ props });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -86,16 +81,12 @@ export default function SectionSettingPage(props) {
                 </Head>
 
                 <main className={styles.main}>
-                    <h1 className={styles.title}>
-                        Welcome to セクション 設定ページ
-                    </h1>
+                    <h1 className={styles.title}>Welcome to 手記設定</h1>
+
                     <p> ユーザー: {props.userName}</p>
-                    <p> 手記: {props.bookName}</p>
+
                     <Link href={`/users/${props.userName}`}>
                         <a>ユーザページ</a>
-                    </Link>
-                    <Link href={`/users/${props.userName}/${props.bookName}`}>
-                        <a>手記ページ</a>
                     </Link>
                 </main>
 

@@ -1,6 +1,6 @@
+import React, { useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useContext } from "react";
 import { useRouter } from "next/router";
 import Logout from "@components/Logout";
 import Layout from "components/Layout";
@@ -27,16 +27,16 @@ import { SectionList } from "components/SectionList";
 // export async function getStaticPaths() {
 export const getStaticPaths = async () => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 getStaticPaths");
 
-    //すべてのユーザ名を含んだパス生成用配列を取得
+    // すべてのユーザ名を含んだパス生成用配列を取得
     const paths = await getAllUserNamesPaths();
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     if (paths) {
         paths.map((p) => {
@@ -45,7 +45,7 @@ export const getStaticPaths = async () => {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
@@ -62,21 +62,21 @@ export const getStaticPaths = async () => {
 // export async function getStaticProps({ params }) {
 export const getStaticProps = async ({ params }) => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/userName].js");
     console.log("関数 getStaticProps");
     console.log({ params });
 
-    //パスから切り出された値が入っている
+    // パスから切り出された値が入っている
     const { userName } = params;
-    //ユーザ名からユーザデータを取得
+    // ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(userName);
 
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
+    // 該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
     if (!userData) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 該当ユーザ名のデータが存在しない\n");
         return {
@@ -87,27 +87,21 @@ export const getStaticProps = async ({ params }) => {
         };
     }
 
-    //ユーザデータ配下のブックデータリストを取得
+    // ユーザデータ配下のブックデータリストを取得
     const bookDataList = await getBookDataListFromUserData(userData);
-    //セクションが一つでもある場合(なくても異常ではない)
-    if (bookDataList) {
-    }
 
-    //ユーザデータ配下のセクションデータリストを取得
+    // ユーザデータ配下のセクションデータリストを取得
     const sectionDataList = await getSectionDataListFromUserData(userData);
-    //セクションが一つでもある場合(なくても異常ではない)
-    if (sectionDataList) {
-    }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return {
+        // Next.jsはDate型を返してほしくないようなのでこのような対処をしている
         props: {
             userName: userName,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             userData: JSON.parse(JSON.stringify(userData)),
             bookDataList: JSON.parse(JSON.stringify(bookDataList)),
             sectionDataList: JSON.parse(JSON.stringify(sectionDataList)),
@@ -128,24 +122,22 @@ export default function UserNamePage({
     bookDataList,
     sectionDataList,
 }) {
-    //デバッグ情報
+    // デバッグ情報
     console.log("\nファイル /pages/users/[userName].js");
     console.log("関数 UserNamePage");
     console.log({ userName, userData, bookDataList, sectionDataList });
 
-    let myUid;
-
-    //事前ビルドされていない場合はここで作成する
+    // 事前ビルドされていない場合はここで作成する
     const router = useRouter();
     if (router.isFallback) {
         console.log(`${userName}静的ページ作成中...`);
         return <div>{`${userName}静的ページ作成中...`}</div>;
     }
 
-    //ユーザネームがない段階では何もしない;
+    // ユーザネームがない段階では何もしない;
     if (!userName) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 そんなユーザいません\n");
         return <div>そんなユーザいません...</div>;
@@ -153,7 +145,7 @@ export default function UserNamePage({
 
     if (!userData) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 指定されたユーザは存在しません...\n");
         return <div>指定されたユーザは存在しません...</div>;
@@ -163,7 +155,7 @@ export default function UserNamePage({
     console.log({ user });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 

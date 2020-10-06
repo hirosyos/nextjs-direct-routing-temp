@@ -1,3 +1,4 @@
+import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import firebase from "common/firebase";
 
@@ -34,7 +35,7 @@ const logout = () => {
     firebase.auth().signOut();
 };
 
-export const CurrentUser = () => {
+const CurrentUser = () => {
     const [user, loading, error] = useAuthState(firebase.auth());
 
     if (loading) {
@@ -55,9 +56,17 @@ export const CurrentUser = () => {
         return (
             <div>
                 <p>Current User: {user.email}</p>
-                <button onClick={logout}>Log out</button>
+                <button type="submit" onClick={logout}>
+                    Log out
+                </button>
             </div>
         );
     }
-    return <button onClick={login}>Log in</button>;
+    return (
+        <button type="submit" onClick={login}>
+            Log in
+        </button>
+    );
 };
+
+export default CurrentUser;

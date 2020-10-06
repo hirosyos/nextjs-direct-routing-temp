@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import firebase from "common/firebase";
 
 const Logout = () => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル Logout.js");
     console.log("関数 Logout");

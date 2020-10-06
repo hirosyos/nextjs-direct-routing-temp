@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,7 +16,7 @@ import firebase from "common/firebase";
  */
 export default function SigninPage() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/auth/signin.js");
     console.log("関数 SigninPage");

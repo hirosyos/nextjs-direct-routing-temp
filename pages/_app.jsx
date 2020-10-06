@@ -1,7 +1,7 @@
+import React, { createContext } from "react";
 import "styles/globals.scss";
 import firebase from "common/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import React, { createContext, useContext } from "react";
 
 export const AuthContext = createContext();
 
@@ -13,7 +13,7 @@ export const AuthContext = createContext();
  */
 function MyApp({ Component, pageProps }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/_app.js");
     console.log("関数 UserNamePage");
@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 

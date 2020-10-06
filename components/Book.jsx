@@ -10,7 +10,7 @@ import { VALIDUSERS, VALIDBOOKS } from "common/common";
  */
 export const BookCreateInputForm = ({ userData }) => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル Book.js");
     console.log("関数 BookCreateInputForm");
@@ -53,10 +53,10 @@ export const BookCreateInputForm = ({ userData }) => {
             chapterName === "" ||
             chapterStartDate === ""
         ) {
-            alert("いまのところ全部埋めてください");
+            console.log("いまのところ全部埋めてください");
             return false;
         }
-        //bookIdを事前に取得
+        // bookIdを事前に取得
         const bookId = firebase
             .firestore()
             .collection(VALIDUSERS)
@@ -89,7 +89,7 @@ export const BookCreateInputForm = ({ userData }) => {
             chapterName: chapterName,
             chapterStartDate: new Date(chapterStartDate),
         };
-        const addedData = await postDataToFirestore(
+        await postDataToFirestore(
             VALIDUSERS,
             userData.uid,
             VALIDBOOKS,
@@ -109,7 +109,7 @@ export const BookCreateInputForm = ({ userData }) => {
     };
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了 BookCreateInputForm\n");
 
@@ -117,69 +117,85 @@ export const BookCreateInputForm = ({ userData }) => {
         <form action="">
             <ul>
                 <li>
-                    <label htmlFor="isPublic">手記公開設定(true/false)：</label>
-                    <input
-                        type="text"
-                        id="isPublic"
-                        value={isPublic}
-                        onChange={(e) => setIsPublic(e.target.value)}
-                    />
+                    <label htmlFor="isPublic">
+                        手記公開設定(true/false)：
+                        <input
+                            type="text"
+                            id="isPublic"
+                            value={isPublic}
+                            onChange={(e) => setIsPublic(e.target.value)}
+                        />
+                    </label>
                 </li>
                 <li>
                     <label htmlFor="bookName">
                         手記管理名(アルファベット)：
+                        <input
+                            type="text"
+                            id="bookName"
+                            value={bookName}
+                            onChange={(e) => setBookName(e.target.value)}
+                        />
                     </label>
-                    <input
-                        type="text"
-                        id="bookName"
-                        value={bookName}
-                        onChange={(e) => setBookName(e.target.value)}
-                    />
                 </li>
                 <li>
-                    <label htmlFor="bookDisplayName">手記表示名：</label>
-                    <input
-                        type="text"
-                        id="bookDisplayName"
-                        value={bookDisplayName}
-                        onChange={(e) => setBookDisplayName(e.target.value)}
-                    />
+                    <label htmlFor="bookDisplayName">
+                        手記表示名：
+                        <input
+                            type="text"
+                            id="bookDisplayName"
+                            value={bookDisplayName}
+                            onChange={(e) => setBookDisplayName(e.target.value)}
+                        />
+                    </label>
                 </li>
                 <li>
-                    <label htmlFor="authorDisplayName">著者表示名：</label>
-                    <input
-                        type="text"
-                        id="authorDisplayName"
-                        value={authorDisplayName}
-                        onChange={(e) => setAuthorDisplayName(e.target.value)}
-                    />
+                    <label htmlFor="authorDisplayName">
+                        著者表示名：
+                        <input
+                            type="text"
+                            id="authorDisplayName"
+                            value={authorDisplayName}
+                            onChange={(e) =>
+                                setAuthorDisplayName(e.target.value)
+                            }
+                        />
+                    </label>
                 </li>
                 <li>
-                    <label htmlFor="authorBirthday">著者誕生日：</label>
-                    <input
-                        type="datetime-local"
-                        id="authorBirthday"
-                        value={authorBirthday}
-                        onChange={(e) => setAuthorBirthday(e.target.value)}
-                    />
+                    <label htmlFor="authorBirthday">
+                        著者誕生日：
+                        <input
+                            type="datetime-local"
+                            id="authorBirthday"
+                            value={authorBirthday}
+                            onChange={(e) => setAuthorBirthday(e.target.value)}
+                        />
+                    </label>
                 </li>
                 <li>
-                    <label htmlFor="chapterName">時代名：</label>
-                    <input
-                        type="text"
-                        id="chapterName"
-                        value={chapterName}
-                        onChange={(e) => setChapterName(e.target.value)}
-                    />
+                    <label htmlFor="chapterName">
+                        時代名：
+                        <input
+                            type="text"
+                            id="chapterName"
+                            value={chapterName}
+                            onChange={(e) => setChapterName(e.target.value)}
+                        />
+                    </label>
                 </li>
                 <li>
-                    <label htmlFor="chapterStartDate">時代開始日：</label>
-                    <input
-                        type="datetime-local"
-                        id="chapterStartDate"
-                        value={chapterStartDate}
-                        onChange={(e) => setChapterStartDate(e.target.value)}
-                    />
+                    <label htmlFor="chapterStartDate">
+                        時代開始日：
+                        <input
+                            type="datetime-local"
+                            id="chapterStartDate"
+                            value={chapterStartDate}
+                            onChange={(e) =>
+                                setChapterStartDate(e.target.value)
+                            }
+                        />
+                    </label>
                 </li>
 
                 <li>

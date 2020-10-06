@@ -1,3 +1,4 @@
+import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "components/Layout";
@@ -5,18 +6,15 @@ import styles from "styles/Home.module.scss";
 import { BookCreateInputForm } from "components/Book";
 import { getUserDataFromUserName } from "common/common";
 
-//****************************************************************
-//
-// 静的パス取得関数
-//
-// [IN]なし
-// [OUT]静的パスを生成するための名称の配列
-// [OUT]fallback設定
-//
-//****************************************************************
+/**
+ * 静的パス取得関数
+ *
+ * @export
+ * @return {*}
+ */
 export async function getStaticPaths() {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 getStaticPaths");
@@ -24,37 +22,35 @@ export async function getStaticPaths() {
     const paths = [];
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return { paths, fallback: true };
 }
 
-//****************************************************************
-//
-// 静的パラメータ取得関数
-//
-// [IN]params: { userName: 'パスから切り出された値' }
-// [out] ユーザネーム
-// [out] ユーザドキュメント
-//
-//****************************************************************
+/**
+ * 静的パラメータ取得関数
+ *
+ * @export
+ * @param {*} { params }
+ * @return {*}
+ */
 export async function getStaticProps({ params }) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 getStaticProps");
     console.log({ params });
 
-    //ユーザ名からユーザデータを取得
+    // ユーザ名からユーザデータを取得
     const { userData } = await getUserDataFromUserName(params.userName);
 
-    //該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
+    // 該当ユーザ名のデータが存在しない場合はデータ部をNullで返す;
     if (!userData) {
         //
-        //デバッグ情報
+        // デバッグ情報
         //
         console.log("異常終了 該当ユーザ名のデータが存在しない");
         return {
@@ -66,38 +62,36 @@ export async function getStaticProps({ params }) {
     }
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 
     return {
         props: {
             userName: params.userName,
-            //Next.jsはDate型を返してほしくないようなのでこのような対処をしている
+            // Next.jsはDate型を返してほしくないようなのでこのような対処をしている
             userData: JSON.parse(JSON.stringify(userData)),
         },
     };
 }
 
-//****************************************************************
-//
-// 手記ページ構成関数コンポーネント
-//
-// [IN]props.userName ユーザネーム
-// [IN]props.userData ユーザデータ
-// [OUT] 手記ページ作成ページ全体
-//
-//****************************************************************
+/**
+ * 手記ページ構成関数コンポーネント
+ *
+ * @export
+ * @param {*} props
+ * @return {*}
+ */
 export default function BookCreatePage(props) {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 BookCreatePage");
     console.log({ props });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了\n");
 

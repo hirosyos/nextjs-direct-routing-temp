@@ -1,16 +1,17 @@
-import styles from "../styles/Layout.module.scss";
+import React from "react";
 import Link from "next/link";
+import styles from "styles/Layout.module.scss";
 
 const Layout = (props) => {
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("\nファイル Layout.js");
     console.log("関数 Layout");
     console.log({ props });
 
     //
-    //デバッグ情報
+    // デバッグ情報
     //
     console.log("正常終了 Layout\n");
 
