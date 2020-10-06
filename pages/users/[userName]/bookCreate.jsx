@@ -89,6 +89,7 @@ export default function BookCreatePage(props) {
     console.log("\nファイル /pages/users/[userName]/bookCreate.js");
     console.log("関数 BookCreatePage");
     console.log({ props });
+    const { userName, userData } = props;
 
     //
     // デバッグ情報
@@ -106,11 +107,11 @@ export default function BookCreatePage(props) {
                 <main className={styles.main}>
                     <h1 className={styles.title}>Welcome to 手記作成 ページ</h1>
 
-                    <p> ユーザー: {props.userName}</p>
+                    <p> ユーザー: {userName}</p>
 
-                    <BookCreateInputForm userData={props.userData} />
+                    <BookCreateInputForm userData={userData} />
 
-                    <Link href={`/users/${props.userName}`}>
+                    <Link href={`/users/${userName}`}>
                         <a>ユーザページへ戻る</a>
                     </Link>
                 </main>

@@ -1,6 +1,7 @@
 {
     "extends": [
-        "airbnb",
+        // "airbnb",
+        "standard",
         // "plugin:jsx-a11y/recommended",
         "prettier",
         "prettier/react"
@@ -15,6 +16,8 @@
         "object-shorthand": "off",
         "consistent-return": "off",
         "no-console": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "react/destructuring-assignment": "never",
+        "jsx-a11y/anchor-is-valid": "off"
     }
 }
