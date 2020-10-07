@@ -12,9 +12,7 @@ export const AuthContext = createContext();
  * @return {*}
  */
 function MyApp({ Component, pageProps }) {
-  //
   // デバッグ情報
-  //
   console.log('\nファイル /pages/_app.js');
   console.log('関数 UserNamePage');
   console.log({ Component, pageProps });
@@ -39,18 +37,14 @@ function MyApp({ Component, pageProps }) {
     );
   }
 
-  //
   // デバッグ情報
-  //
   console.log('正常終了\n');
 
-  // if (user) {
   return (
     <AuthContext.Provider value={{ user }}>
       <Component {...pageProps} />
     </AuthContext.Provider>
   );
-  // }
 }
 
 export default MyApp;
