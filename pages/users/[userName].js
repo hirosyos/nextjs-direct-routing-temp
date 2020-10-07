@@ -173,7 +173,7 @@ export default function UserNamePage({
         </Head>
 
         <main className={styles.main}>
-          <UserLoginInfo myUid={user.uid} />
+          <UserLoginInfo myUid={user?.uid} />
           {/* <CurrentUser /> */}
           <h1>
             {userName}

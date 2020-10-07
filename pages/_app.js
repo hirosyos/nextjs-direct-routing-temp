@@ -19,9 +19,7 @@ function MyApp({ Component, pageProps }) {
   console.log('関数 UserNamePage');
   console.log({ Component, pageProps });
 
-  const [user, loading, error] = useAuthState(
-    firebase.auth(),
-  );
+  const [user, loading, error] = useAuthState(firebase.auth());
 
   if (loading) {
     return (

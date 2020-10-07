@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-
 import firebase from 'common/firebase';
 
 const Login = () => {
@@ -14,12 +13,14 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
   const mounted = useRef(true);
+
   useEffect(() => {
     const cleanup = () => {
       mounted.current = false;
     };
     return cleanup;
   }, []);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -28,12 +29,18 @@ const Login = () => {
       await firebase.auth().signInWithEmailAndPassword(email, pass);
     } catch (e) {
       console.log(e.message, mounted);
-      if (mounted.current) setError(e);
+      if (mounted.current) {
+        setError(e);
+        console.log('ログイン失敗');
+      }
     } finally {
-      if (mounted.current) setPending(false);
-      console.log('ログイン処理しました');
+      if (mounted.current) {
+        setPending(false);
+        console.log('ログイン処理しました');
+      }
     }
   };
+
   return (
     <>
       <h2>ログイン</h2>
