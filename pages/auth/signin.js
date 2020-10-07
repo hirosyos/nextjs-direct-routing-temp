@@ -1,11 +1,13 @@
+import { useState, useEffect, useContext } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import Layout from 'components/Layout';
 import Logout from 'components/Logout';
 import Signin from 'components/Signin';
 import styles from 'styles/Home.module.scss';
 import firebase from 'common/firebase';
+import { VALIDUSERS } from 'common/common';
+import { AuthContext } from 'pages/_app';
 
 /**
  * サインインページ
@@ -20,22 +22,34 @@ export default function SigninPage() {
   console.log('\nファイル /pages/auth/signin.js');
   console.log('関数 SigninPage');
 
-  const [user, initialising, error] = useAuthState(firebase.auth());
+  const { user } = useContext(AuthContext);
+  const [userName, setUserName] = useState('');
 
-  if (initialising) {
-    return (
-      <Layout>
-        <div>Initialising...</div>
-      </Layout>
-    );
-  }
-  if (error) {
-    return (
-      <Layout>
-        <div>Error: {error}</div>
-      </Layout>
-    );
-  }
+  console.log('user');
+  console.log({ user });
+
+  useEffect(() => {
+    if (user) {
+      async function fetchData() {
+        const docSnapshot = await firebase
+          .firestore()
+          .collection(VALIDUSERS)
+          .doc(user.uid)
+          .get();
+
+        console.log('docSnapshot');
+        console.log(docSnapshot.data());
+        setUserName(docSnapshot.data().userName);
+      }
+      fetchData();
+
+      // const cleanup = () => {
+      //   console.log('cleanup!');
+      // };
+      // return cleanup;
+    }
+  }, [user]);
+
   if (!user) {
     return (
       <Layout>
@@ -50,28 +64,11 @@ export default function SigninPage() {
             <h1>認証ページ</h1>
             <Signin />
           </main>
-          <footer className={styles.footer}>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Powered by{' '}
-              <img
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.logo}
-              />
-            </a>
-          </footer>
         </div>
       </Layout>
     );
   }
 
-  const values = firebase.firestore().collection('validUsers').doc(user.uid);
-  console.log('values◆');
-  console.log(values);
   return (
     <Layout>
       <div className={styles.container}>
@@ -79,8 +76,8 @@ export default function SigninPage() {
           <title>手記書庫/サインイン</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <p>{`すでに${values.userName}としてログイン済みです`}</p>
-        <Link href={`/users/${values.userName}`}>
+        <p>{`すでに${userName}としてログイン済みです`}</p>
+        <Link href={`/users/${userName}`}>
           <a>ユーザページへ</a>
         </Link>
         <Logout />
