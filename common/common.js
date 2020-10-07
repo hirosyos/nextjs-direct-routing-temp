@@ -382,6 +382,37 @@ export const getUserDataList = async () => {
 };
 
 /**
+ * Uidからユーザデータを取得
+ *
+ * @param {*} uid
+ */
+export const getUserDataFromUid = async (uid) => {
+  //
+  // デバッグ情報
+  //
+  console.log('\nファイル common.js');
+  console.log('関数 getUserDataFromUid');
+
+  const docSnapshot = await firebase
+    .firestore()
+    .collection(VALIDUSERS)
+    .doc(uid)
+    .get();
+  console.log({ docSnapshot });
+  console.log('docSnapshot.size');
+  console.log(docSnapshot.size);
+
+  if (docSnapshot.size === 0) {
+    return null;
+  }
+
+  console.log('正常終了 getSectionDataListFromBookData\n');
+  return {
+    userData: docSnapshot.data(),
+  };
+};
+
+/**
  * ブックデータ配下のセクションリストを取得
  *
  * @param {*} uid

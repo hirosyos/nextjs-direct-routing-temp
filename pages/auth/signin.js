@@ -5,8 +5,7 @@ import Layout from 'components/Layout';
 import Logout from 'components/Logout';
 import Signin from 'components/Signin';
 import styles from 'styles/Home.module.scss';
-import firebase from 'common/firebase';
-import { VALIDUSERS } from 'common/common';
+import { getUserDataFromUid, VALIDUSERS } from 'common/common';
 import { AuthContext } from 'pages/_app';
 
 /**
@@ -31,15 +30,11 @@ export default function SigninPage() {
   useEffect(() => {
     if (user) {
       async function fetchData() {
-        const docSnapshot = await firebase
-          .firestore()
-          .collection(VALIDUSERS)
-          .doc(user.uid)
-          .get();
+        const { userData } = await getUserDataFromUid(user.uid);
 
-        console.log('docSnapshot');
-        console.log(docSnapshot.data());
-        setUserName(docSnapshot.data().userName);
+        console.log('userData');
+        console.log(userData);
+        setUserName(userData.userName);
       }
       fetchData();
 
