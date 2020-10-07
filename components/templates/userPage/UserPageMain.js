@@ -1,22 +1,17 @@
 import { useContext } from 'react';
-import Head from 'next/head';
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Logout from '@components/Logout';
-import Layout from 'components/Layout';
-import styles from 'styles/Home.module.scss';
 
-import {
-  getAllUserNamesPaths,
-  getUserDataFromUserName,
-  convertFromTimestampToDatetime,
-  getBookDataListFromUserData,
-  getSectionDataListFromUserData,
-} from 'common/common';
-import { UserLoginInfo } from 'components/User';
-import { BooksList } from 'components/BookList';
+import { convertFromTimestampToDatetime } from '@common/common';
+
+import Logout from '@components/Logout';
+import { UserLoginInfo } from '@components/User';
+import { BooksList } from '@components/BookList';
+import { SectionList } from '@components/SectionList';
+
 import { AuthContext } from 'pages/_app';
-import { SectionList } from 'components/SectionList';
+import styles from 'styles/Home.module.scss';
 
 /**
  * ユーザページメイン
