@@ -5,11 +5,11 @@ import {
 
 import { RSC } from 'common/resource';
 
-import SectionPageHead from '@/templates/SEctionPage/SectionPageHead';
-import SectionPageHeader from '@/templates/SectionPage/SectionPageHeader';
-import SectionPageFooter from '@/templates/SectionPage/SectionPageFooter';
-import SectionPageNavi from '@/templates/SectionPage/SectionPageNavi';
-import SectionPageMain from '@/templates/SectionPage/SectionPageMain';
+import SectionPageHead from '@/templates/sectionPage/SectionPageHead';
+import SectionPageHeader from '@/templates/sectionPage/SectionPageHeader';
+import SectionPageFooter from '@/templates/sectionPage/SectionPageFooter';
+import SectionPageNavi from '@/templates/sectionPage/SectionPageNavi';
+import SectionPageMain from '@/templates/sectionPage/SectionPageMain';
 
 /**
  * 静的パス取得
