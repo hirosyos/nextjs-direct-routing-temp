@@ -8,4 +8,9 @@ export const RSC = {
   searchPageTitle: '検索',
   loginPrint: 'ログイン',
   signinPrint: 'サインイン',
+  img: {
+    faviconImg: '/logo.png',
+    footerImg: '/logo.png',
+    headerImg: '/logo.png',
+  },
 };

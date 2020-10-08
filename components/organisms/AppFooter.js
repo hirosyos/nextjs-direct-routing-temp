@@ -1,4 +1,5 @@
 import styles from 'styles/Home.module.scss';
+import { RSC } from '@/common/resource';
 
 const AppFooter = (props) => {
   //
@@ -20,7 +21,11 @@ const AppFooter = (props) => {
         rel="noopener noreferrer"
       >
         Powered by{' '}
-        <img src="/logo.png" alt="ShukiShoko Logo" className={styles.logo} />
+        <img
+          src={RSC.img.footerImg}
+          alt="ShukiShoko Logo"
+          className={styles.logo}
+        />
       </a>
     </footer>
   );

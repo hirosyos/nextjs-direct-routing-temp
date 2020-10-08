@@ -1,3 +1,4 @@
+import { RSC } from 'common/resource';
 import Link from 'next/link';
 import styles from 'styles/Layout.module.scss';
 
@@ -20,7 +21,7 @@ const AppHeader = (props) => {
         <a className={styles.header}>
           <img
             className={styles.header__img}
-            src="/logo.png"
+            src={RSC.img.headerImg}
             alt="ShukiShoko ロゴ"
             width="50"
           />

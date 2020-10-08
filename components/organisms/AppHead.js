@@ -12,7 +12,7 @@ const AppHead = ({ pageTitle }) => {
     <>
       <Head>
         <title>{`${RSC.catchCopy}/${RSC.appTitle}/${pageTitle}`}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={RSC.img.faviconImg} />
       </Head>
     </>
   );
