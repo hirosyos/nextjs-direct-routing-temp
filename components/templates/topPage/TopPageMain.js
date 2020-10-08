@@ -6,7 +6,7 @@ import styles from 'styles/Home.module.scss';
 import Logout from 'components/Logout';
 import { UserList } from 'components/UserList';
 
-import { RSC } from '@common/resource';
+import { RSC } from '@/common/resource';
 const TopPageMain = ({ userDataList }) => {
   return (
     <>

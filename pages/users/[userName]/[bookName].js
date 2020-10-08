@@ -7,11 +7,11 @@ import {
 
 import { RSC } from 'common/resource';
 
-import BookPageHead from '@templates/BookPage/BookPageHead';
-import BookPageHeader from '@templates/BookPage/BookPageHeader';
-import BookPageFooter from '@templates/BookPage/BookPageFooter';
-import BookPageNavi from '@templates/BookPage/BookPageNavi';
-import BookPageMain from '@templates/BookPage/BookPageMain';
+import BookPageHead from '@/templates/BookPage/BookPageHead';
+import BookPageHeader from '@/templates/BookPage/BookPageHeader';
+import BookPageFooter from '@/templates/BookPage/BookPageFooter';
+import BookPageNavi from '@/templates/BookPage/BookPageNavi';
+import BookPageMain from '@/templates/BookPage/BookPageMain';
 
 /**
  * 静的パス取得

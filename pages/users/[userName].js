@@ -7,11 +7,11 @@ import {
 
 import { RSC } from 'common/resource';
 
-import UserPageHead from '@templates/UserPage/UserPageHead';
-import UserPageHeader from '@templates/UserPage/UserPageHeader';
-import UserPageFooter from '@templates/UserPage/UserPageFooter';
-import UserPageNavi from '@templates/UserPage/UserPageNavi';
-import UserPageMain from '@templates/UserPage/UserPageMain';
+import UserPageHead from '@/templates/UserPage/UserPageHead';
+import UserPageHeader from '@/templates/UserPage/UserPageHeader';
+import UserPageFooter from '@/templates/UserPage/UserPageFooter';
+import UserPageNavi from '@/templates/UserPage/UserPageNavi';
+import UserPageMain from '@/templates/UserPage/UserPageMain';
 
 /**
  * 静的パス取得

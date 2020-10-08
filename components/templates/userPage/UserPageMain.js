@@ -3,12 +3,12 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { convertFromTimestampToDatetime } from '@common/common';
+import { convertFromTimestampToDatetime } from '@/common/common';
 
-import Logout from '@components/Logout';
-import { UserLoginInfo } from '@components/User';
-import { BooksList } from '@components/BookList';
-import { SectionList } from '@components/SectionList';
+import Logout from '@/components/Logout';
+import { UserLoginInfo } from '@/components/User';
+import { BooksList } from '@/components/BookList';
+import { SectionList } from '@/components/SectionList';
 
 import { AuthContext } from 'pages/_app';
 import styles from 'styles/Home.module.scss';

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { convertFromTimestampToDatetime } from '@common/common';
+import { convertFromTimestampToDatetime } from '@/common/common';
 
-import AppMain from '@components/organisms/AppMain';
+import AppMain from '@/components/organisms/AppMain';
 
 import styles from 'styles/Home.module.scss';
 
