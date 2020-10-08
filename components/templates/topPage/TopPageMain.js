@@ -6,6 +6,7 @@ import styles from 'styles/Home.module.scss';
 import Logout from 'components/Logout';
 import { UserList } from 'components/UserList';
 
+import { RSC } from '@common/resource';
 const TopPageMain = ({ userDataList }) => {
   return (
     <>
@@ -13,12 +14,12 @@ const TopPageMain = ({ userDataList }) => {
 
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>Welcome to 手記書庫</h1>
+          <h1 className={styles.title}>{RSC.appTitle}</h1>
           <Link href="/auth/login">
-            <a>ログイン</a>
+            <a>{RSC.loginPrint}</a>
           </Link>
           <Link href="/auth/signin">
-            <a>サインイン</a>
+            <a>{RSC.signinPrint}</a>
           </Link>
 
           <Logout />

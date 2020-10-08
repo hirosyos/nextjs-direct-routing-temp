@@ -20,7 +20,7 @@ const AppFooter = (props) => {
         rel="noopener noreferrer"
       >
         Powered by{' '}
-        <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+        <img src="/logo.png" alt="ShukiShoko Logo" className={styles.logo} />
       </a>
     </footer>
   );

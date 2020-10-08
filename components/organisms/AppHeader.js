@@ -20,9 +20,9 @@ const AppHeader = (props) => {
         <a className={styles.header}>
           <img
             className={styles.header__img}
-            src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
-            alt="Next.js ロゴ"
-            width="100"
+            src="/logo.png"
+            alt="ShukiShoko ロゴ"
+            width="50"
           />
         </a>
       </Link>

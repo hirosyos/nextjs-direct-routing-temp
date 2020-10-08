@@ -6,4 +6,6 @@ export const RSC = {
   bookPageTitle: '手記',
   sectionPageTitle: 'セクション',
   searchPageTitle: '検索',
+  loginPrint: 'ログイン',
+  signinPrint: 'サインイン',
 };
