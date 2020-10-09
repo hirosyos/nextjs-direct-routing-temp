@@ -7,6 +7,7 @@ import AppMain from '@/components/organisms/AppMain';
 import { SectionList } from '@/components/SectionList';
 
 import styles from 'styles/Home.module.scss';
+import BookCard from 'components/molecules/BookCard';
 /**
  * ブックページメイン
  *
@@ -79,6 +80,8 @@ const BookPageMain = ({
           手記
           {bookName}
         </h1>
+
+        <BookCard userName={userName} bookName={bookName} bookData={bookData} />
 
         <table border="1">
           <tbody>
