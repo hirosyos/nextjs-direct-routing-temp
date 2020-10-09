@@ -5,6 +5,10 @@ import TopPageNavi from 'components/templates/topPage/TopPageNavi';
 import TopPageMain from 'components/templates/topPage/TopPageMain';
 import { getUserDataList } from 'common/common';
 import { RSC } from 'common/resource';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
 /**
  * 静的パラメータ取得
@@ -41,13 +45,35 @@ export default function TopPage({ userDataList }) {
   console.log('関数 TopPage');
   console.log({ userDataList });
 
+  const classes = useStyles();
+
   return (
     <>
       <TopPageHead pageTitle={RSC.topPageTitle} />
       <TopPageHeader />
-      <TopPageNavi />
-      <TopPageMain userDataList={userDataList} />
-      <TopPageFooter />
+      <Grid container justify="center">
+        <Grid item xs={2} sm={12}>
+          <TopPageNavi />
+        </Grid>
+        <Grid item xs={8} sm={12}>
+          <TopPageMain userDataList={userDataList} />
+        </Grid>
+        <Grid item xs={2} sm={12}></Grid>
+        <TopPageFooter />
+      </Grid>
     </>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));

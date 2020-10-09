@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import firebase from 'common/firebase';
+import Button from '@material-ui/core/Button';
+
 /**
  *
  *
@@ -27,9 +29,14 @@ const Logout = () => {
   };
   return (
     <>
-      <button type="button" onClick={logout}>
+      <Button
+        variant="contained"
+        color="primary"
+        type="button"
+        onClick={logout}
+      >
         Logout
-      </button>
+      </Button>
       {pending && 'Pending...'}
     </>
   );

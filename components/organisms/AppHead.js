@@ -11,6 +11,10 @@ const AppHead = ({ pageTitle }) => {
   return (
     <>
       <Head>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
         <title>{`${RSC.catchCopy}/${RSC.appTitle}/${pageTitle}`}</title>
         <link rel="icon" href={RSC.img.faviconImg} />
       </Head>
