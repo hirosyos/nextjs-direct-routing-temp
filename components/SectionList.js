@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { convertFromTimestampToDatetime } from '../common/common';
+import SectionCard from 'components/molecules/SectionCard';
 
 /**
  * セクションリスト表示
@@ -44,6 +45,15 @@ export const SectionList = ({ sectionDataList }) => {
           ))}
         </tbody>
       </table>
+
+      {sectionDataList?.map((x) => (
+        <SectionCard
+          userName={x.userName}
+          bookName={x.bookName}
+          sectionId={x.sectionId}
+          sectionData={x.sectionData}
+        />
+      ))}
     </>
   );
 };
