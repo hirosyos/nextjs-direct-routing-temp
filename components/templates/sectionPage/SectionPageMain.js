@@ -7,6 +7,12 @@ import AppMain from '@/components/organisms/AppMain';
 
 import styles from 'styles/Home.module.scss';
 
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import SectionCard from 'components/molecules/SectionCard';
+
 const SectionPageMain = ({ userName, bookName, sectionId, sectionData }) => {
   // 事前ビルドされていない場合はここで作成する
   const router = useRouter();
@@ -36,6 +42,13 @@ const SectionPageMain = ({ userName, bookName, sectionId, sectionData }) => {
           セクション
           {sectionId}{' '}
         </h1>
+
+        <SectionCard
+          userName={userName}
+          bookName={bookName}
+          sectionId={sectionId}
+          sectionData={sectionData}
+        />
 
         <table border="1">
           <tbody>
@@ -163,5 +176,18 @@ const SectionPageMain = ({ userName, bookName, sectionId, sectionData }) => {
     </>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: 100,
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}));
 
 export default SectionPageMain;
