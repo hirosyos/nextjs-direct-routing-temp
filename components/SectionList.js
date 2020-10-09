@@ -19,7 +19,7 @@ export const SectionList = ({ sectionDataList }) => {
 
   return (
     <>
-      <table border="1">
+      {/* <table border="1">
         <tbody>
           <tr>
             <th>セクション公開設定</th>
@@ -44,10 +44,11 @@ export const SectionList = ({ sectionDataList }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
 
       {sectionDataList?.map((x) => (
         <SectionCard
+          key={x.sectionId}
           userName={x.userName}
           bookName={x.bookName}
           sectionId={x.sectionId}

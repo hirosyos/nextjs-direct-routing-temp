@@ -16,10 +16,13 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { convertFromTimestampToDatetime } from '@/common/common';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Link from 'src/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    minWidth: 400,
+    maxWidth: 400,
   },
   media: {
     height: 0,
@@ -68,16 +71,65 @@ const BookCard = ({ userName, bookName, bookData }) => {
         // 手記更新日
         subheader={convertFromTimestampToDatetime(bookData.updatedAt.seconds)}
       />
-      <CardMedia
+      {/* <CardMedia
         className={classes.media}
         image="/static/images/cards/paella.jpg"
         title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          著者名：{bookData.authorDisplayName}
-        </Typography>
-      </CardContent>
+      /> */}
+      <CardActionArea>
+        <Link underline="none" href={`/users/${userName}/${bookName}`}>
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記作成日：
+              {convertFromTimestampToDatetime(bookData.createdAt.seconds)}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記更新日：
+              {convertFromTimestampToDatetime(bookData.updatedAt.seconds)}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記公開設定：{bookData.isPublic}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              ユーザドキュメントへのリファレンス：{bookData.userDocRef}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記ドキュメントID：{bookData.bookId}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記ドキュメントへのリファレンス：{bookData.bookDocRef}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              管理上の手記名：{bookData.bookName}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              画面上に見せる手記名：{bookData.bookDisplayName}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              画面上に見せる著者名：{bookData.authorDisplayName}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              著者誕生日：
+              {convertFromTimestampToDatetime(bookData.authorBirthday.seconds)}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              著者の現在の年齢：{bookData.authorNowAge}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記アイコン画像URL：{bookData.bookIconImageUrl}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記カバー画像URL：{bookData.bookCoverImageUrl}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記はじめに：{bookData.bookIntroduction}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              手記がお気に入りに入れられている数：{bookData.bookFavoritedCount}
+            </Typography>
+          </CardContent>
+        </Link>
+      </CardActionArea>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />

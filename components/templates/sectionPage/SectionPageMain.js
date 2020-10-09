@@ -50,7 +50,7 @@ const SectionPageMain = ({ userName, bookName, sectionId, sectionData }) => {
           sectionData={sectionData}
         />
 
-        <table border="1">
+        {/* <table border="1">
           <tbody>
             <tr>
               <th>firebase上の名前</th>
@@ -164,7 +164,7 @@ const SectionPageMain = ({ userName, bookName, sectionId, sectionData }) => {
               <td>{sectionData.quotedCount}</td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
 
         <Link href={`/users/${userName}`}>
           <a>ユーザページ</a>

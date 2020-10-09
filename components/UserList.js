@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { convertFromTimestampToDatetime } from 'common/common';
+import UserCard from 'components/molecules/UserCard';
 
 /**
  * ユーザが作成した手記リスト
@@ -21,7 +22,7 @@ export const UserList = ({ userDataList }) => {
 
   return (
     <>
-      <table border="1">
+      {/* <table border="1">
         <tbody>
           <tr>
             <th>ユーザ公開設定</th>
@@ -44,7 +45,15 @@ export const UserList = ({ userDataList }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
+
+      {userDataList?.map((x) => (
+        <UserCard
+          key={x.userData.uid}
+          userName={x.userData.userName}
+          userData={x.userData}
+        />
+      ))}
     </>
   );
 };

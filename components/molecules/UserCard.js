@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // export default function SectionCard() {
-const SectionCard = ({ userName, bookName, sectionId, sectionData }) => {
+const UserCard = ({ userName, userData }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -66,10 +66,10 @@ const SectionCard = ({ userName, bookName, sectionId, sectionData }) => {
             <MoreVertIcon />
           </IconButton>
         }
-        // セクションタイトル
-        title={sectionData.title}
-        // セクションが起きた日付
-        subheader={convertFromTimestampToDatetime(sectionData.date.seconds)}
+        // ユーザ名
+        title={userData.userDisplayName}
+        // 手記更新日
+        subheader={convertFromTimestampToDatetime(userData.updatedAt.seconds)}
       />
       {/* <CardMedia
         className={classes.media}
@@ -77,43 +77,39 @@ const SectionCard = ({ userName, bookName, sectionId, sectionData }) => {
         title="Paella dish"
       /> */}
       <CardActionArea>
-        <Link
-          underline="none"
-          href={`/users/${userName}/${bookName}/${sectionId}`}
-        >
+        <Link underline="none" href={`/users/${userName}`}>
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクション作成日：
-              {convertFromTimestampToDatetime(sectionData.createdAt.seconds)}
+              ユーザドキュメント作成日:
+              {convertFromTimestampToDatetime(userData.createdAt.seconds)}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクション更新日：
-              {convertFromTimestampToDatetime(sectionData.updatedAt.seconds)}
+              ユーザドキュメント更新日:
+              {convertFromTimestampToDatetime(userData.updatedAt.seconds)}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクション公開設定：{sectionData.isPublic}
+              ユーザ公開設定:{userData.isPublic}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクションドキュメントID：{sectionData.sectionId}
+              google認証から取得したユーザID:{userData.uid}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクションが起きた日付：
-              {convertFromTimestampToDatetime(sectionData.date.seconds)}
+              管理上のユーザ名:{userData.userName}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクションのタイトル：{sectionData.title}
+              画面上に見せるユーザ名:{userData.userDisplayName}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              セクションの内容：{sectionData.contents}
+              ユーザアイコン画像URL:{userData.userIconImageUrl}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              喜怒哀楽：{sectionData.emo}
+              ユーザカバー画像URL:{userData.userCoverImageUrl}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              引用した元セクション：{sectionData.quoteRef}
+              ユーザ自己紹介文:{userData.userIntroduction}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              引用された数：{sectionData.quotedCount}
+              料金プラン:{userData.pricePlan}
             </Typography>
           </CardContent>
         </Link>
@@ -171,4 +167,4 @@ const SectionCard = ({ userName, bookName, sectionId, sectionData }) => {
   );
 };
 
-export default SectionCard;
+export default UserCard;

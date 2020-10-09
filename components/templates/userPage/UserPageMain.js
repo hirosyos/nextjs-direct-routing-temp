@@ -12,6 +12,7 @@ import { SectionList } from '@/components/SectionList';
 
 import { AuthContext } from 'pages/_app';
 import styles from 'styles/Home.module.scss';
+import UserCard from 'components/molecules/UserCard';
 
 /**
  * ユーザページメイン
@@ -67,7 +68,7 @@ const UserPageMain = ({
           の手記書庫
         </h1>
         <p>ユーザ情報</p>
-        <table border="1">
+        {/* <table border="1">
           <tbody>
             <tr>
               <th>firebase上の名前</th>
@@ -130,7 +131,8 @@ const UserPageMain = ({
             </tr>
           </tbody>
         </table>
-        <br />
+        <UserCard userName={userName} userData={userData} />
+        <br /> */}
 
         <p>
           {userName}

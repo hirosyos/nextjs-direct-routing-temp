@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { convertFromTimestampToDatetime } from 'common/common';
+import BookCard from 'components/molecules/BookCard';
 
 /**
  * ユーザが作成した手記リスト
@@ -22,7 +23,7 @@ export const BooksList = ({ userData, bookDataList }) => {
 
   return (
     <>
-      <table border="1">
+      {/* <table border="1">
         <tbody>
           <tr>
             <th>手記公開設定</th>
@@ -45,7 +46,16 @@ export const BooksList = ({ userData, bookDataList }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
+
+      {bookDataList?.map((x) => (
+        <BookCard
+          key={x.data.bookId}
+          userName={x.userName}
+          bookName={x.data.bookName}
+          bookData={x.data}
+        />
+      ))}
     </>
   );
 };

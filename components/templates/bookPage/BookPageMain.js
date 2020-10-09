@@ -81,9 +81,7 @@ const BookPageMain = ({
           {bookName}
         </h1>
 
-        <BookCard userName={userName} bookName={bookName} bookData={bookData} />
-
-        <table border="1">
+        {/* <table border="1">
           <tbody>
             <tr>
               <th>firebase上の名前</th>
@@ -189,7 +187,9 @@ const BookPageMain = ({
             </tr>
           </tbody>
         </table>
-        <br />
+        <br /> */}
+
+        <BookCard userName={userName} bookName={bookName} bookData={bookData} />
 
         <h1>手記{bookName} が持つセクション</h1>
         <SectionList sectionDataList={sectionDataList} />
