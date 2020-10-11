@@ -1,7 +1,7 @@
-import AppHeader from 'components/organisms/AppNavi';
+import AppNavi from 'components/organisms/AppNavi';
 
 const BookPageNavi = (props) => {
-  return <></>;
+  return <AppNavi />;
 };
 
 export default BookPageNavi;
