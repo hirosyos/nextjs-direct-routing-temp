@@ -7,6 +7,7 @@ import Login from 'components/Login';
 import styles from 'styles/Home.module.scss';
 import { getUserDataFromUid, VALIDUSERS } from 'common/common';
 import { AuthContext } from 'pages/_app';
+import AppHead from 'components/organisms/AppHead';
 
 /**
  * ログインページ
@@ -47,16 +48,10 @@ export default function LoginPage() {
   if (!user) {
     return (
       <Layout>
-        <div className={styles.container}>
-          <Head>
-            <title>手記書庫/ログイン</title>
-            <link rel="icon" href="/favicon.ico" />
-          </Head>
+        <div classNamze={styles.container}>
+          <AppHead pageTitle={'ログイン'} />
 
           <main className={styles.main}>
-            <h1 className={styles.title}>Welcome to ログイン ページ</h1>
-            <h1>ログインページ</h1>
-
             <Login />
           </main>
         </div>
@@ -67,10 +62,8 @@ export default function LoginPage() {
   return (
     <Layout>
       <div className={styles.container}>
-        <Head>
-          <title>手記書庫/ログイン</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
+        <AppHead pageTitle={'ログイン'} />
+
         <p>{`すでに${userName}ログイン済みです`}</p>
         <Link href={`/users/${userName}`}>
           <a>ユーザページへ</a>

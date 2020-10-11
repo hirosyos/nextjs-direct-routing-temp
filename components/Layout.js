@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from 'styles/Layout.module.scss';
+import AppNavi from 'components/organisms/AppNavi';
 
 const Layout = (props) => {
   //
@@ -28,6 +29,7 @@ const Layout = (props) => {
           </a>
         </Link>
       </header>
+      {/* <AppNavi /> */}
       <div className={styles.container}>{props.children}</div>
     </div>
   );
