@@ -131,7 +131,7 @@ export default function SectionIdPage({
   return (
     <>
       <Layout
-        pageTitle={`${RSC.userPageTitle}/${userName}/${bookName}/${sectionData.title}`}
+        pageTitle={`${RSC.userPageTitle}/${userName}/${bookName}/${sectionData?.title}`}
       >
         <SectionPageMain
           userName={userName}

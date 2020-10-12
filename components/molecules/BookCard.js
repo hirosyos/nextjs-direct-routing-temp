@@ -18,11 +18,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { convertFromTimestampToDatetime } from '@/common/common';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'src/Link';
+import { Autorenew } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 400,
     maxWidth: 400,
+    // width: '100%',
   },
   media: {
     height: 0,
@@ -71,11 +73,6 @@ const BookCard = ({ userName, bookName, bookData }) => {
         // 手記更新日
         subheader={convertFromTimestampToDatetime(bookData.updatedAt.seconds)}
       />
-      {/* <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="Paella dish"
-      /> */}
       <CardActionArea>
         <Link underline="none" href={`/users/${userName}/${bookName}`}>
           <CardContent>

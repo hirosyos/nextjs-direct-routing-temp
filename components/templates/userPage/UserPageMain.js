@@ -13,6 +13,21 @@ import { SectionList } from '@/components/SectionList';
 import { AuthContext } from 'pages/_app';
 import styles from 'styles/Home.module.scss';
 import UserCard from 'components/molecules/UserCard';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
+
+const useStyles = makeStyles((theme) => ({
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 /**
  * ユーザページメイン
@@ -31,6 +46,7 @@ const UserPageMain = ({
   bookDataList,
   sectionDataList,
 }) => {
+  const classes = useStyles();
   // 事前ビルドされていない場合はここで作成する
   const router = useRouter();
   if (router.isFallback) {
@@ -60,34 +76,21 @@ const UserPageMain = ({
   console.log({ user });
 
   return (
-    <>
-      <main className={styles.main}>
-        <UserLoginInfo myUid={user?.uid} />
-        <h1>
-          {userName}
-          の手記書庫
-        </h1>
-        <p>ユーザ情報</p>
-        <p>
-          {userName}
-          が作成した手記
-        </p>
+    <Grid container alignItems="center" justify="center">
+      <Grid item xs={12}>
+        <h1>{userName}の手記書庫</h1>
         <BooksList bookDataList={bookDataList} />
         <br />
-        <p>
-          {userName}
-          が作成したセクション
-        </p>
+        <p>{userName}が作成したセクション</p>
         <SectionList sectionDataList={sectionDataList} />
         <br />
-
         <Link href={`/users/${userName}/bookCreate`}>
           <a>新規手記作成</a>
         </Link>
         <br />
         <Logout />
-      </main>
-    </>
+      </Grid>
+    </Grid>
   );
 };
 

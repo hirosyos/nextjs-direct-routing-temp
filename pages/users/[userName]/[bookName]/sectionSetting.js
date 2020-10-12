@@ -72,42 +72,19 @@ export default function SectionSettingPage(props) {
   console.log('関数コンポーネント SectionSetting');
   console.log({ props });
 
-  //
-  // デバッグ情報
-  //
-  console.log('正常終了\n');
-
   return (
     <Layout>
-      <div className={styles.container}>
-        <Head>
-          <title>手記書庫</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-
-        <main className={styles.main}>
-          <h1 className={styles.title}>Welcome to セクション 設定ページ</h1>
-          <p> ユーザー: {props.userName}</p>
-          <p> 手記: {props.bookName}</p>
-          <Link href={`/users/${props.userName}`}>
-            <a>ユーザページ</a>
-          </Link>
-          <Link href={`/users/${props.userName}/${props.bookName}`}>
-            <a>手記ページ</a>
-          </Link>
-        </main>
-
-        <footer className={styles.footer}>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by{' '}
-            <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-          </a>
-        </footer>
-      </div>
+      <>
+        <h1>Welcome to セクション 設定ページ</h1>
+        <p> ユーザー: {props.userName}</p>
+        <p> 手記: {props.bookName}</p>
+        <Link href={`/users/${props.userName}`}>
+          <a>ユーザページ</a>
+        </Link>
+        <Link href={`/users/${props.userName}/${props.bookName}`}>
+          <a>手記ページ</a>
+        </Link>
+      </>
     </Layout>
   );
 }

@@ -23,31 +23,6 @@ export const BooksList = ({ userData, bookDataList }) => {
 
   return (
     <>
-      {/* <table border="1">
-        <tbody>
-          <tr>
-            <th>手記公開設定</th>
-            <th>手記更新日</th>
-            <th>管理上の手記名</th>
-            <th>画面上に見せる手記名</th>
-            <th>手記ページへ移動ボタン</th>
-          </tr>
-          {bookDataList?.map((x) => (
-            <tr key={x.data.bookId}>
-              <td>{x.data.isPublic}</td>
-              <td>{convertFromTimestampToDatetime(x.data.updatedAt)}</td>
-              <td>{x.data.bookName}</td>
-              <td>{x.data.bookDisplayName}</td>
-              <td>
-                <Link href={`./${x.userName}/${x.data.bookName}`}>
-                  手記ページへ
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-
       {bookDataList?.map((x) => (
         <BookCard
           key={x.data.bookId}

@@ -3,6 +3,17 @@ import styles from 'styles/Layout.module.scss';
 import AppHead from 'components/organisms/AppHead';
 import AppNavi from 'components/organisms/AppNavi';
 import AppFooter from 'components/organisms/AppHead';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import ResponsiveDrawer from 'pages/muidemo/RDr';
+
+const useStyles = makeStyles((theme) => ({
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
 
 const Layout = ({ children, pageTitle, userData }) => {
   //
@@ -12,18 +23,20 @@ const Layout = ({ children, pageTitle, userData }) => {
   console.log('関数 Layout');
   // console.log({ props });
 
-  //
-  // デバッグ情報
-  //
-  console.log('正常終了 Layout\n');
+  const classes = useStyles();
+  // const theme = useTheme();
 
   return (
-    <div>
+    <>
       <AppHead pageTitle={pageTitle} />
-      <AppNavi appBarTitle={pageTitle} userData={userData} />
-      <div>{children}</div>
+      <AppNavi appBarTitle={pageTitle} userData={userData}>
+        {/* <ResponsiveDrawer /> */}
+        <main className={classes.content}>
+          <div className={classes.toolbar}>{children}</div>
+        </main>
+      </AppNavi>
       <AppFooter />
-    </div>
+    </>
   );
 };
 

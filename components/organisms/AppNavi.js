@@ -100,8 +100,8 @@ HideOnScroll.propTypes = {
  * @param {*} props
  * @return {*}
  */
-function ResponsiveDrawer(props) {
-  const { window, appBarTitle, userData } = props;
+function AppNavi(props) {
+  const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -111,10 +111,10 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const selectMenu = (event, path) => {
-    dispatch(push(path));
-    props.onClose(event);
-  };
+  // const selectMenu = (event, path) => {
+  //   dispatch(push(path));
+  //   props.onClose(event);
+  // };
 
   //認証情報取得
   const authData = useContext(AuthContext);
@@ -202,7 +202,7 @@ function ResponsiveDrawer(props) {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap>
-              {RSC.appTitle}/{appBarTitle}
+              {RSC.appTitle}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -238,11 +238,14 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
+      <main className={classes.content}>
+        <div className={classes.toolbar}>{props.children}</div>
+      </main>
     </div>
   );
 }
 
-ResponsiveDrawer.propTypes = {
+AppNavi.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -250,4 +253,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default AppNavi;
