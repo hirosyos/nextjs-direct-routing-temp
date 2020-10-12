@@ -21,8 +21,8 @@ import Link from 'src/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 400,
-    maxWidth: 400,
+    minWidth: 350,
+    maxWidth: 350,
   },
   media: {
     height: 0,

@@ -22,8 +22,8 @@ import { Autorenew } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 400,
-    maxWidth: 400,
+    minWidth: 350,
+    maxWidth: 350,
     // width: '100%',
   },
   media: {

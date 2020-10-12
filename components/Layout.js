@@ -31,9 +31,10 @@ const Layout = ({ children, pageTitle, userData }) => {
       <AppHead pageTitle={pageTitle} />
       <AppNavi appBarTitle={pageTitle} userData={userData}>
         {/* <ResponsiveDrawer /> */}
-        <main className={classes.content}>
+        {/* <main className={classes.content}>
           <div className={classes.toolbar}>{children}</div>
-        </main>
+        </main> */}
+        {children}
       </AppNavi>
       <AppFooter />
     </>

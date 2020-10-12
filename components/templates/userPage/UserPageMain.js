@@ -76,21 +76,19 @@ const UserPageMain = ({
   console.log({ user });
 
   return (
-    <Grid container alignItems="center" justify="center">
-      <Grid item xs={12}>
-        <h1>{userName}の手記書庫</h1>
-        <BooksList bookDataList={bookDataList} />
-        <br />
-        <p>{userName}が作成したセクション</p>
-        <SectionList sectionDataList={sectionDataList} />
-        <br />
-        <Link href={`/users/${userName}/bookCreate`}>
-          <a>新規手記作成</a>
-        </Link>
-        <br />
-        <Logout />
-      </Grid>
-    </Grid>
+    <main className={styles.main}>
+      <h1>{userName}の手記書庫</h1>
+      <BooksList bookDataList={bookDataList} />
+      <br />
+      <p>{userName}が作成したセクション</p>
+      <SectionList sectionDataList={sectionDataList} />
+      <br />
+      <Link href={`/users/${userName}/bookCreate`}>
+        <a>新規手記作成</a>
+      </Link>
+      <br />
+      <Logout />
+    </main>
   );
 };
 
