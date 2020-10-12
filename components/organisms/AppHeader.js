@@ -16,18 +16,20 @@ const AppHeader = (props) => {
   console.log('正常終了 Layout\n');
 
   return (
-    <header>
-      <Link href="/">
-        <a className={styles.header}>
-          <img
-            className={styles.header__img}
-            src={RSC.img.headerImg}
-            alt="ShukiShoko ロゴ"
-            width="50"
-          />
-        </a>
-      </Link>
-    </header>
+    <></>
+    // <header>
+
+    //   <Link href="/">
+    //     <a className={styles.header}>
+    //       <img
+    //         className={styles.header__img}
+    //         src={RSC.img.headerImg}
+    //         alt="ShukiShoko ロゴ"
+    //         width="50"
+    //       />
+    //     </a>
+    //   </Link>
+    // </header>
   );
 };
 

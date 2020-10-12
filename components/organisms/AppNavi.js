@@ -16,6 +16,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
+import { RSC } from 'common/resource';
+import Link from 'src/Link';
+import Logout from 'components/Logout';
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
@@ -52,16 +60,85 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * スクロールしたらAppBarが隠れる機能
+ *
+ * @param {*} props
+ * @return {*}
+ */
+function HideOnScroll(props) {
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+HideOnScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
+
+/**
+ * レスポンシブドロワー
+ * AppBarはスクロールで消えるようにした
+ *
+ * @param {*} props
+ * @return {*}
+ */
 function ResponsiveDrawer(props) {
-  const { window } = props;
+  const { window, appBarTitle } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const router = useRouter();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
+  const selectMenu = (event, path) => {
+    dispatch(push(path));
+    props.onClose(event);
+  };
+
+  const menus = [
+    {
+      func: selectMenu,
+      label: 'ログイン',
+      icon: <ExitToAppIcon />,
+      id: 'login',
+      value: '/auth/login',
+    },
+    {
+      func: selectMenu,
+      label: 'ログアウト',
+      icon: <ExitToAppIcon />,
+      id: 'logout',
+      value: '/auth/logout',
+    },
+    {
+      func: selectMenu,
+      label: 'サインイン',
+      icon: <ExitToAppIcon />,
+      id: 'signin',
+      value: '/auth/signin',
+    },
+  ];
+
+  //ドロワーの定義
   const drawer = (
     <div>
       <div className={classes.toolbar} />
@@ -77,15 +154,43 @@ function ResponsiveDrawer(props) {
         ))}
       </List>
       <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+
+      {/* <List>
+        {menus.map((menu) => (
+          <ListItem
+            button
+            key={menu.id}
+            onClick={(e) => router.push(e, menu.value)}
+          >
+            <ListItemIcon>{menu.icon}</ListItemIcon>
+            <ListItemText primary={menu.label} />
           </ListItem>
         ))}
+      </List> */}
+
+      <List>
+        <ListItem button onClick={() => router.push('/auth/login')}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="ログイン" />
+        </ListItem>
+      </List>
+      <List>
+        <ListItem button onClick={() => router.push('/auth/logout')}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="ログアウト" />
+        </ListItem>
+      </List>
+      <List>
+        <ListItem button onClick={() => router.push('/auth/signin')}>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="サインイン" />
+        </ListItem>
       </List>
     </div>
   );
@@ -96,22 +201,41 @@ function ResponsiveDrawer(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            手記書庫
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <HideOnScroll {...props}>
+        {/* これはAppBarが小さくならなくて上にスクロールしたらAppBarが出る */}
+        <AppBar position="fixed" className={classes.appBar}>
+          {/* これはAppBarが小さくなって上にスクロールしてもAppBarが出てくれない */}
+          {/* <AppBar position="relative" className={classes.appBar}> */}
+          {/* これはAppBarが小さくなって上にスクロールしてもAppBarが出てくれない */}
+          {/* <AppBar position="static" className={classes.appBar}> */}
+          {/* これはAppBarが小さくなって上にスクロールしてもAppBarが出てくれない */}
+          {/* <AppBar position="sticky" className={classes.appBar}> */}
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" noWrap>
+              {RSC.appTitle}/{appBarTitle}
+            </Typography>
+            <Link href="/auth/login">
+              <a>{RSC.loginPrint}</a>
+            </Link>
+            <Link href="/auth/signin">
+              <a>{RSC.signinPrint}</a>
+            </Link>
+
+            <Logout />
+
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">

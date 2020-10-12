@@ -14,7 +14,7 @@ const TopPageMain = ({ userDataList }) => {
 
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>{RSC.appTitle}</h1>
+          {/* <h1 className={styles.title}>{RSC.appTitle}</h1> */}
           <Link href="/auth/login">
             <a>{RSC.loginPrint}</a>
           </Link>

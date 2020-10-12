@@ -52,13 +52,13 @@ export default function TopPage({ userDataList }) {
       <TopPageHead pageTitle={RSC.topPageTitle} />
       <TopPageHeader />
       <Grid container justify="center">
-        <Grid item xs={2} sm={12}>
-          <TopPageNavi />
-        </Grid>
-        <Grid item xs={8} sm={12}>
-          <TopPageMain userDataList={userDataList} />
-        </Grid>
-        <Grid item xs={2} sm={12}></Grid>
+        {/* <Grid item xs={2} sm={12}> */}
+        <TopPageNavi />
+        {/* </Grid> */}
+        {/* <Grid item xs={8} sm={12}> */}
+        <TopPageMain userDataList={userDataList} />
+        {/* </Grid> */}
+        {/* <Grid item xs={2} sm={12}></Grid> */}
         <TopPageFooter />
       </Grid>
     </>

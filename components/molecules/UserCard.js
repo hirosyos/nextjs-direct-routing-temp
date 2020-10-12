@@ -57,8 +57,12 @@ const UserCard = ({ userName, userData }) => {
       <CardHeader
         // 著者アイコン
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            著
+          <Avatar
+            aria-label="recipe"
+            // className={classes.avatar}
+            className={classes.lightGray}
+          >
+            {userData.userIconImageUrl}
           </Avatar>
         }
         action={

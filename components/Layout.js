@@ -17,7 +17,7 @@ const Layout = (props) => {
 
   return (
     <div>
-      <header>
+      {/* <header>
         <Link href="/">
           <a className={styles.header}>
             <img
@@ -28,9 +28,9 @@ const Layout = (props) => {
             />
           </a>
         </Link>
-      </header>
+      </header> */}
       {/* <AppNavi /> */}
-      <div className={styles.container}>{props.children}</div>
+      <div>{props.children}</div>
     </div>
   );
 };
