@@ -4,11 +4,12 @@ import {
 } from 'common/common';
 
 import { RSC } from 'common/resource';
+import Layout from 'components/Layout';
 
-import SectionPageHead from '@/templates/sectionPage/SectionPageHead';
-import SectionPageHeader from '@/templates/sectionPage/SectionPageHeader';
-import SectionPageFooter from '@/templates/sectionPage/SectionPageFooter';
-import SectionPageNavi from '@/templates/sectionPage/SectionPageNavi';
+// import SectionPageHead from '@/templates/sectionPage/SectionPageHead';
+// import SectionPageHeader from '@/templates/sectionPage/SectionPageHeader';
+// import SectionPageFooter from '@/templates/sectionPage/SectionPageFooter';
+// import SectionPageNavi from '@/templates/sectionPage/SectionPageNavi';
 import SectionPageMain from '@/templates/sectionPage/SectionPageMain';
 
 /**
@@ -129,18 +130,16 @@ export default function SectionIdPage({
 
   return (
     <>
-      <SectionPageHead
+      <Layout
         pageTitle={`${RSC.userPageTitle}/${userName}/${bookName}/${sectionData.title}`}
-      />
-      <SectionPageHeader />
-      <SectionPageNavi />
-      <SectionPageMain
-        userName={userName}
-        bookName={bookName}
-        sectionId={sectionId}
-        sectionData={sectionData}
-      />
-      <SectionPageFooter />
+      >
+        <SectionPageMain
+          userName={userName}
+          bookName={bookName}
+          sectionId={sectionId}
+          sectionData={sectionData}
+        />
+      </Layout>
     </>
   );
 }

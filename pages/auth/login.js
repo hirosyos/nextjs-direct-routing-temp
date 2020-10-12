@@ -39,13 +39,6 @@ export default function LoginPage() {
         setUserName(userData.userName);
       }
       fetchData();
-
-      // router.push(`/users/${userData.userName}`);
-
-      // const cleanup = () => {
-      //   console.log('cleanup!');
-      // };
-      // return cleanup;
     }
   }, [user]);
 

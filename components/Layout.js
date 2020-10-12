@@ -1,14 +1,16 @@
 import Link from 'next/link';
 import styles from 'styles/Layout.module.scss';
+import AppHead from 'components/organisms/AppHead';
 import AppNavi from 'components/organisms/AppNavi';
+import AppFooter from 'components/organisms/AppHead';
 
-const Layout = (props) => {
+const Layout = ({ children, pageTitle, userData }) => {
   //
   // デバッグ情報
   //
   console.log('\nファイル Layout.js');
   console.log('関数 Layout');
-  console.log({ props });
+  // console.log({ props });
 
   //
   // デバッグ情報
@@ -17,20 +19,10 @@ const Layout = (props) => {
 
   return (
     <div>
-      {/* <header>
-        <Link href="/">
-          <a className={styles.header}>
-            <img
-              className={styles.header__img}
-              src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg"
-              alt="Next.js ロゴ"
-              width="100"
-            />
-          </a>
-        </Link>
-      </header> */}
-      {/* <AppNavi /> */}
-      <div>{props.children}</div>
+      <AppHead pageTitle={pageTitle} />
+      <AppNavi appBarTitle={pageTitle} userData={userData} />
+      <div>{children}</div>
+      <AppFooter />
     </div>
   );
 };

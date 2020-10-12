@@ -6,11 +6,12 @@ import {
 } from 'common/common';
 
 import { RSC } from 'common/resource';
+import Layout from 'components/Layout';
 
-import BookPageHead from '@/templates/bookPage/BookPageHead';
-import BookPageHeader from '@/templates/bookPage/BookPageHeader';
-import BookPageFooter from '@/templates/bookPage/BookPageFooter';
-import BookPageNavi from '@/templates/bookPage/BookPageNavi';
+// import BookPageHead from '@/templates/bookPage/BookPageHead';
+// import BookPageHeader from '@/templates/bookPage/BookPageHeader';
+// import BookPageFooter from '@/templates/bookPage/BookPageFooter';
+// import BookPageNavi from '@/templates/bookPage/BookPageNavi';
 import BookPageMain from '@/templates/bookPage/BookPageMain';
 
 /**
@@ -131,12 +132,10 @@ export default function BookNamePage({
   });
 
   return (
-    <>
-      <BookPageHead
-        pageTitle={`${RSC.bookPageTitle}/${userName}/${bookName}`}
-      />
-      <BookPageHeader />
-      <BookPageNavi />
+    <Layout
+      pageTitle={`${RSC.bookPageTitle}/${userName}/${bookName}`}
+      userData={userData}
+    >
       <BookPageMain
         userName={userName}
         userData={userData}
@@ -144,8 +143,6 @@ export default function BookNamePage({
         bookData={bookData}
         sectionDataList={sectionDataList}
       />
-
-      <BookPageFooter />
-    </>
+    </Layout>
   );
 }

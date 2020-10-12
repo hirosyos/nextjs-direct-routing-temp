@@ -6,11 +6,8 @@ import {
 } from 'common/common';
 
 import { RSC } from 'common/resource';
+import Layout from 'components/Layout';
 
-import UserPageHead from '@/templates/userPage/UserPageHead';
-import UserPageHeader from '@/templates/userPage/UserPageHeader';
-import UserPageFooter from '@/templates/userPage/UserPageFooter';
-import UserPageNavi from '@/templates/userPage/UserPageNavi';
 import UserPageMain from '@/templates/userPage/UserPageMain';
 
 /**
@@ -116,18 +113,13 @@ export default function UserNamePage({
   });
 
   return (
-    <>
-      <UserPageHead pageTitle={`${RSC.userPageTitle}/${userName}`} />
-      <UserPageHeader />
-      <UserPageNavi />
+    <Layout pageTitle={`${RSC.userPageTitle}/${userName}`} userData={userData}>
       <UserPageMain
         userName={userName}
         userData={userData}
         bookDataList={bookDataList}
         sectionDataList={sectionDataList}
       />
-
-      <UserPageFooter />
-    </>
+    </Layout>
   );
 }

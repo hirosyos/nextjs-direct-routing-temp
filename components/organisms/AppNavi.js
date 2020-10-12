@@ -24,6 +24,8 @@ import { RSC } from 'common/resource';
 import Link from 'src/Link';
 import Logout from 'components/Logout';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { AuthContext } from 'pages/_app';
 
 const drawerWidth = 240;
 
@@ -99,7 +101,7 @@ HideOnScroll.propTypes = {
  * @return {*}
  */
 function ResponsiveDrawer(props) {
-  const { window, appBarTitle } = props;
+  const { window, appBarTitle, userData } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -114,29 +116,11 @@ function ResponsiveDrawer(props) {
     props.onClose(event);
   };
 
-  const menus = [
-    {
-      func: selectMenu,
-      label: 'ログイン',
-      icon: <ExitToAppIcon />,
-      id: 'login',
-      value: '/auth/login',
-    },
-    {
-      func: selectMenu,
-      label: 'ログアウト',
-      icon: <ExitToAppIcon />,
-      id: 'logout',
-      value: '/auth/logout',
-    },
-    {
-      func: selectMenu,
-      label: 'サインイン',
-      icon: <ExitToAppIcon />,
-      id: 'signin',
-      value: '/auth/signin',
-    },
-  ];
+  //認証情報取得
+  const authData = useContext(AuthContext);
+  const user = authData.user;
+  const authUserData = authData.userData;
+  console.log({ user });
 
   //ドロワーの定義
   const drawer = (
@@ -154,19 +138,6 @@ function ResponsiveDrawer(props) {
         ))}
       </List>
       <Divider />
-
-      {/* <List>
-        {menus.map((menu) => (
-          <ListItem
-            button
-            key={menu.id}
-            onClick={(e) => router.push(e, menu.value)}
-          >
-            <ListItemIcon>{menu.icon}</ListItemIcon>
-            <ListItemText primary={menu.label} />
-          </ListItem>
-        ))}
-      </List> */}
 
       <List>
         <ListItem button onClick={() => router.push('/auth/login')}>
@@ -192,6 +163,16 @@ function ResponsiveDrawer(props) {
           <ListItemText primary="サインイン" />
         </ListItem>
       </List>
+      {user && (
+        <List>
+          <ListItem button onClick={() => router.push('/auth/signin')}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={authUserData.userName} />
+          </ListItem>
+        </List>
+      )}
     </div>
   );
 
@@ -223,16 +204,6 @@ function ResponsiveDrawer(props) {
             <Typography variant="h6" noWrap>
               {RSC.appTitle}/{appBarTitle}
             </Typography>
-            <Link href="/auth/login">
-              <a>{RSC.loginPrint}</a>
-            </Link>
-            <Link href="/auth/signin">
-              <a>{RSC.signinPrint}</a>
-            </Link>
-
-            <Logout />
-
-            <Button color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
       </HideOnScroll>

@@ -1,10 +1,11 @@
-import TopPageHead from 'components/templates/topPage/TopPageHead';
-import TopPageHeader from 'components/templates/topPage/TopPageHeader';
-import TopPageFooter from 'components/templates/topPage/TopPageFooter';
-import TopPageNavi from 'components/templates/topPage/TopPageNavi';
+// import TopPageHead from 'components/templates/topPage/TopPageHead';
+// import TopPageHeader from 'components/templates/topPage/TopPageHeader';
+// import TopPageFooter from 'components/templates/topPage/TopPageFooter';
+// import TopPageNavi from 'components/templates/topPage/TopPageNavi';
 import TopPageMain from 'components/templates/topPage/TopPageMain';
 import { getUserDataList } from 'common/common';
 import { RSC } from 'common/resource';
+import Layout from 'components/Layout';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -48,20 +49,20 @@ export default function TopPage({ userDataList }) {
   const classes = useStyles();
 
   return (
-    <>
-      <TopPageHead pageTitle={RSC.topPageTitle} />
-      <TopPageHeader />
+    <Layout pageTitle={RSC.topPageTitle}>
+      {/* <TopPageHead pageTitle={RSC.topPageTitle} /> */}
+      {/* <TopPageHeader /> */}
       <Grid container justify="center">
         {/* <Grid item xs={2} sm={12}> */}
-        <TopPageNavi />
+        {/* <TopPageNavi /> */}
         {/* </Grid> */}
         {/* <Grid item xs={8} sm={12}> */}
         <TopPageMain userDataList={userDataList} />
         {/* </Grid> */}
         {/* <Grid item xs={2} sm={12}></Grid> */}
-        <TopPageFooter />
+        {/* <TopPageFooter /> */}
       </Grid>
-    </>
+    </Layout>
   );
 }
 
