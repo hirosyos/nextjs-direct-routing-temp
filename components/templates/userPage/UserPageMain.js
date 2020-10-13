@@ -3,29 +3,26 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { convertFromTimestampToDatetime } from '@/common/common';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 import Logout from '@/components/Logout';
-import { UserLoginInfo } from '@/components/User';
 import { BooksList } from '@/components/BookList';
 import { SectionList } from '@/components/SectionList';
 
+import { TabPanel, a11yProps } from '@/components/atoms/TabPanel';
+
 import { AuthContext } from 'pages/_app';
-import styles from 'styles/Home.module.scss';
-import UserCard from 'components/molecules/UserCard';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-
-  content: {
+  root: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    backgroundColor: theme.palette.background.paper,
   },
 }));
 
@@ -47,6 +44,12 @@ const UserPageMain = ({
   sectionDataList,
 }) => {
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   // 事前ビルドされていない場合はここで作成する
   const router = useRouter();
   if (router.isFallback) {
@@ -76,19 +79,59 @@ const UserPageMain = ({
   console.log({ user });
 
   return (
-    <main className={styles.main}>
-      <h1>{userName}の手記書庫</h1>
-      <BooksList bookDataList={bookDataList} />
-      <br />
-      <p>{userName}が作成したセクション</p>
-      <SectionList sectionDataList={sectionDataList} />
-      <br />
-      <Link href={`/users/${userName}/bookCreate`}>
-        <a>新規手記作成</a>
-      </Link>
-      <br />
-      <Logout />
-    </main>
+    <Grid
+      container
+      alignItems="center"
+      justify="center"
+      direction="column"
+      mt="4rem"
+    >
+      <Grid item xs={8}>
+        {/* ユーザアイコン画像 */}
+        <Avatar alt={userName}>{userData.userIconImageUrl}</Avatar>
+        <Avatar alt={userName}>{userData.userIconImageUrl}</Avatar>
+        <Avatar alt={userName}>{userData.userIconImageUrl}</Avatar>
+        {/* ユーザネーム */}
+        <Typography variant="h4" align="center">
+          {userData.userDisplayName}
+        </Typography>
+        <Typography variant="subtitle1" align="center">
+          {userData.userName}
+        </Typography>
+
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="simple tabs example"
+            >
+              <Tab label="手記" {...a11yProps(0)} />
+              <Tab label="活動" {...a11yProps(1)} />
+              <Tab label="未来" {...a11yProps(2)} />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            手記
+            <BooksList bookDataList={bookDataList} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {userName}が作成したセクション
+            <SectionList sectionDataList={sectionDataList} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            未来
+          </TabPanel>
+        </div>
+
+        <br />
+        <Link href={`/users/${userName}/bookCreate`}>
+          <a>新規手記作成</a>
+        </Link>
+        <br />
+        <Logout />
+      </Grid>
+    </Grid>
   );
 };
 

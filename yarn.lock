@@ -4135,6 +4135,16 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
 
+fontsource-noto-sans@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/fontsource-noto-sans/-/fontsource-noto-sans-3.0.10.tgz#1fffa82a748b91c2a4c0b2d97bbd5bd7245eed8b"
+  integrity sha512-Gn8ucYOSk2p2Fzj9x4K6DMoX+bhk6nfwVD7h59QFr5uJL8ha2B5i3It9ZIy3AV1+qbgIY3kCmyx9pSWnpB85SQ==
+
+fontsource-noto-serif@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/fontsource-noto-serif/-/fontsource-noto-serif-3.0.9.tgz#601468100fa2b97595ba0be06285ea477aee2788"
+  integrity sha512-WBzxnMGOzOAsBQ2vkL5xHWJnK5WtOCe3FdFVDhmhsQJQgCssIJ6vfjLEJkuS3fzXmnzk5ZCkve1dtEgJjusYnA==
+
 fontsource-roboto@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/fontsource-roboto/-/fontsource-roboto-3.0.3.tgz#99c312babeabce22b3e933b3edf2951d4508f4f7"
